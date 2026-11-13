@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="./assets/gallery.css">
   <script defer src="./assets/gallery.js"></script>
 </head>
-<body>
+<body class="gallery-page">
   <a class="skip" href="#gallery-main">ข้ามไปยังภาพกิจกรรม</a>
   <header class="site-header">
     <div class="wrap topbar">
@@ -29,10 +29,20 @@
   </header>
   <main id="gallery-main">
     <section class="gallery-hero">
-      <div class="wrap">
-        <p class="section-label">BWD STORIES / PHOTO ARCHIVE</p>
-        <h1>ภาพกิจกรรม<span>โรงเรียนบ้านวังด้ง</span></h1>
-        <p>เรื่องราว ความทรงจำ และการเรียนรู้ผ่านภาพถ่ายที่ผ่านการตรวจรับให้เผยแพร่แล้ว</p>
+      <div class="wrap gallery-hero-layout">
+        <div class="gallery-hero-copy">
+          <p class="section-label">BWD STORIES / PHOTO ARCHIVE</p>
+          <h1>ภาพกิจกรรม<span>โรงเรียนบ้านวังด้ง</span></h1>
+          <p>เรื่องราว ความทรงจำ และการเรียนรู้ผ่านภาพถ่ายที่ผ่านการตรวจรับให้เผยแพร่แล้ว</p>
+        </div>
+        <div class="gallery-hero-display" aria-hidden="true">
+          <div class="gallery-hero-frame gallery-hero-frame-back"></div>
+          <div class="gallery-hero-frame gallery-hero-frame-front">
+            <span class="gallery-frame-kicker">WD’NEWS</span>
+            <span class="gallery-frame-mark">✦</span>
+            <span class="gallery-frame-caption">PHOTO STORIES · BWD</span>
+          </div>
+        </div>
       </div>
     </section>
     <div class="wrap gallery-content">
