@@ -1,7 +1,7 @@
 name: BWD Newsroom static QA
 on:
   push:
-    branches: [main, feat/n02-bookshelf-flipbook]
+    branches: [main, feat/n02-bookshelf-flipbook, feat/n02-mobile-immersive-reader]
   pull_request:
     branches: [main]
 permissions:
@@ -18,6 +18,7 @@ jobs:
         run: |
           node --check assets/app.js
           node --check assets/reader.js
+          node --check assets/reader-geometry.js
           node --check scripts/validate-catalog.mjs
           node --check scripts/validate-books.mjs
       - name: Validate approved public manifests
@@ -28,3 +29,4 @@ jobs:
         run: |
           node tests/n01.test.mjs
           node tests/n02.test.mjs
+          node tests/n02-mobile.test.mjs
