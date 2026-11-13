@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#112b4e">
+  <meta name="description" content="คลังจดหมายข่าวประชาสัมพันธ์โรงเรียนบ้านวังด้ง รวบรวมข่าวกิจกรรมและหนังสือข่าวดิจิทัล">
+  <title>BWD Newsroom | จดหมายข่าวโรงเรียนบ้านวังด้ง</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script defer src="./assets/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
+  <header class="site-header">
+    <div class="wrap topbar">
+      <a class="brand" href="./" aria-label="BWD Newsroom หน้าแรก">
+        <span class="brand-mark" aria-hidden="true">WD<span class="brand-dot">.</span></span>
+        <span class="brand-copy"><strong>BWD NEWSROOM</strong><small>โรงเรียนบ้านวังด้ง · สพป.กาญจนบุรี เขต 4</small></span>
+      </a>
+      <nav class="head-nav" aria-label="เมนูหลัก">
+        <a class="active" href="#news">จดหมายข่าว</a>
+        <a href="#books">หนังสือรวมเล่ม</a>
+        <a href="#about">เกี่ยวกับ</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-intro">
+          <div class="eyebrow"><span class="eyebrow-line"></span> THE SCHOOL CHRONICLE</div>
+          <h1 id="hero-title">บันทึกเรื่องราว<br><em>ทุกก้าวของวังด้ง</em></h1>
+          <p>พื้นที่รวบรวมข่าวสาร กิจกรรม และความภาคภูมิใจของโรงเรียนบ้านวังด้ง จากจดหมายข่าวแต่ละฉบับสู่ความทรงจำที่เปิดอ่านได้ทุกเวลา</p>
+          <a class="hero-link" href="#news">สำรวจจดหมายข่าว <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-badge">WD’NEWS</div>
+          <div class="paper paper-back"></div>
+          <div class="paper paper-front">
+            <div class="paper-rule"></div>
+            <div class="paper-kicker">จดหมายข่าวประชาสัมพันธ์</div>
+            <div class="paper-headline">เรื่องราว<br>ของเรา</div>
+            <div class="paper-image"><span>บ้านวังด้ง</span></div>
+            <div class="paper-lines"><i></i><i></i><i></i></div>
+            <div class="paper-footer">EST. 2569 <span>•</span> BOPHLOI, KANCHANABURI</div>
+          </div>
+          <div class="hero-stamp">A SCHOOL<br>WITH STORIES</div>
+        </div>
+      </div>
+    </section>
+    <div class="wrap">
+      <section class="archive" id="news" aria-labelledby="news-title">
+        <div class="section-head">
+          <div><p class="section-label">01 / OUR STORIES</p><h2 id="news-title">คลังจดหมายข่าว</h2></div>
+          <p class="section-note" id="result-count" aria-live="polite">กำลังโหลดข้อมูล…</p>
+        </div>
+        <form class="filters" id="filters" role="search" autocomplete="off">
+          <label class="search-field"><span class="search-icon" aria-hidden="true">⌕</span><span class="visually-hidden">ค้นหาข่าว</span><input id="search" type="search" placeholder="ค้นหาชื่อข่าว กิจกรรม หรือคำสำคัญ…" aria-label="ค้นหาข่าว"></label>
+          <label><span class="visually-hidden">เลือกปี</span><select id="year" aria-label="เลือกปี"><option value="">ทุกปี</option></select></label>
+          <label><span class="visually-hidden">เลือกหมวดข่าว</span><select id="category" aria-label="เลือกหมวดข่าว"><option value="">ทุกหมวด</option></select></label>
+          <label><span class="visually-hidden">เลือกรูปแบบจดหมายข่าว</span><select id="template" aria-label="เลือกรูปแบบ"><option value="">ทุกรูปแบบ</option></select></label>
+          <button class="reset" type="reset">ล้างตัวกรอง</button>
+        </form>
+        <div class="news-grid" id="news-grid" aria-live="polite" aria-busy="true"></div>
+        <div class="empty" id="empty" hidden>
+          <div class="empty-symbol" aria-hidden="true">✦</div>
+          <h3 id="empty-title">ยังไม่มีจดหมายข่าวที่เผยแพร่</h3>
+          <p id="empty-description">จดหมายข่าวจะปรากฏที่นี่เมื่อผ่านการตรวจทานและอนุมัติเรียบร้อยแล้ว</p>
+        </div>
+        <div class="error" id="error" role="alert" hidden>ไม่สามารถโหลดทะเบียนจดหมายข่าวได้ในขณะนี้ โปรดลองโหลดหน้าเว็บอีกครั้ง</div>
+      </section>
+      <section class="books" id="books" aria-labelledby="books-title">
+        <div class="section-head">
+          <div><p class="section-label">02 / THE COLLECTION</p><h2 id="books-title">หนังสือข่าวรวมเล่ม</h2></div>
+          <p class="section-note">Flipbook & PDF Collection</p>
+        </div>
+        <div class="books-empty">
+          <div class="book-mini" aria-hidden="true"><span>BWD<br>NEWS</span><b>BOOKS</b></div>
+          <div><span class="soon">COMING NEXT · N02 / N03</span><h3>จากข่าวรายฉบับ สู่หนังสือความทรงจำ</h3><p>เตรียมระบบรวมเล่มรายปักษ์ รายเดือน และรายปี พร้อมเปิดอ่านแบบพลิกหน้ากระดาษและดาวน์โหลด PDF โดยใช้เฉพาะข่าวที่ได้รับอนุมัติ</p></div>
+        </div>
+      </section>
+      <section class="about" id="about" aria-labelledby="about-title">
+        <p class="section-label">03 / ABOUT THE ARCHIVE</p>
+        <h2 id="about-title">ทุกเรื่องราวมีคุณค่า<br>เมื่อเราได้บันทึกไว้</h2>
+        <p>BWD Newsroom จัดเก็บจดหมายข่าวในรูปแบบดิจิทัล โดยเชื่อมโยงงานออกแบบกับคลังไฟล์ต้นฉบับ และเผยแพร่เฉพาะเนื้อหาที่ผ่านการตรวจรับของโรงเรียนแล้ว</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="wrap footer-inner"><span>© 2569 โรงเรียนบ้านวังด้ง</span><span>ข่าวสาร · ความทรงจำ · การเติบโต</span></div></footer>
+  <dialog id="issue-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-frame"><div class="dialog-top"><div><span class="section-label">WD’NEWS / ISSUE</span><h2 id="dialog-title"></h2><p id="dialog-meta"></p></div><button id="dialog-close" type="button" class="dialog-close" aria-label="ปิดรายละเอียด">×</button></div><div id="dialog-content"></div></div>
+  </dialog>
+</body>
+</html>
