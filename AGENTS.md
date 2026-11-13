@@ -36,3 +36,10 @@ N00 documentation (complete) -> N01 static news catalogue -> N02 flipbook -> N03
 - Never commit large print-quality masters or annual PDFs into GitHub Pages unless space budget is analyzed and explicitly approved.
 - Do not add Supabase/login/backend just to publish the first catalogue; it is intentionally static.
 - Keep progress and limitations written in README; absence of a live site is NOT a failure hidden by optimistic labels.
+
+
+## Additional rules — Gallery + Chat + PWA
+
+Read `docs/GALLERY_CHAT_UI_PWA_PLAN.md` with the other three governance docs. N01-G, N04-P and N04-W extend existing N00–N04; do not create a second Photo Hub product or separate AI Curator Dashboard. ChatGPT is the user's photo-selection/review/publication command plane; secure teacher upload is a minimal separate authenticated surface. `EVT-...` ties one private Drive original set to independent approved Gallery and WDNEWS photo selections.
+
+Preserve N02-MOBILE merged reader mechanics, safe areas and page geometry; UI remains navy/gold Kanit editorial style. PWA must stay on public `/bwd-newsroom/` scope and read-only offline, never storing private originals, tokens, huge PDFs, unpublished school photos or unrelated app state. Plans are not feature delivery; require actual QA, owner approval and release evidence.
