@@ -28,13 +28,13 @@ class ExportPreparationTest(unittest.TestCase):
         d.save(self.pdf)
         d.close()
         self.approval = {
-            'issue_id': 'WDNEWS-2569-0001', 'design_id': 'DAHa0P1ymZs',
+            'issue_id': 'WDNEWS-2569-0001', 'design_id': 'DTEST000001',
             'approved_version': 'v01',
             'png_sha256': sha256(self.png), 'pdf_sha256': sha256(self.pdf),
             **{k: True for k in MODULE['QA_REQUIRED']},
         }
         self.args = SimpleNamespace(issue_id='WDNEWS-2569-0001', version='v01',
-            design_id='DAHa0P1ymZs', date='2026-11-08', title='ทดสอบ',
+            design_id='DTEST000001', date='2026-11-08', title='ทดสอบ',
             excerpt='เนื้อหาสำหรับทดสอบเท่านั้น', source_png=str(self.png),
             source_pdf=str(self.pdf), qa_json=str(self.qa),
             output_dir=str(self.root / 'out'))
