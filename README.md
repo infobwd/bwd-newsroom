@@ -13,6 +13,7 @@ BWD Newsroom is planned as a public, mobile-first archive of approved WD’NEWS 
 2. [DATA & STORAGE](docs/DATA_AND_STORAGE.md) — news/book IDs, image and PDF contracts, Drive folder layout and access rules.
 3. [PUBLISHING & QA](docs/PUBLISHING_AND_QA.md) — Canva saved-preview check, photo/Thai-text checks, PDF generation verification and live Pages gates.
 4. [AGENTS.md](AGENTS.md) — Codex/AI and contributor instructions.
+5. [AI DEVELOPMENT LOOP](docs/AI_DEVELOPMENT_LOOP.md) — L0–L5 evidence-led iterative workflow, Drive import policy, checkpoints.
 
 ## Ownership boundaries
 
@@ -25,7 +26,7 @@ BWD Newsroom is planned as a public, mobile-first archive of approved WD’NEWS 
 | Phase | Deliverable | Status |
 |---|---|---|
 | N00 | Structure, integration/storage plan, publication policy | COMPLETED (documentation) |
-| N01 | Searchable responsive WD’NEWS archive | NOT STARTED |
+| N01 | Searchable responsive WD’NEWS archive | IN PROGRESS — Draft PR #1 (not merged) |
 | N02 | Flipbook reader (based on WD Books self-hosted StPageFlip patterns) | NOT STARTED |
 | N03 | Image-to-PDF biweekly / monthly book workflow | NOT STARTED |
 | N04 | Guarded import, long-term archive, optional PWA | NOT STARTED |
@@ -48,3 +49,11 @@ WD Books source: https://github.com/infobwd/manual. Its StPageFlip 2.0.7 based e
 ## Operational next step
 
 Implement N01 as a separate PR: site shell + searchable catalogue + JSON validation + one verified, approved sample issue. Do not publish a fabricated issue or automatically expose files from Drive.
+
+## N01 work in progress (13 Nov 2026)
+
+- Draft implementation: https://github.com/infobwd/bwd-newsroom/pull/1 — responsive public archive, filter/search, approved-only JSON catalogue and validation scripts.
+- Checkpoint in draft branch: https://github.com/infobwd/bwd-newsroom/blob/feat/n01-public-news-archive/docs/N01_CHECKPOINT.md.
+- No real news published yet; Canva/Drive export approval and actual deployed browser/device QA are still required.
+- Google Drive images/PDF can be imported through an authenticated editorial workflow, then optimized approved public web images go into Pages. Direct private Drive hotlinking is not production image delivery; link approved PDF files individually when permitted.
+- Scheduled automatic AI loop is **not yet active**: account reached its maximum of 5 enabled automations. Do not disable another automation without the owner's instruction. The repository protocol works for manual or resumed runs.
