@@ -88,3 +88,33 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 
 ### L4–L5 — gate and next step
 **READY_FOR_SCHOOL_REVIEW — N01-G real-browser/mobile and photo-rights QA still pending.** Preserve PR #6 as **draft**; no main merge or Pages change. Next run should obtain actual browser/mobile evidence (including Safari iPhone/iPad) or a documented device QA artifact, then inspect event-file sharing and school consent before any public album proposal. Existing 17 PDF files remain untouched. PR #10 is independent and must not be treated as an N01-G duplicate.
+
+
+## 2026-11-14 04:02 Asia/Bangkok — N01-G source-photo readiness QA (L0–L5)
+
+**One selected task:** verify the existing November Event ID source-photo inventory and privacy boundary; append results to existing **draft PR #6** only. This is not a new N01-G implementation or an approval to publish.
+
+### L0 — fresh evidence
+- Main HEAD: `630b9638ff139cfa99c18ca2123ba78c52404f44`; open draft PRs: **#6** (QA checkpoint) and **#10** (separate Canva preflight). PR #5 (N01-G) and #3 (N02-MOBILE) already merged; no duplicate PR.
+- Read current main README, AGENTS, MASTER_PLAN, DATA_AND_STORAGE, PUBLISHING_AND_QA, AI_DEVELOPMENT_LOOP, GALLERY_CHAT_UI_PWA_PLAN, N01_G_CHECKPOINT, and PR #6 checkpoint. The public `data/galleries.json` remains `galleries: []`.
+- School-account Drive metadata listing confirmed the Newsroom root's six folders, Shared Drive academic-year root with **17 original PDFs** and `01_ภาพกิจกรรม`, November year-month folder, and one event subfolder with ID `EVT-2569-0001`. Existing PDFs were not moved or changed.
+- Directly listed the event folder **this run**: **17 files, all `image/jpeg`, total 16,445,695 bytes**, each marked `can_download=true` and **all 17 `source_visibility_status=access_not_verified`**. These are metadata-only observations; they do **not** establish image safety, parental consent, public sharing rights, provenance, content suitability or authorization to publish. Private names, file IDs, links and images are deliberately omitted from this public document.
+- GitHub Actions latest static QA for current main: [run 43472403839](https://github.com/infobwd/bwd-newsroom/actions/runs/43472403839) **SUCCESS**; Pages workflow for same main: [run 43472402014](https://github.com/infobwd/bwd-newsroom/actions/runs/43472402014) **SUCCESS**. PR #6 latest pre-edit static QA: [run 43488075685](https://github.com/infobwd/bwd-newsroom/actions/runs/43488075685) **SUCCESS**. A workflow success is not live/browser or device QA.
+- Canva canonical approved issue/design ID and persisted page/export validation: **NOT RUN** (no approved news issue selected). WD Books FLIP03/FLIP04: **NOT RUN**, since reader mechanics were unchanged.
+
+### L1–L3 — QA and decision
+| Test | Status | Evidence |
+|---|---|---|
+| Actual main, draft PR list, public Gallery catalogue empty | PASS | GitHub branch/PR/content readback |
+| 17 PDFs preserved in academic-year root | PASS (metadata) | School Shared Drive root listing |
+| Event ID hierarchy, 17 JPEG MIME entries and aggregate size | PASS (metadata) | Direct school-account event folder listing |
+| All 17 photos explicitly approved for public release | **NOT VERIFIED** | All 17 visibility statuses are `access_not_verified`; no school consent/release record read |
+| Image bytes, EXIF/GPS, face/privacy review, duplicate detection | NOT RUN | No original image bytes fetched |
+| Live Gallery HTML rendering, Chrome/Safari/iPhone/iPad interaction, performance and keyboard | NOT RUN | No actual browser/device run in this iteration |
+| Canva saved design/pages, QR and PDF visual parity | NOT RUN | No canonical approved issue |
+| Local Node validator | NOT RUN | Remote static QA above is separate |
+
+### L4–L5 — gate and next action
+**READY_FOR_SCHOOL_REVIEW / N01-G real-device QA and rights evidence pending.** Keep PR #6 **draft and unmerged**. The next independent acceptance task should collect desktop and iPhone/iPad screenshots/interaction evidence for the public Gallery empty state (navigation, search, filters, lightbox disabled without albums, focus, rotation and Safari safe areas). Before any real event album proposal, school authority must verify rights and consent **per image**, check image bytes and GPS EXIF, and approve the exact selected photo set. N04-P teacher upload must not bypass this gate. No public images, PDF, Drive URLs, private file IDs or secrets were committed.
+
+**Rollback:** documentation-only update in PR #6; no deployed application behavior or Drive contents changed.
