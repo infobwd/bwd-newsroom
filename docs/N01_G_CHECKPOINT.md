@@ -118,3 +118,32 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 **READY_FOR_SCHOOL_REVIEW / N01-G real-device QA and rights evidence pending.** Keep PR #6 **draft and unmerged**. The next independent acceptance task should collect desktop and iPhone/iPad screenshots/interaction evidence for the public Gallery empty state (navigation, search, filters, lightbox disabled without albums, focus, rotation and Safari safe areas). Before any real event album proposal, school authority must verify rights and consent **per image**, check image bytes and GPS EXIF, and approve the exact selected photo set. N04-P teacher upload must not bypass this gate. No public images, PDF, Drive URLs, private file IDs or secrets were committed.
 
 **Rollback:** documentation-only update in PR #6; no deployed application behavior or Drive contents changed.
+
+
+## 2026-11-14 06:00 Asia/Bangkok — first public Gallery readback (L0–L5)
+
+**One selected task:** reconcile N01-G acceptance checkpoint with **newly published** Gallery evidence on actual main. This supersedes earlier statements that the public Gallery is empty; historical entries above describe earlier snapshots. No feature PR, publication, or merge performed in this iteration.
+
+### L0 — fresh source evidence
+- **Main HEAD:** `6f5a89bc7c0a0509c3261ecaa584e42dc62c75bd` (PR #14 merged). Open draft PRs: **#6** (this QA record, head `2aa59a79e7e9e39ba1041d32cf1799ba7946d1b1` before this update) and **#15** (Drive-first WebP/chat-led publishing documentation). Earlier PR #10 is now **merged**, not open. PR #5 (N01-G feature) and #3 (mobile reader) remain merged.
+- **New substantive changes since last checkpoint:** PR #11 merged first newsletter `WDNEWS-2569-0001`; PR #13 merged **first public Gallery** `WDGAL-2569-0001` with **five published WebP photos** and explicit publication timestamps in public JSON; PR #14 merged automated live Gallery/photo-asset smoke checks. These are *repository publication records*, not proof that original private files are safe to republish elsewhere.
+- **Public Gallery catalogue is NO LONGER EMPTY:** `data/galleries.json` schema 1 now lists **one** published gallery, event `EVT-2569-0001`, with five approved-version photo entries and local `assets/galleries/...` paths. Previous assertions of `galleries: []` are obsolete.
+- Main SHA GitHub Actions **static QA SUCCESS** [run 43518219545](https://github.com/infobwd/bwd-newsroom/actions/runs/43518219545), **live Pages smoke SUCCESS** [run 43518219331](https://github.com/infobwd/bwd-newsroom/actions/runs/43518219331), **Pages deployment SUCCESS** [run 43518218173](https://github.com/infobwd/bwd-newsroom/actions/runs/43518218173). The smoke workflow is stronger than CI alone but is not an iPhone/iPad Safari visual or touch test.
+- Read current main README, AGENTS, MASTER_PLAN, DATA_AND_STORAGE, PUBLISHING_AND_QA, AI_DEVELOPMENT_LOOP, GALLERY_CHAT_UI_PWA_PLAN, N01_G_CHECKPOINT, and this draft-PR checkpoint. Canva search identified existing master/template/draft designs, including draft issue `WDNEWS-2569-0001` design `DAHa0P1ymZs`; **saved-page visual, export parity, QR and consent verification NOT RUN** this iteration. Canva thumbnail URLs were not reused as assets.
+- School `info@bwd.ac.th` Drive listing **PASS** for Newsroom six root folders and academic-year root's four categorized subfolders; `01_ภาพกิจกรรม/2569-11_พฤศจิกายน` now contains **two event-ID folders**, `EVT-2569-0001` and **new `EVT-2569-0002`**. This iteration did not enumerate event photo bytes or verify per-image permissions. The old PDF inventory was **not independently recounted** this iteration; existing PDFs were not moved, deleted or published by this run. Private Drive IDs and URLs intentionally omitted from public checkpoint.
+- WD Books FLIP03/FLIP04 **NOT RUN**, as this task did not modify page-turning.
+
+### L1–L3 — acceptance QA
+| Check | Status | Evidence / limitation |
+|---|---|---|
+| Actual main SHA and open draft PR #6/#15 | PASS | GitHub API |
+| PR #11/#13/#14 merged and public Gallery contains one album/five photos | PASS | GitHub merged PR and current main catalogue readback |
+| Main static CI, live Pages smoke, Pages deployment | PASS | Three Actions runs linked above |
+| Authenticated school Drive root/year/month event-ID folder listing | PASS (metadata) | Two event folders; no private IDs stored |
+| Source photo sharing/consent, EXIF, public suitability | NOT VERIFIED | School editorial approval record and image bytes not independently reviewed here |
+| Physical iPhone/iPad Safari, rotation, touch, image rendering | NOT RUN | No real device/browser session in this iteration |
+| Canva persisted saved-page QA, QR parity, PDF visual review | NOT RUN | Design discovery only; no export inspection |
+| Local Node validator | NOT RUN | Remote Actions test evidence recorded separately |
+
+### L4–L5 — gate and next action
+**READY_FOR_SCHOOL_REVIEW — real-device/mobile and source-rights evidence pending.** The first album **is already public from PR #13**; do not claim an empty public Gallery or try to reverse publication without a separate explicit safety decision. Preserve this PR #6 as **draft/unmerged**. Next independent task: review actual published five-photo Gallery on iPhone/iPad Safari (layout, image loading, lightbox, keyboard and touch) and audit exact source-photo consent/rights and EXIF with school authority; independently assess the new event `EVT-2569-0002` before any proposed publication. No additional photos, PDF files, Drive links or secrets were published by this checkpoint.
