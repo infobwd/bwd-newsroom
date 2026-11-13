@@ -20,3 +20,7 @@ jobs:
         run: node --check scripts/verify-live-pages.mjs
       - name: Verify public Pages URLs and approved issue checksums
         run: node scripts/verify-live-pages.mjs
+      - name: Check Gallery live smoke script syntax
+        run: node --check scripts/verify-live-gallery.mjs
+      - name: Verify public Gallery and all approved photo checksums
+        run: node scripts/verify-live-gallery.mjs
