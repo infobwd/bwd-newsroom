@@ -22,7 +22,7 @@ class ExportPreparationTest(unittest.TestCase):
         self.png = self.root / 'canva-export.png'
         self.pdf = self.root / 'canva-export.pdf'
         self.qa = self.root / 'qa.json'
-        Image.new('RGB', (1700, 2404), color='white').save(self.png, 'PNG')
+        Image.new('RGB', (1414, 2000), color='white').save(self.png, 'PNG')
         d = fitz.open()
         d.new_page(width=595, height=842)
         d.save(self.pdf)
@@ -51,6 +51,7 @@ class ExportPreparationTest(unittest.TestCase):
         self.assertEqual(info['status'], 'STAGED_NOT_PUBLISHED')
         self.assertEqual(info['public_record_candidate']['date'], '2026-11-08')
         self.assertNotIn('status', info['public_record_candidate'])
+        self.assertLess(info['png_pdf_mean_abs_diff'], 18)
         with Image.open(output) as web:
             self.assertLessEqual(web.width, 1800)
             self.assertEqual(web.getexif(), {})
@@ -68,6 +69,17 @@ class ExportPreparationTest(unittest.TestCase):
         self.approval['png_sha256'] = '0' * 64
         self.write_qa()
         with self.assertRaisesRegex(ValueError, 'hashes do not match'):
+            prepare(self.args)
+
+    def test_different_pdf_layout_refused(self):
+        doc = fitz.open()
+        page = doc.new_page(width=595, height=842)
+        page.draw_rect(fitz.Rect(0, 0, 595, 842), fill=(0, 0, 0))
+        doc.save(self.pdf, incremental=False)
+        doc.close()
+        self.approval['pdf_sha256'] = sha256(self.pdf)
+        self.write_qa()
+        with self.assertRaisesRegex(ValueError, 'layout mismatch'):
             prepare(self.args)
 
     def test_thumbnail_refused(self):
