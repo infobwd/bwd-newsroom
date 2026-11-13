@@ -136,3 +136,14 @@ The school owner has selected a different Google Shared Drive folder named **ป
 - PDF intake does not imply school approval. Verify contents, permissions, rights, and student privacy before processing and publishing.
 - Generate approved optimized web page images from the PDF in an authenticated editorial pipeline. Keep source PDF in Drive. Only individually approved public PDF links may appear in the public website.
 - The AI Loop may inspect the designated academic-year intake folder if connected; keep the public catalogue and approval status in the GitHub repo.
+
+
+## 11. Event/Photo/Gallery data contract extension (N01-G / N04-P)
+
+Full specification: [GALLERY_CHAT_UI_PWA_PLAN.md](GALLERY_CHAT_UI_PWA_PLAN.md). Do not create another independent photo source of truth. Keep the 17 academic-year source PDFs unchanged.
+
+- **Private** activity ID `EVT-2569-XXXX` maps to a single school Shared Drive event folder, source image File IDs, hashes, upload audit, permissions and candidate/approval records. Secure school-side registry; never commit it to GitHub Pages.
+- **Public** Gallery ID `WDGAL-2569-XXXX`, stored when approved as `data/galleries/<gallery-id>.json`: title_th, ISO event date, category/tags, public image path/caption/alt/dimensions/hash, cover, approved_version, published_at and optional `linked_issue_ids`. No private File IDs, uploader identities, consent evidence, hidden folder links or GPS metadata.
+- Existing WDNEWS issue may reference `event_id` and `related_gallery_ids`, but an issue remains valid without a Gallery. Gallery and issue image subsets/approval gates are separate.
+- The academic-year school Shared Drive can receive `01_ภาพกิจกรรม/<month>/<event-id>` in a later implementation. Existing `03_Source_Photos` should index/shortcut original files, not duplicate large image binaries.
+- Publishing generates approved optimized web image derivatives, with stable versioned paths and separate approval history; do not hotlink Google Drive thumbnails. PWA may cache only bounded public derivatives, never private originals.
