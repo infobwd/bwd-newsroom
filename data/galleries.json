@@ -1,5 +1,81 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-13",
-  "galleries": []
+  "generated_at": "2026-11-14",
+  "galleries": [
+    {
+      "gallery_id": "WDGAL-2569-0001",
+      "event_id": "EVT-2569-0001",
+      "title_th": "โรงเรียนบ้านวังด้งร่วมจัดโรงทานในงานทอดกฐินสามัคคี",
+      "date": "2026-11-08",
+      "description_th": "ภาพบรรยากาศการร่วมจัดโรงทานและแจกขนมของโรงเรียนบ้านวังด้ง ณ วัดพระพุทธเมตตาอุดมธรรม เมื่อวันที่ 8 พฤศจิกายน 2569",
+      "category": "community",
+      "tags": [
+        "โรงทาน",
+        "กฐินสามัคคี",
+        "วัดพระพุทธเมตตาอุดมธรรม",
+        "จิตอาสา",
+        "ชุมชน"
+      ],
+      "status": "published",
+      "approved_version": "v01",
+      "visibility_approved_at": "2026-11-14T05:14:00+07:00",
+      "published_at": "2026-11-14T05:14:00+07:00",
+      "cover_image": "assets/galleries/WDGAL-2569-0001/photo01-thumb-v01.webp",
+      "photos": [
+        {
+          "photo_id": "P01",
+          "thumb_image": "assets/galleries/WDGAL-2569-0001/photo01-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0001/photo01-web-v01.webp",
+          "alt_th": "คณะครูและบุคลากรโรงเรียนบ้านวังด้งถ่ายภาพร่วมกันที่โรงทานพร้อมขนมที่เตรียมไว้",
+          "caption_th": "ร่วมแรงร่วมใจเตรียมโรงทาน",
+          "width": 1600,
+          "height": 1200,
+          "sha256": "198c9a7e4fc94ff89e8f8be8c0433407075133910d26987d5070800bb178a5cc"
+        },
+        {
+          "photo_id": "P02",
+          "thumb_image": "assets/galleries/WDGAL-2569-0001/photo02-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0001/photo02-web-v01.webp",
+          "alt_th": "คณะครูและบุคลากรโรงเรียนบ้านวังด้งร่วมกิจกรรมจัดโรงทานในบรรยากาศเป็นกันเอง",
+          "caption_th": "บรรยากาศการร่วมกิจกรรม",
+          "width": 1600,
+          "height": 1200,
+          "sha256": "74a8b5de71557e8c2ab1c3dae2e59247b9e3c897b2014f1c7ab928f189f0dca5"
+        },
+        {
+          "photo_id": "P03",
+          "thumb_image": "assets/galleries/WDGAL-2569-0001/photo03-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0001/photo03-web-v01.webp",
+          "alt_th": "คณะครูและบุคลากรโรงเรียนบ้านวังด้งช่วยกันจัดเตรียมขนมและแจกจ่ายให้ผู้ร่วมงาน",
+          "caption_th": "ช่วยกันจัดเตรียมและบริการขนม",
+          "width": 1600,
+          "height": 1200,
+          "sha256": "13f664b8c740eeee3b37df29a58fe1bfa0419bdd6564fbf4dc88b481af729603"
+        },
+        {
+          "photo_id": "P04",
+          "thumb_image": "assets/galleries/WDGAL-2569-0001/photo04-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0001/photo04-web-v01.webp",
+          "alt_th": "บุคลากรและผู้ร่วมงานช่วยกันบริการขนมที่โรงทาน",
+          "caption_th": "น้ำใจและความร่วมมือในโรงทาน",
+          "width": 1600,
+          "height": 1200,
+          "sha256": "1996e2c7f86673896428c3269319db506b30cc7e4824fa8515e459d7a3fce716"
+        },
+        {
+          "photo_id": "P05",
+          "thumb_image": "assets/galleries/WDGAL-2569-0001/photo05-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0001/photo05-web-v01.webp",
+          "alt_th": "บุคลากรโรงเรียนบ้านวังด้งส่งมอบขนมให้ผู้ร่วมงานและเด็กที่มารับบริการ",
+          "caption_th": "แบ่งปันขนมแก่ผู้ร่วมงาน",
+          "width": 1600,
+          "height": 1200,
+          "sha256": "801a47888405313cb19641c92db2d5da6f5b013827da7e7285f7b4987eccef5e"
+        }
+      ],
+      "linked_issue_ids": [
+        "WDNEWS-2569-0001"
+      ]
+    }
+  ]
 }
