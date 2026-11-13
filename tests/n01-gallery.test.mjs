@@ -69,13 +69,21 @@ assert.ok(html.includes('./assets/gallery.css')&&html.includes('./assets/gallery
 assert.ok(js.includes("fetch('./data/galleries.json'")&&js.includes("g.status !== 'published'"));
 assert.ok(js.includes('ArrowLeft')&&js.includes('touchend'));
 assert.ok(css.includes('@media(max-width:630px)')&&css.includes('prefers-reduced-motion'));
-// Desktop polish is Gallery-scoped: do not change N02 reader or expose dummy photos.
+// Unified design guard: Gallery reuses homepage's real brand/hero/filters,
+// not a second 2000px-wide desktop design system.
 assert.ok(html.includes('<body class="gallery-page">'));
-assert.ok(html.includes('gallery-hero-display') && html.includes('aria-hidden="true"'));
+assert.ok(html.includes('class="hero gallery-hero"'));
+assert.ok(html.includes('class="wrap hero-grid gallery-hero-grid"'));
+assert.ok(html.includes('class="hero-intro gallery-hero-intro"'));
+assert.ok(html.includes('class="hero-art" aria-hidden="true"'));
+assert.ok(html.includes('class="paper paper-front"'));
+assert.ok(html.includes('class="filters gallery-filters"'));
+assert.ok(html.includes('class="empty gallery-empty"'));
+assert.ok(html.includes('class="empty-symbol gallery-empty-symbol"'));
 assert.ok(css.includes('body.gallery-page') && css.includes('min-height:100dvh'));
-assert.ok(css.includes('.gallery-page .wrap') && css.includes('2000px'));
-assert.ok(css.includes('@media(min-width:1500px)') && css.includes('repeat(4,minmax(0,1fr))'));
-assert.ok(css.includes('@media(max-width:630px)') && css.includes('.gallery-page .wrap{width:calc(100% - 32px)}'));
+assert.ok(css.includes('var(--deep)') && css.includes('grid-template-columns:repeat(3,minmax(0,1fr))'));
+assert.ok(!css.includes('2000px') && !css.includes('repeat(4,minmax(0,1fr))'));
+assert.ok(css.includes('@media(max-width:900px)') && css.includes('@media(max-width:630px)'));
 
 assert.ok(!html.includes('drive.google.com')&&!js.includes('drive.google.com'),'no public Drive hotlink');
 console.log('PASS N01-G: approved-only schema, source parity, security fixtures, UI routes and responsive styles');
