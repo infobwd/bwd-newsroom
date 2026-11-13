@@ -1,7 +1,7 @@
 # WDNEWS-2569-0001 — First real issue release checkpoint
 
-**Recorded:** 13 November 2026 (Asia/Bangkok)  
-**Status:** `DRAFT / READY_FOR_QA_BLOCKED` — **NOT PUBLISHED**  
+**Recorded:** 13 November 2026; updated 14 November 2026 (Asia/Bangkok)  
+**Status:** `READY_FOR_QA_BLOCKED` — exports inspected, **NOT PUBLISHED**  
 **Scope:** school newsletter first-issue import. This checkpoint does not authorize public media publication.
 
 ## Grounded editorial record
@@ -13,32 +13,37 @@
 - School's original event set contains 17 JPEGs in restricted Drive. Five photos were selected for the issue; the school owns the Canva media copies. **This does not grant consent to publish every source photo.**
 - Do not expose private Drive IDs, source-folder paths, original photos or internal approval details in public assets/manifests.
 
-## Evidence-based checks
+## Evidence-based checks — updated 14 Nov 2026
 
 | Check | Result | Evidence / blocker |
 | --- | --- | --- |
-| Thai article text, venue and 8 Nov 2026 date saved in Canva | PASS (text readback) | Saved design content / owner-confirmed date |
-| 1 page and five inserted event photos | PASS (metadata readback) | Canva page list and saved media IDs |
-| Accurate logo, unchanged official QR and QR functionality | **NOT VERIFIED** | Brand-assets source not yet available for comparison; QR design elements need manual inspection |
-| Full-page visual QA, Thai wrapping, cropping/face visibility | **NOT VERIFIED** | Text and element metadata do not replace inspecting the saved raster |
-| Canonical high-resolution PNG/PDF exported from Canva | **BLOCKED** | Connected Canva workflow does not expose a verified export |
-| Public image consent and school editorial release record | **PENDING REVIEW** | Do not infer consent from upload or publication request alone |
-| Optimized versioned web asset checked against exported Canva page | **NOT RUN** | Requires approved PNG/PDF source |
-| Public `data/catalog.json` issue record | **NOT STAGED** | Remains intentionally empty until asset + editorial QA are complete |
-| Browser / actual iPhone and iPad / live GitHub Pages | **NOT RUN** | Must be tested on the real published issue |
+| Event facts and date 8 Nov 2026 in saved Canva | **PASS** | Existing canonical 1-page WD-04 issue |
+| Five selected event photographs | **PASS** | Media and saved export visual readback |
+| Official logo, unchanged Website/Facebook QR destinations | **PASS (readback)** | Compared current export's two QR decoded destinations against previous school newsletter; both match the references |
+| Thai title and body visibly readable | **PASS (visual)** | Reviewed Canva PNG and independent A4 PDF render |
+| Canva PNG/PDF export received in restricted school Drive | **PASS** | PNG 1414×2000 pixels (approximately 171 DPI); 1-page A4 PDF 595.5×842.25 pt |
+| PNG/PDF layout equivalence | **PASS (technical)** | Full-page mean absolute pixel difference approximately 6.405/255 after PDF rasterisation |
+| Optimized web image | **STAGED PRIVATELY** | Versioned WebP approximately 371 kB; source EXIF/XMP not propagated; **not in public GitHub** |
+| All photo crops and publication permission for identifiable children | **PENDING SCHOOL REVIEW** | Lower photo row shows children; school must confirm child-image policy/rights and safe crop before web publication |
+| Final issue-level layout acceptance | **PENDING** | Explicit publication intent is known, but exported visual and image-rights gates require final documented acceptance |
+| Public issue JSON record, GitHub image asset | **NOT STAGED** | `data/catalog.json` intentionally remains empty until review is complete |
+| Live browser, iPhone/iPad, flipbook, link QA | **NOT RUN** | Requires actual published issue |
 
 ## Technical first-publication gate
 
-The original N01/N02/N01-G regression tests assumed public collections must stay empty forever, which would reject the first genuinely approved issue, book or album. Draft PR #9 removes these fixed-empty assumptions without weakening approved-only manifest validation or exposing photos. GitHub Actions `BWD Newsroom static QA` completed **SUCCESS** on branch `fix/first-real-news-publication-gates`, run [43470110546](https://github.com/infobwd/bwd-newsroom/actions/runs/43470110546). The PR is not merged.
+- PR #9 merged into `main`, merge commit `630b9638ff139cfa99c18ca2123ba78c52404f44`. It removed test assumptions that genuine published collections must remain empty; all published-only validation remains enforced.
+- Draft PR #10 adds a fail-closed, source-hash/approval-checked Canva PNG/PDF-to-WebP staging utility and synthetic CI tests. It does not publish real school photographs or change `data/catalog.json`.
+- Canva image/export technical receipt is independent of any student-image disclosure rights; do not set `image_permission_checked=true` by assumption.
+- The 1414×2000 Canva export is sufficient as a **web image source** but is not described as a 300 DPI print PNG; use the A4 PDF as the print source.
 
 ## Next required gates (in order)
 
-1. Verify the existing Canva design against the school's original logo/QR and visually inspect every photo, typography, safe crop and all page elements.
-2. Export a high-resolution PNG and print-quality PDF of **that same saved Canva design** and store them in the school's restricted `04_News_Drafts` folder under the issue ID. Reopen and compare both against the saved design; do not use a temporary thumbnail as the public issue image.
-3. Record issue-level editorial approval, public-image rights/permission, approved version and timestamp in the restricted register.
-4. Derive versioned, EXIF/GPS-free web image(s); stage only the approved derivatives and validated public record in a new reviewed publication PR. Never commit an original or a private collaboration URL.
-5. Run all static tests, publish only after the approved release gate, and verify the actual `/bwd-newsroom/` news URL, thumbnail, flipbook link, reader interactions and privacy on mobile/iPad/desktop.
-6. Gallery is a separate publication approval. The original album is private until individually selected images and its own approval version pass review.
+1. School reviews the exported page specifically for faces cropped at the frame edge and confirms appropriate permissions for identifiable child photos. Do not assume the public event automatically grants permission.
+2. Record final image/publication rights, approved version and approval time in a restricted register, excluding personal consent records from GitHub.
+3. Check the saved Canva PNG/PDF visually one last time; if the image is revised, require a new export and new hash/version review.
+4. Transfer the EXIF-free web derivative from restricted Drive into a **scoped publication PR only after the preceding gates**. Add searchable Thai `body_th` and only approved public catalog metadata; no private Drive source IDs, QR screenshots or Canva edit URLs.
+5. Run all static tests, merge/deploy under school authorization, verify actual `/bwd-newsroom/` page and flipbook on mobile/iPad/desktop.
+6. Gallery remains a separately approved release; private source photos are never automatically public.
 
 **Status transitions:** `DRAFT` → `READY_FOR_QA` → `APPROVED` → `PUBLISHED` only when each gate has supporting evidence. Publishing intent alone is not proof of export, device QA or live availability.
 
