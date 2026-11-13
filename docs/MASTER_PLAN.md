@@ -116,3 +116,17 @@ F. **Admin workflow (initially Git-based)**: บันทึกข่าว Mark
 ## 9. Change control
 
 Planning files may be committed now. Implementation and public deployment are separate tasks with QA/approval. Follow small PRs, avoid bypassing tests or claim verified deployment before actual verification. Maintain a release status table in README.
+
+
+## 10. Approved architecture extension (13 Nov 2026): Gallery + Chat + PWA
+
+**Decision: extend N00–N04; do not create a second Photo Hub project or AI Curator dashboard.**
+
+- **N01-G:** add approved-only public activity Gallery to this same Newsroom site: album browse/search/filter, accessible full-screen viewer, optional relationship to WDNEWS issue and book. Do not auto-publicize teacher uploads.
+- **N04-P:** teacher uploads from authenticated mobile web form to school-owned Shared Drive; authorized editorial process reads actual image bytes; ChatGPT is the command/review interface for ranking, selecting and approving Gallery images and separate Canva/WDNEWS images. Publication requires explicit school approval and reviewed build/deploy.
+- **N04-W:** phased PWA for public reading with manifest, project-scoped service worker, offline *read-only* shell, versioned bounded cache and non-disruptive update prompt; preserve immersive N02-MOBILE reader and do not add a new public backend/Supabase merely to display approved Gallery.
+- **Shared data:** `EVT-2569-XXXX` activity links one original image set to optional `WDGAL-2569-XXXX`, `WDNEWS-2569-XXXX`, canonical Canva Design ID and existing WDBOOKs. Gallery and WDNEWS may use different image selections and have independent approval versions.
+- **Mobile visual language:** extend the current navy `#112b4e` / deep navy `#0b203a` / gold `#d9b15b`, Kanit headers and Thai-readable body. N02-MOBILE PR #3 was merged; keep phone+portrait-iPad single page, landscape spread, 760ms flip, 100dvh/safe areas, TOC bottom sheet, 100–250% zoom and scroll fallback. Gallery/bottom navigation must not overlay the reader.
+- **Source protection:** retain current academic-year Shared Drive folder and its 17 PDFs; new photo subfolders are created by authorized implementation, with private registry and no duplicates of original photos. Public Pages receives only optimized approved derivatives and sanitized manifest.
+
+**Detailed, normative extension:** [Gallery + Chat + UI/PWA Plan](GALLERY_CHAT_UI_PWA_PLAN.md). This documentation does not claim Gallery/PWA/upload are implemented, Pages is live, or actual-device QA passed.
