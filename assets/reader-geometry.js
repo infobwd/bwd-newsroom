@@ -9,7 +9,7 @@
     const viewportHeight = Math.max(230, Math.floor(Number(params.viewportHeight) || stageHeight));
     const portrait = viewportHeight >= viewportWidth || stageWidth < 820;
     const maxHeight = Math.max(180, stageHeight - 12);
-    const maxWidth = bounded(Math.floor(maxHeight / (665 / 470)), 140, 470);
+    const maxWidth = bounded(Math.floor(maxHeight / (665 / 470)), 140, 570);
     const hostWidth = Math.min(stageWidth, Math.floor(maxWidth * (portrait ? 1.52 : 2.05)));
     const hostHeight = Math.min(stageHeight, Math.round(maxWidth * (665 / 470)) + 12);
     const minWidth = portrait
