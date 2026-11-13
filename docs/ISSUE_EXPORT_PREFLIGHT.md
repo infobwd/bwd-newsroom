@@ -1,7 +1,7 @@
 # WD’NEWS issue-export preflight (staging only)
 
 **Status:** developer utility, no automatic website publication  
-**First issue:** \`WDNEWS-2569-0001\` | canonical Canva design \`DAHa0P1ymZs\` | event \`2026-11-08\`
+**First issue:** \`WDNEWS-2569-0001\` | canonical Canva design \`DXXXXXXXXXX\` | event \`2026-11-08\`
 
 ## Why this exists
 
@@ -26,7 +26,7 @@ Create a local \`issue-qa.json\` next to the two exports, NOT in the public repo
 \`\`\`json
 {
   "issue_id": "WDNEWS-2569-0001",
-  "design_id": "DAHa0P1ymZs",
+  "design_id": "DXXXXXXXXXX",
   "approved_version": "v01",
   "png_sha256": "REPLACE_WITH_REAL_64_CHAR_SHA256",
   "pdf_sha256": "REPLACE_WITH_REAL_64_CHAR_SHA256",
@@ -51,7 +51,7 @@ Install \`Pillow\` and \`PyMuPDF\` (or use the GitHub Actions Python environment
 python scripts/prepare-issue-export.py \
   --issue-id WDNEWS-2569-0001 \
   --version v01 \
-  --design-id DAHa0P1ymZs \
+  --design-id DXXXXXXXXXX \
   --date 2026-11-08 \
   --title "ร่วมบุญ ร่วมใจ สานสัมพันธ์วัดและชุมชน" \
   --excerpt "โรงเรียนบ้านวังด้งร่วมจัดโรงทานในงานทอดกฐินสามัคคี" \
