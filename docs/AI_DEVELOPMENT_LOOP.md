@@ -59,3 +59,15 @@ N04: Semi-automated import using authenticated tool or controlled server-side pr
 ## Scheduled mode (when enabled)
 
 A repeated automation may run every 2 hours to read latest state and perform one safe loop. Preserve rules above and do not auto-merge or auto-deploy without explicit user approval; only report material progress or blockers. Follow next-run state from the actual task, not assumptions. At each run, if N01 needs a human-approved photo/publication decision and no independent work is available, report READY_FOR_SCHOOL_REVIEW once and stop redundant changes.
+
+
+## N01-G / N04-P / N04-W work package integration (13 Nov 2026)
+
+Read [GALLERY_CHAT_UI_PWA_PLAN.md](GALLERY_CHAT_UI_PWA_PLAN.md) at L0 as well as existing source-of-truth documents. This is **one existing BWD Newsroom AI Loop**; do not spawn duplicate Photo Hub repo, development loop or AI Curator dashboard.
+
+- **N01-G:** public approved-only Gallery UI/manifest linked by event ID to news, with responsive album view and accessible lightbox; can be built with empty public catalogue (no fabricated school photos).
+- **N04-P:** authenticated teacher upload and private event registry; ChatGPT commands to review actual source photo bytes, recommend Gallery vs newsletter subsets, capture **separate explicit approvals**, then stage optimized derivatives/JSON and reviewed PR.
+- **N04-W:** installable public PWA after stable routes; manifest/service-worker scoped to `/bwd-newsroom/`, only public shell/offline read-only, network-first public catalogues, storage bounds and safe update prompt.
+- L1: preserve N02-MOBILE PR #3 merged implementation and N03 independent PDF work; do not rewrite the reader to create Gallery navigation.
+- L2/L3: no content publication solely from upload/AI scores; verify Drive access and privacy; avoid private ID leaks; confirm approved image hashes, mobile Gallery, PWA offline/update and existing reader gestures.
+- L4/L5: record event_id, gallery_id, WDNEWS link, distinct approvals, preview, version, checksums, release PR/commit, live QA and rollback. Do not report implementation/PWA ready based only on planning docs.
