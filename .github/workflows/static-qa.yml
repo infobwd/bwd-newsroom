@@ -17,16 +17,20 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check assets/app.js
+          node --check assets/gallery.js
           node --check assets/reader.js
           node --check assets/reader-geometry.js
           node --check scripts/validate-catalog.mjs
           node --check scripts/validate-books.mjs
+          node --check scripts/validate-galleries.mjs
       - name: Validate approved public manifests
         run: |
           node scripts/validate-catalog.mjs
           node scripts/validate-books.mjs
+          node scripts/validate-galleries.mjs
       - name: Regression tests
         run: |
           node tests/n01.test.mjs
+          node tests/n01-gallery.test.mjs
           node tests/n02.test.mjs
           node tests/n02-mobile.test.mjs
