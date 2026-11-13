@@ -99,3 +99,18 @@ References: existing WD Books infobwd/manual docs/WD_BOOKS_FLIP03_CORNER_DRAG_PI
 - PDF checks (pages/dimensions/checksum):
 - Approval decision / timestamp:
 - Rollback reference:
+
+
+## I. Gallery / chat-selection / PWA acceptance (new scope, not yet delivered)
+
+- [ ] Teacher upload is authenticated, mobile-friendly, reliably uploads image bytes to correct Shared Drive event, handles retries/progress/duplicates and logs real uploader identity (no write credentials in Pages).
+- [ ] Chat-led AI curation inspects *actual photo content*, reports per-photo reasoning and duplicates; inability to access images is an explicit blocker, not a fabricated ranking. No automatic student identification.
+- [ ] Gallery and WDNEWS image subsets receive **independent** school-owner approval through chat; no separate AI Curator Dashboard.
+- [ ] Public Gallery manifest includes approved safe public image variants only, event/issue backlinks and non-sensitive alt/captions; no Drive source IDs, student sensitive data, GPS EXIF or unreviewed thumbnails.
+- [ ] Website Gallery works at 360–430px / 768–1024px / 1280px+, search/filter, keyboard and touch lightbox, correct no-face-crop image display, lazy load, empty/offline/error states, real live/incognito access.
+- [ ] Keep N02-MOBILE 100dvh reader unaffected by any PWA navbar: portrait one page, landscape spread, ~760ms flip, contents sheet, 100–250% zoom, scroll fallback and reduced-motion handling, real iPhone/iPad QA.
+- [ ] PWA project-scoped manifest, 192px/512px icons, iOS Add to Home Screen guidance and supported Android install behavior; scoped service worker cache only public app shell/tiny derivatives, network-first catalog, offline *read-only* fallback.
+- [ ] Safe service-worker update notification (no forced reload while reading/uploading), bounded cache/revision cleanup and withdrawal testing; no private token/image/PDF cached.
+- [ ] Test/PR/doc changes are not publication evidence; require explicit approved version, actual merge/deploy, verified public URLs and per-device QA evidence.
+
+See [GALLERY_CHAT_UI_PWA_PLAN.md](GALLERY_CHAT_UI_PWA_PLAN.md).
