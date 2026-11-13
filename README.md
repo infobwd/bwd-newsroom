@@ -69,3 +69,11 @@ Verify N02 demo reader and GitHub Pages deployment. Publish real news only after
 - **N04-W:** Future public-reading PWA with install metadata, project-scoped offline shell/cache and update notification. Preserve N02-MOBILE immersive reader. No new Supabase project for MVP.
 - Keep the academic-year selected Drive folder's existing 17 PDFs untouched; never automatically expose original school/student photos.
 - Detailed contract: [docs/GALLERY_CHAT_UI_PWA_PLAN.md](docs/GALLERY_CHAT_UI_PWA_PLAN.md). This plan does NOT deliver a new upload service, live Gallery or PWA yet.
+
+## N01-G Public Gallery implementation (feature branch)
+
+- Branch `feat/n01-g-public-gallery`: approved-only `gallery.html` with album search/year/category filters, responsive cards, deep link `#album=WDGAL-...`, full-screen lightbox and related WDNEWS links.
+- New `data/galleries.json` catalogue is deliberately empty until the school approves actual albums. Future per-album records live at `data/galleries/<gallery-id>.json`. No Drive originals or student photos are published by the UI work.
+- Validation: `node scripts/validate-galleries.mjs` and `node tests/n01-gallery.test.mjs`. These checks also run in GitHub Actions.
+- This is **N01-G only**; authenticated teacher upload, AI image curation through ChatGPT and installation/offline PWA remain N04-P/N04-W.
+- Checkpoint: [N01-G](docs/N01_G_CHECKPOINT.md). Publication and real-device/browser QA are independent gates; feature branch/PR is not automatically live.
