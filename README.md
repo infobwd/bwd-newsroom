@@ -26,7 +26,7 @@ BWD Newsroom is planned as a public, mobile-first archive of approved WD’NEWS 
 | Phase | Deliverable | Status |
 |---|---|---|
 | N00 | Structure, integration/storage plan, publication policy | COMPLETED (documentation) |
-| N01 | Searchable responsive WD’NEWS archive | IN PROGRESS — Draft PR #1 (not merged) |
+| N01 | Searchable responsive WD’NEWS archive | CODE MERGED — PR #1; real-content/device/deployment QA PENDING |
 | N02 | Flipbook reader (based on WD Books self-hosted StPageFlip patterns) | IMPLEMENTED IN FEATURE BRANCH; QA PENDING |
 | N03 | Image-to-PDF biweekly / monthly book workflow | NOT STARTED |
 | N04 | Guarded import, long-term archive, optional PWA | NOT STARTED |
@@ -50,10 +50,10 @@ WD Books source: https://github.com/infobwd/manual. Its StPageFlip 2.0.7 based e
 
 Verify N02 demo reader and GitHub Pages deployment. Publish real news only after Canva export and school approval; never publish a fabricated issue.
 
-## N01 work in progress (13 Nov 2026)
+## N01 code merged; publication still gated (13 Nov 2026)
 
-- Draft implementation: https://github.com/infobwd/bwd-newsroom/pull/1 — responsive public archive, filter/search, approved-only JSON catalogue and validation scripts.
-- Checkpoint in draft branch: https://github.com/infobwd/bwd-newsroom/blob/feat/n01-public-news-archive/docs/N01_CHECKPOINT.md.
+- Merged implementation: https://github.com/infobwd/bwd-newsroom/pull/1 — responsive public archive, filter/search, approved-only JSON catalogue and validation scripts.
+- Initial historical checkpoint: [docs/N01_CHECKPOINT.md](docs/N01_CHECKPOINT.md). It describes the pre-merge state; current PR #1 is merged.
 - No real news published yet; Canva/Drive export approval and actual deployed browser/device QA are still required.
 - Google Drive images/PDF can be imported through an authenticated editorial workflow, then optimized approved public web images go into Pages. Direct private Drive hotlinking is not production image delivery; link approved PDF files individually when permitted.
-- Scheduled automatic AI loop is **not yet active**: account reached its maximum of 5 enabled automations. Do not disable another automation without the owner's instruction. The repository protocol works for manual or resumed runs.
+- AI Loop runs are governed by [docs/AI_DEVELOPMENT_LOOP.md](docs/AI_DEVELOPMENT_LOOP.md). Verify actual task status in the automation service; this README is not a reliable source for its enabled state.
