@@ -126,3 +126,13 @@ Workflow for source PDF:
 Never use temporary Drive thumbnail URLs as published images, expose Drive bearer access tokens in site JS, or make an entire private source folder public. A PDF that contains sensitive material stays private; web flipbook cannot bypass that restriction.
 
 **Implementation milestone:** N01 stores the schema/policy and public display only. Authorized file fetching, PDF rasterization, and publication workflow remain N03/N04 implementation tasks requiring testing and source approval.
+
+## 10. School-selected PDF intake (13 Nov 2026)
+
+The school owner has selected a different Google Shared Drive folder named **ปีการศึกษา 2569** as the intended intake location for PDF files and flipbook tests. Its private folder URL/ID should be kept in the authenticated automation configuration rather than the public repository.
+
+- Source and test PDFs for academic year 2569 go to this selected folder, not automatically to `04_News_Drafts`.
+- The original `04_News_Drafts` and `05_Published_News` folders remain available for Canva drafts and archival exports. Do not move or delete existing files automatically.
+- PDF intake does not imply school approval. Verify contents, permissions, rights, and student privacy before processing and publishing.
+- Generate approved optimized web page images from the PDF in an authenticated editorial pipeline. Keep source PDF in Drive. Only individually approved public PDF links may appear in the public website.
+- The AI Loop may inspect the designated academic-year intake folder if connected; keep the public catalogue and approval status in the GitHub repo.
