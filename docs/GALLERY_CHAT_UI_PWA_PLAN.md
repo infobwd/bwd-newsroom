@@ -1,7 +1,7 @@
 # BWD Newsroom — Unified Photo Gallery, Chat Workflow, UI & PWA Plan
 **Plan ID:** BN-PLAN-20261113-GALLERY-CHAT-PWA
 **Date:** 13 November 2026 (Asia/Bangkok)
-**Status:** PLANNED / DOCUMENTATION; no production upload, Gallery, AI curation or PWA delivered by this plan
+**Status (updated 14 Nov 2026):** N01-G Gallery and its first approved five-photo album are published; project-chat photo curation has been used for this pilot. Teacher upload web UI, Drive-hosted public image delivery, automatic syncing and offline PWA remain **NOT IMPLEMENTED**.
 **Repository:** infobwd/bwd-newsroom
 **Related milestones:** N01-G (public Gallery), N02-MOBILE (preserved), N03 (unchanged), N04-P (chat/photo workflow), N04-W (PWA)
 **Change boundary:** extend existing N00–N04; do NOT create a duplicate Photo Hub product, new repository, separate AI selection dashboard or parallel publication database.
@@ -101,3 +101,9 @@ Verified from GitHub connected reads on 13 Nov 2026: PR #3 N02-MOBILE has merged
 - `docs/N02_MOBILE_CHECKPOINT.md` and existing reader code
 - MDN installability: https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable
 - MDN caching: https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Caching
+
+## 9. Drive-first WebP folder pilot — documented 14 Nov 2026
+
+The school-selected Shared Drive has 17 original event images in the existing `01_ภาพกิจกรรม/<month>/<event>` tree. Separate `03_ภาพเว็บ_รอตรวจ` (internal candidates) and `04_ภาพเว็บ_เผยแพร่` (approved derivatives) now exist, and the first five approved photos' 10 versioned WebPs (thumb/full) were uploaded. This **does not** give Google Drive a verified publicly anonymous image-serving endpoint. Publication permission for a photo and anonymous HTTP access to bytes are distinct.
+
+Maintain the current public GitHub image assets, including live tests, unless a later tested and authorized delivery route can serve stable `image/webp` bytes (without relying on private previews, cookies, temporary thumbnailLink or public source folders). The project-chat interface remains the owner-selected primary editorial control plane, not an autonomous Drive-to-public synchronizer. See [Drive-first pilot](DRIVE_FIRST_WEBP_PILOT.md) for go/no-go gates and rollbacks.
