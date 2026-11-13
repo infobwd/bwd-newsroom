@@ -1,36 +1,39 @@
-# N01-G — Public Gallery MVP checkpoint
+# N01-G — Gallery MVP QA readback checkpoint
 
-**Date:** 13 November 2026 Asia/Bangkok
-**Branch:** feat/n01-g-public-gallery
-**Base:** main (following merged docs-only PR #4)
-**Status:** DRAFT PR #5 OPEN; GitHub Actions static QA PASS; school visual/release approval and real-device/live QA still pending. No student images imported or published.
+**Checked:** 2026-11-13 (Asia/Bangkok), automation loop L0–L5
+**Verified main SHA before this review:** `2ef99e9a2a7cc6a3c2f810720f8163daf4fbd20f`
+**Original N01-G:** PR #5 **MERGED / CLOSED**; do not reopen or duplicate original feature work.
+**Review-only branch:** `chore/n01-g-qa-readback-20261113` (not merged)
+**Public content:** `data/galleries.json` is approved-only and contains no real albums (verify catalogue again before future publishing).
 
-## Implemented in this branch
-- \`gallery.html\`: standalone Gallery route within existing BWD Newsroom top navigation; search/year/category filters, empty/error states, album view and full-screen photo dialog.
-- \`assets/gallery.css\`: navy/gold/Kanit editorial design, 360–430px, iPad and desktop styles, accessible focus, preserved image aspect ratios.
-- \`assets/gallery.js\`: only records marked published + approved are rendered; album URL \`#album=<gallery-id>\`, Thai date, caption/alt, keyboard arrows/mobile swipe, related published issue links; no private Google Drive images in browser.
-- \`data/galleries.json\`: intentionally empty approved-only public catalogue; no fabricated event, real student images or public private-folder metadata.
-- \`data/galleries/README.md\`: publication record contract for future approved \`WDGAL-...\` records.
-- \`scripts/validate-galleries.mjs\` and \`tests/n01-gallery.test.mjs\`: public-only IDs/dates/approval/version/photo dimensions/SHA/file-path/privacy guard, source/index parity, mock-only security fixtures, DOM wiring checks.
-- \`index.html\` and \`assets/styles.css\`: Gallery entry points on existing Newsroom home; unchanged N02-MOBILE reader and books pipeline.
-- CI workflow: Node Gallery syntax/schema/fixtures alongside existing N01/N02 checks.
+## L0 — Evidence readback
+- GitHub API main commit SHA: `2ef99e9a2a7cc6a3c2f810720f8163daf4fbd20f`.
+- GitHub API open pull requests: `[]`; PR #5: `state=closed, merged=true, draft=false`.
+- GitHub Actions for that main SHA: **BWD Newsroom static QA SUCCESS**, run https://github.com/infobwd/bwd-newsroom/actions/runs/43443252014.
+- GitHub Pages build/deployment workflow for that SHA: **SUCCESS**, run https://github.com/infobwd/bwd-newsroom/actions/runs/43443250480. A workflow success is **not** browser, mobile Safari or actual rendered public-route verification.
+- Read fresh from main: README, AGENTS, MASTER_PLAN, DATA_AND_STORAGE, PUBLISHING_AND_QA, AI_DEVELOPMENT_LOOP, GALLERY_CHAT_UI_PWA_PLAN, N01_G_CHECKPOINT and N01_CHECKPOINT. N01_G_CHECKPOINT and README still described N01-G as draft/planned even though PR #5 merged: this checkpoint corrects the status.
+- Google Drive school connector read: **BLOCKED** (`link_id must identify an eligible linked account` from Drive profile/list). Cannot verify Shared Drive contents, access, 17 PDF list or photo folder metadata in this run; do not claim inspected.
+- Canva persisted design/pages: **NOT RUN** (no approved issue/design ID provided in this run; no new public issue).
+- WD Books FLIP03/FLIP04 reference: **NOT RUN** (no page-turn code modified this run).
 
-## Privacy and status gates
-- Public Gallery is completely empty until a real reviewed Gallery is approved. Existing 17 school Drive PDFs are untouched; they are not automatically source photo albums.
-- Teacher upload, AI image curation through ChatGPT, Canva photo transfer and PWA are **N04-P/N04-W**, NOT implemented by N01-G.
-- Do not publish \`data/galleries/*.json\` containing drafts/unapproved photos or private Drive IDs. Public asset paths must use \`assets/galleries/WDGAL-.../\` and versioned compressed local images.
-- This branch does not alter reader.html, assets/reader.js, reader.css or GitHub Pages settings.
+## L1–L2 — Single selected task: N01-G acceptance status reconciliation
+No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the checkpoint after live GitHub readback. Existing Gallery remains an empty approved-only public catalogue pending school-reviewed photos. The teacher upload/AI Chat workflow (N04-P) and PWA (N04-W) remain independent planned work; no student images, Drive originals or PDF files are imported.
 
-## QA evidence to collect
-- GitHub connector readback / diff: PASS — 12 scoped files on branch versus main, no N02 reader changes.
-- Node: \`node --check assets/gallery.js && node --check scripts/validate-galleries.mjs\`
-- Data and regression: \`node scripts/validate-galleries.mjs && node tests/n01-gallery.test.mjs\`.
-- Existing N01/N02 tests: PASS in the same GitHub Actions job (validated job id 131934220862, conclusion success).
-- Manual desktop/iPhone/iPad/real image Gallery visual/touch QA: NOT RUN.
-- Deploy/live Pages: NOT VERIFIED; no newly approved album.
+## L3 — QA result table
 
-## Next gates
-1. Follow Draft PR #5 (https://github.com/infobwd/bwd-newsroom/pull/5); initial Actions CI completed successfully. Any fixes stay in the same PR.
-2. School reviews Gallery empty-state design and mobile interaction.
-3. Merge code only after school release approval. Merge does not authorize any real student photos.
-4. Secure teacher upload (N04-P) may follow independently after the empty public Gallery UI is stable.
+| Check | Result | Evidence / limitation |
+|---|---|---|
+| Main SHA, PR #5 merge, open PR list | PASS | GitHub API readback above |
+| Static tests on main | PASS | GitHub Actions run 43443252014 |
+| Pages deployment workflow | PASS | GitHub Actions run 43443250480 |
+| Browser-visible Gallery route/empty state | NOT RUN | External live page not accessible from this execution environment |
+| iPhone/iPad Safari layout, touch, accessibility | NOT RUN | No physical device or remote browser evidence |
+| Shared Drive photos/folder permissions | BLOCKED | Google Drive linked-account error |
+| Canva persisted pages/export, QR parity | NOT RUN | No approved real issue selected |
+| Approved album publication | NOT RUN | No school-approved album or real photos |
+| Node validator local rerun | NOT RUN | No local checkout; CI pass is recorded separately |
+
+## L4–L5 — Gate and next action
+**READY_FOR_SCHOOL_REVIEW / REAL-DEVICE QA PENDING**. School review should test Gallery page on desktop/iPhone/iPad and public/incognito route; approve any individual real Gallery album/photo set separately. Do not mark approved/published, merge this review PR or expose private Drive folder links. If Drive account access is restored, read Shared Drive `ปีการศึกษา 2569/01_ภาพกิจกรรม/<BE-month>/<EVT-id>_<short-title>` with authenticated permissions and leave existing PDFs untouched. No automated public photo publication.
+
+**Rollback:** This change is documentation-only; closing the review PR or reverting this file restores the prior checkpoint without changing the deployed Gallery.
