@@ -3,7 +3,7 @@
 **Project:** โรงเรียนบ้านวังด้ง สพป.กาญจนบุรี เขต 4  
 **Repo:** https://github.com/infobwd/bwd-newsroom  
 **Target GitHub Pages:** https://infobwd.github.io/bwd-newsroom/  
-**Status (13 Nov 2026):** PLAN READY / WEBSITE NOT YET IMPLEMENTED OR VERIFIED LIVE.
+**Status (13 Nov 2026):** N01 merged to main; N02 development in feature branch. Live GitHub Pages still requires verification.
 
 BWD Newsroom is planned as a public, mobile-first archive of approved WD’NEWS school newsletters, with a searchable issue catalogue, multi-layout Canva templates, photo-based e-books, realistic page-turn reading like WD Books, and compiled PDFs by **half-month (รายปักษ์)**, month, semester, and year.
 
@@ -27,7 +27,7 @@ BWD Newsroom is planned as a public, mobile-first archive of approved WD’NEWS 
 |---|---|---|
 | N00 | Structure, integration/storage plan, publication policy | COMPLETED (documentation) |
 | N01 | Searchable responsive WD’NEWS archive | IN PROGRESS — Draft PR #1 (not merged) |
-| N02 | Flipbook reader (based on WD Books self-hosted StPageFlip patterns) | NOT STARTED |
+| N02 | Flipbook reader (based on WD Books self-hosted StPageFlip patterns) | IMPLEMENTED IN FEATURE BRANCH; QA PENDING |
 | N03 | Image-to-PDF biweekly / monthly book workflow | NOT STARTED |
 | N04 | Guarded import, long-term archive, optional PWA | NOT STARTED |
 | Deploy | GitHub Pages enable + real URL / iPhone/iPad/desktop QA | NOT VERIFIED |
@@ -48,7 +48,7 @@ WD Books source: https://github.com/infobwd/manual. Its StPageFlip 2.0.7 based e
 
 ## Operational next step
 
-Implement N01 as a separate PR: site shell + searchable catalogue + JSON validation + one verified, approved sample issue. Do not publish a fabricated issue or automatically expose files from Drive.
+Verify N02 demo reader and GitHub Pages deployment. Publish real news only after Canva export and school approval; never publish a fabricated issue.
 
 ## N01 work in progress (13 Nov 2026)
 
