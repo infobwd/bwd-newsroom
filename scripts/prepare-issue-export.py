@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 
 import fitz
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageChops, ImageStat
 
 ISSUE_PATTERN = re.compile(r"^WDNEWS-(\d{4})-(\d{4})$")
 VERSION_PATTERN = re.compile(r"^v\d{2}$")
@@ -67,8 +67,8 @@ def prepare(args):
             raise ValueError("Input must be a genuine full-resolution PNG export")
         image = ImageOps.exif_transpose(opened).convert("RGB")
     width, height = image.size
-    if width < 1600 or height < 2260 or abs(width / height - 0.7071) > 0.025:
-        raise ValueError("Source image must be at least 1600x2260 and A4 portrait; thumbnail is forbidden")
+    if width < 1400 or height < 1950 or abs(width / height - 0.7071) > 0.025:
+        raise ValueError("Source image must be at least 1400x1950 and A4 portrait; thumbnail is forbidden")
     pdf = fitz.open(source_pdf)
     try:
         if len(pdf) != 1 or pdf.is_encrypted:
@@ -76,6 +76,17 @@ def prepare(args):
         page = pdf[0]
         if abs(page.rect.width / page.rect.height - 0.7071) > 0.025:
             raise ValueError("PDF aspect ratio does not match A4 portrait")
+        # Both formats must be exports of the SAME saved Canva page, not merely two A4 files.
+        pix = page.get_pixmap(matrix=fitz.Matrix(width / page.rect.width, height / page.rect.height),
+                              colorspace=fitz.csRGB, alpha=False)
+        rendered = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
+        if rendered.size != image.size:
+            rendered = rendered.resize(image.size, Image.Resampling.LANCZOS)
+        differences = ImageStat.Stat(ImageChops.difference(image, rendered)).mean
+        parity_mean_abs_diff = sum(differences) / len(differences)
+        # Allow ordinary PDF rasterisation anti-aliasing; reject materially different layouts.
+        if parity_mean_abs_diff > 18:
+            raise ValueError(f"PNG/PDF layout mismatch (mean difference {parity_mean_abs_diff:.1f})")
     finally:
         pdf.close()
 
@@ -117,6 +128,7 @@ def prepare(args):
         "original_pdf_sha256": pdf_hash,
         "derivative_sha256": sha256(dest),
         "source_dimensions": [width, height],
+        "png_pdf_mean_abs_diff": round(parity_mean_abs_diff, 3),
         "web_dimensions": list(image.size),
         "public_record_candidate": record,
         "next_gate": "Recheck final image/QR and stage approved content with published timestamps in a separate PR; verify live Pages after merge",
