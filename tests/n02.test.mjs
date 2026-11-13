@@ -7,7 +7,8 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const books=JSON.parse(fs.readFileSync(path.join(root,'data/books.json'),'utf8'));
 const catalog=JSON.parse(fs.readFileSync(path.join(root,'data/catalog.json'),'utf8'));
 assert.deepEqual(validateBooks(books,catalog),[]);
-assert.equal(books.books.length,0,'Do not publish fabricated book volumes');
+assert.ok(books.books.every(book => book.status === 'published' && book.approved_at && book.published_at && book.revision),
+  'N02 public books must be approved published volumes; genuine approved books are allowed');
 assert.equal(validBookImage('assets/books/WDBOOK-2569-11A/cover-v01.webp'),true);
 assert.equal(validBookImage('https://drive.google.com/some-image'),false);
 assert.equal(validBookImage('../private/cover.png'),false);

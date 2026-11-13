@@ -10,7 +10,8 @@ const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const app = fs.readFileSync(path.join(root, 'assets/app.js'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'assets/styles.css'), 'utf8');
 assert.deepEqual(validateCatalogue(catalog), []);
-assert.equal(catalog.issues.length, 0, 'N01 must not invent or publish sample news without approval');
+assert.ok(catalog.issues.every(issue => issue.status === 'published' && issue.visibility_approved_at && issue.approved_version && issue.published_at),
+  'N01 public catalogue must contain only approved published news; genuine approved issues are allowed');
 assert.equal(isRealDate('2026-11-13'), true);
 assert.equal(isRealDate('2026-02-30'), false);
 assert.equal(validAsset('assets/issues/WDNEWS-2569-0001/page-01-v01.webp'), true);
