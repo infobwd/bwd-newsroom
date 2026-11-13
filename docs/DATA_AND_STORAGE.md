@@ -104,3 +104,25 @@ Validation: no status=published without approval timestamp/version, valid upload
 - MVP does not require Supabase, OAuth, or backend. A static catalogue is safer, lower-cost and works on GitHub Pages.
 - If editor UI becomes necessary, design a separate authenticated admin/backend; never put write credentials or Google OAuth secrets in public JavaScript.
 - Keep a clear separation of source/master data, approved output, and derived published web assets.
+
+
+## 9. Additional accepted source type — existing PDF in Google Drive (decision 13 Nov 2026)
+
+BWD Newsroom may ingest **either approved PNG/JPG/WebP images OR an existing PDF file** from the school's authorized Google Drive account. Ingestion is editorial/admin-side, not by anonymous public browser JavaScript.
+
+Workflow for source images:
+1. Read file metadata and real access permission from Drive.
+2. Download authorized original through connector/Drive API; check dimensions/orientation.
+3. Confirm school publication approval and expected article/page order.
+4. Generate approved thumbnails + reader images (with versioned paths) for Pages; retain originals in Drive.
+
+Workflow for source PDF:
+1. Read metadata/MIME (application/pdf), authorized download, page count and security/access status.
+2. Inspect PDF pages; if PDF has text/vector content, retain the original PDF; for Flipbook render each page to an optimized image at legible resolution using an offline/admin build.
+3. Preserve logical page order, page proportions, and colors; check Thai glyph integrity and that pages are not accidentally clipped or blank.
+4. Store approved source PDF privately in Drive; publish only optimized page images and an explicitly approved public PDF link if the school authorizes public download.
+5. Record source kind: image_pages or pdf, original document revision checksum (restricted register), derived public page checksums, and reviewed version.
+
+Never use temporary Drive thumbnail URLs as published images, expose Drive bearer access tokens in site JS, or make an entire private source folder public. A PDF that contains sensitive material stays private; web flipbook cannot bypass that restriction.
+
+**Implementation milestone:** N01 stores the schema/policy and public display only. Authorized file fetching, PDF rasterization, and publication workflow remain N03/N04 implementation tasks requiring testing and source approval.
