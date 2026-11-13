@@ -1,0 +1,133 @@
+{
+  "gallery_id": "WDGAL-2569-0002",
+  "event_id": "EVT-2569-0002",
+  "title_th": "การประชุมคณะกรรมการสถานศึกษาขั้นพื้นฐาน โรงเรียนบ้านวังด้ง",
+  "date": "2026-11-10",
+  "description_th": "ภาพบรรยากาศการประชุมคณะกรรมการสถานศึกษาขั้นพื้นฐาน ณ โรงเรียนบ้านวังด้ง วันที่ 10 พฤศจิกายน 2569 โดยหารือการเตรียมกีฬานักเรียนและกิจกรรมสำคัญในช่วงปลายปี",
+  "category": "administration",
+  "tags": [
+    "ประชุมคณะกรรมการสถานศึกษา",
+    "บริหารสถานศึกษา",
+    "กีฬานักเรียน",
+    "ความร่วมมือ",
+    "โรงเรียนบ้านวังด้ง"
+  ],
+  "status": "published",
+  "approved_version": "v01",
+  "visibility_approved_at": "2026-11-14T06:15:53+07:00",
+  "published_at": "2026-11-14T06:15:53+07:00",
+  "cover_image": "assets/galleries/WDGAL-2569-0002/photo01-thumb-v01.webp",
+  "photos": [
+    {
+      "photo_id": "P01",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo01-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo01-web-v01.webp",
+      "alt_th": "ผู้เข้าร่วมประชุมนั่งล้อมโต๊ะในห้องประชุมโรงเรียนบ้านวังด้ง",
+      "caption_th": "ภาพรวมการประชุมคณะกรรมการสถานศึกษาขั้นพื้นฐาน",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "69f9d16df5238a543783afdbb4464ee41895c0733ba839eedbc52d74748afbd1"
+    },
+    {
+      "photo_id": "P02",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo02-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo02-web-v01.webp",
+      "alt_th": "มุมกว้างห้องประชุมพร้อมป้ายชื่อโรงเรียนบ้านวังด้งด้านหน้า",
+      "caption_th": "บรรยากาศการประชุมจากอีกด้านของห้อง",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "67f5fc803562760152043b58671f16b82b51fd6b2861a5e9fd8e1f64a4756791"
+    },
+    {
+      "photo_id": "P03",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo03-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo03-web-v01.webp",
+      "alt_th": "ผู้เข้าร่วมประชุมในเสื้อสีเข้มนั่งฟังอยู่ริมโต๊ะ",
+      "caption_th": "ผู้เข้าร่วมประชุมกำลังรับฟัง",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "1e7fe7486f77220f904019be3b68857554750cf3f13ade1ccb8ed27ba1d49e85"
+    },
+    {
+      "photo_id": "P04",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo04-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo04-web-v01.webp",
+      "alt_th": "ผู้เข้าร่วมประชุมสองท่านนั่งรับฟังการหารือ",
+      "caption_th": "คณะกรรมการร่วมรับฟังการประชุม",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "35321b3176310c159d96f4971cb3fccbf7cf87d7fcb0b6abb5be994e74ce0210"
+    },
+    {
+      "photo_id": "P05",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo05-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo05-web-v01.webp",
+      "alt_th": "ผู้เข้าร่วมประชุมเสื้อเชิ้ตลายสก็อตนั่งฟังอยู่ด้านข้าง",
+      "caption_th": "ผู้เข้าร่วมประชุมนั่งรับฟัง",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "3c192227733c47b7e643a46c7df47fa495150cfa1f49cf7eaf3d4b4b1afbfb49"
+    },
+    {
+      "photo_id": "P06",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo06-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo06-web-v01.webp",
+      "alt_th": "ผู้ร่วมประชุมเสื้อสีเหลืองดำกำลังพูดระหว่างการประชุม",
+      "caption_th": "ผู้เข้าร่วมประชุมบริเวณโต๊ะด้านข้าง",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "affa38d88f12657ab590af30540415655cae338c6645d4006af83f1e017faefa"
+    },
+    {
+      "photo_id": "P07",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo07-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo07-web-v01.webp",
+      "alt_th": "พระสงฆ์และผู้เข้าร่วมประชุมนั่งรับฟังอยู่ที่โต๊ะ",
+      "caption_th": "บรรยากาศช่วงการกล่าวในที่ประชุม",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "b6272d8e37f86d7fc2a842077fe632ee6c49e4a54809fff76967474fa6561700"
+    },
+    {
+      "photo_id": "P08",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo08-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo08-web-v01.webp",
+      "alt_th": "ผู้เข้าร่วมประชุมในเสื้อสีดำพร้อมเอกสารและเครื่องเขียน",
+      "caption_th": "ผู้เข้าร่วมประชุมและเอกสารประกอบ",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "d1c7ba14b5e3e80b6423396d201a425cc31b17f69859f86d8aa5aaf1d500c81d"
+    },
+    {
+      "photo_id": "P09",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo09-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo09-web-v01.webp",
+      "alt_th": "ผู้เข้าร่วมประชุมสองท่านนั่งรับฟังใกล้ผ้าม่านสีเขียว",
+      "caption_th": "คณะกรรมการร่วมประชุมอีกมุมหนึ่ง",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "2b387f6048ae8abee79391682b2fc623e7c5533c80149b764e7e784f0c98cb60"
+    },
+    {
+      "photo_id": "P10",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo10-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo10-web-v01.webp",
+      "alt_th": "ผู้เข้าร่วมประชุมสองท่านนั่งริมโต๊ะผ้าสีเหลือง",
+      "caption_th": "คณะกรรมการร่วมรับฟัง ณ ห้องประชุม",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "0f95c78653bcf55b693177a87dfa923323f8c041e9ec81d9a9d8bca76aa6b03d"
+    },
+    {
+      "photo_id": "P11",
+      "thumb_image": "assets/galleries/WDGAL-2569-0002/photo11-thumb-v01.webp",
+      "web_image": "assets/galleries/WDGAL-2569-0002/photo11-web-v01.webp",
+      "alt_th": "มุมกว้างของคณะกรรมการสถานศึกษาร่วมการประชุม",
+      "caption_th": "ภาพบรรยากาศการประชุมรอบโต๊ะ",
+      "width": 1600,
+      "height": 1200,
+      "sha256": "5d64be209fb6f613c1b5d6c690ee50bb23a83fdbe4636a533940f407592ac40d"
+    }
+  ],
+  "linked_issue_ids": []
+}
