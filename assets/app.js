@@ -168,10 +168,11 @@
 
   function renderBooks(data) {
     const node=$('books-list'), emptyNode=$('books-empty');if(!node||!emptyNode)return;
+    const bookAsset=p=>typeof p==='string'&&/^assets\/(?:issues|books)\/[A-Za-z0-9_-]+\/[A-Za-z0-9._-]+\.(?:png|jpe?g|webp)$/i.test(p)&&!p.includes('..');
     const books=Array.isArray(data?.books)?data.books.filter(b=>b&&b.status==='published'&&b.approved_at&&b.published_at&&
       typeof b.title_th==='string'&&b.title_th.trim()&&Array.isArray(b.contents)&&b.contents.length&&
       b.contents.every(c=>published.some(i=>i.id===c.issue_id&&i.approved_version===c.approved_version))&&
-      Array.isArray(b.pages)&&b.pages.length&&b.pages.every((p,i)=>p.page_no===i+1&&validAsset(p.web_image))):[];
+      Array.isArray(b.pages)&&b.pages.length&&b.pages.every((p,i)=>p.page_no===i+1&&bookAsset(p.web_image))):[];
     books.sort((a,b)=>String(b.date_end).localeCompare(String(a.date_end)));
     node.replaceChildren();
     books.forEach(b=>{

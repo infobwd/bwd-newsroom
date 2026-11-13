@@ -1,0 +1,30 @@
+name: BWD Newsroom static QA
+on:
+  push:
+    branches: [main, feat/n02-bookshelf-flipbook]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/app.js
+          node --check assets/reader.js
+          node --check scripts/validate-catalog.mjs
+          node --check scripts/validate-books.mjs
+      - name: Validate approved public manifests
+        run: |
+          node scripts/validate-catalog.mjs
+          node scripts/validate-books.mjs
+      - name: Regression tests
+        run: |
+          node tests/n01.test.mjs
+          node tests/n02.test.mjs
