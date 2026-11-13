@@ -28,20 +28,26 @@
     </div>
   </header>
   <main id="gallery-main">
-    <section class="gallery-hero">
-      <div class="wrap gallery-hero-layout">
-        <div class="gallery-hero-copy">
-          <p class="section-label">BWD STORIES / PHOTO ARCHIVE</p>
-          <h1>ภาพกิจกรรม<span>โรงเรียนบ้านวังด้ง</span></h1>
+    <section class="hero gallery-hero" aria-labelledby="gallery-hero-title">
+      <div class="wrap hero-grid gallery-hero-grid">
+        <div class="hero-intro gallery-hero-intro">
+          <div class="eyebrow"><span class="eyebrow-line"></span> BWD STORIES / PHOTO ARCHIVE</div>
+          <h1 id="gallery-hero-title">ภาพกิจกรรม<br><em>โรงเรียนบ้านวังด้ง</em></h1>
           <p>เรื่องราว ความทรงจำ และการเรียนรู้ผ่านภาพถ่ายที่ผ่านการตรวจรับให้เผยแพร่แล้ว</p>
+          <a class="hero-link" href="#gallery-list">สำรวจภาพกิจกรรม <span aria-hidden="true">↗</span></a>
         </div>
-        <div class="gallery-hero-display" aria-hidden="true">
-          <div class="gallery-hero-frame gallery-hero-frame-back"></div>
-          <div class="gallery-hero-frame gallery-hero-frame-front">
-            <span class="gallery-frame-kicker">WD’NEWS</span>
-            <span class="gallery-frame-mark">✦</span>
-            <span class="gallery-frame-caption">PHOTO STORIES · BWD</span>
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-badge">WD’NEWS</div>
+          <div class="paper paper-back"></div>
+          <div class="paper paper-front">
+            <div class="paper-rule"></div>
+            <div class="paper-kicker">ภาพกิจกรรมโรงเรียนบ้านวังด้ง</div>
+            <div class="paper-headline">ภาพเล่า<br>เรื่องราว</div>
+            <div class="paper-image"><span>บ้านวังด้ง</span></div>
+            <div class="paper-lines"><i></i><i></i><i></i></div>
+            <div class="paper-footer">BWD STORIES <span>•</span> KANCHANABURI</div>
           </div>
+          <div class="hero-stamp">A SCHOOL<br>WITH STORIES</div>
         </div>
       </div>
     </section>
@@ -51,15 +57,15 @@
           <div><p class="section-label">OUR ALBUMS</p><h2 id="gallery-heading">คลังภาพกิจกรรม</h2></div>
           <p class="section-note" id="gallery-count" aria-live="polite">กำลังโหลดข้อมูล…</p>
         </div>
-        <form id="gallery-filters" class="gallery-filters" role="search" autocomplete="off">
-          <label class="gallery-search"><span class="visually-hidden">ค้นหาอัลบั้ม</span><input id="gallery-search" type="search" placeholder="ค้นหาชื่อกิจกรรมหรือคำสำคัญ…" aria-label="ค้นหาอัลบั้ม"></label>
+        <form id="gallery-filters" class="filters gallery-filters" role="search" autocomplete="off">
+          <label class="search-field gallery-search"><span class="search-icon" aria-hidden="true">⌕</span><span class="visually-hidden">ค้นหาอัลบั้ม</span><input id="gallery-search" type="search" placeholder="ค้นหาชื่อกิจกรรมหรือคำสำคัญ…" aria-label="ค้นหาอัลบั้ม"></label>
           <label><span class="visually-hidden">เลือกปี</span><select id="gallery-year" aria-label="เลือกปี"><option value="">ทุกปี</option></select></label>
           <label><span class="visually-hidden">เลือกหมวด</span><select id="gallery-category" aria-label="เลือกหมวด"><option value="">ทุกหมวด</option></select></label>
-          <button type="reset" class="gallery-clear">ล้างตัวกรอง</button>
+          <button type="reset" class="reset gallery-clear">ล้างตัวกรอง</button>
         </form>
         <div id="gallery-grid" class="gallery-grid" aria-live="polite" aria-busy="true"></div>
-        <div id="gallery-empty" class="gallery-empty" hidden>
-          <span aria-hidden="true" class="gallery-empty-symbol">✦</span>
+        <div id="gallery-empty" class="empty gallery-empty" hidden>
+          <span aria-hidden="true" class="empty-symbol gallery-empty-symbol">✦</span>
           <h3 id="gallery-empty-title">ยังไม่มีอัลบั้มที่เผยแพร่</h3>
           <p id="gallery-empty-description">ภาพกิจกรรมจะปรากฏที่นี่หลังโรงเรียนตรวจสอบและอนุมัติให้เผยแพร่</p>
         </div>
