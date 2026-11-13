@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#112b4e">
-  <meta name="description" content="BWD Newsroom อ่านจดหมายข่าวและหนังสือรวมเล่มแบบพลิกหน้ากระดาษ">
-  <title>BWD Newsroom | อ่านหนังสือแบบพลิกหน้า</title>
+  <meta name="theme-color" content="#102b4d">
+  <meta name="description" content="BWD Newsroom ห้องอ่านจดหมายข่าวดิจิทัลที่รองรับมือถือและแท็บเล็ต">
+  <title>BWD Newsroom | ห้องอ่านหนังสือ</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/styles.css">
   <link rel="stylesheet" href="./assets/reader.css">
@@ -14,39 +14,61 @@
 </head>
 <body class="reader-body">
   <a class="skip" href="#reading-main">ข้ามไปยังหนังสือ</a>
-  <header class="site-header">
-    <div class="wrap topbar">
-      <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">WD<span class="brand-dot">.</span></span><span class="brand-copy"><strong>BWD NEWSROOM</strong><small>โรงเรียนบ้านวังด้ง · ห้องสมุดจดหมายข่าวดิจิทัล</small></span></a>
-      <nav class="head-nav" aria-label="นำทาง"><a href="./#news">จดหมายข่าว</a><a href="./#books">ชั้นหนังสือ</a></nav>
-    </div>
+  <header class="reader-topbar">
+    <a class="reader-exit" href="./#books" aria-label="กลับไปยังชั้นหนังสือ">‹ <span>ชั้นหนังสือ</span></a>
+    <a class="reader-brand" href="./" aria-label="BWD Newsroom หน้าแรก"><strong>WD<span>’</span>NEWS</strong><small>โรงเรียนบ้านวังด้ง</small></a>
+    <button id="reader-info-open" class="reader-header-button" type="button" aria-label="ดูรายละเอียดหนังสือ">รายละเอียด</button>
   </header>
-  <main class="wrap" id="reading-main">
-    <div class="reader-heading">
-      <p class="section-label">BWD NEWSROOM / DIGITAL READER</p>
-      <h1 id="reader-title">กำลังเปิดหนังสือ…</h1>
-      <p id="reader-subtitle" aria-live="polite">หนังสือที่ได้รับอนุมัติจึงจะแสดงในคลังสาธารณะ</p>
-    </div>
-    <section class="reader-shell" aria-label="พื้นที่อ่านจดหมายข่าว">
+  <main id="reading-main" class="reader-main">
+    <section class="reader-shell" aria-label="ห้องอ่านหนังสือ BWD Newsroom">
       <div class="reader-toolbar">
-        <label for="reader-toc">สารบัญ <select id="reader-toc" aria-label="ไปยังหน้า"><option value="0">หน้าปก</option></select></label>
-        <div class="reader-modes" role="group" aria-label="รูปแบบการอ่าน">
-          <button id="mode-flip" type="button" aria-pressed="false">พลิกหน้า</button>
-          <button id="mode-scroll" type="button" aria-pressed="false">อ่านแบบเลื่อน</button>
+        <div class="reader-heading">
+          <p class="reader-eyebrow">DIGITAL PAPER READER</p>
+          <h1 id="reader-title">กำลังเปิดหนังสือ…</h1>
+          <p id="reader-subtitle" class="reader-subtitle">แสดงเฉพาะจดหมายข่าวที่ได้รับอนุมัติให้เผยแพร่</p>
+        </div>
+        <div class="reader-actions" role="group" aria-label="เครื่องมืออ่าน">
+          <button id="reader-toc-open" class="reader-tool-button" type="button" title="สารบัญ" aria-label="เปิดสารบัญ">☷ <span>สารบัญ</span></button>
+          <button id="reader-zoom-out" class="reader-tool-button" type="button" title="ย่อหน้า" aria-label="ย่อหน้า">−</button>
+          <output id="reader-zoom-value" class="reader-zoom-value" aria-live="polite">100%</output>
+          <button id="reader-zoom-in" class="reader-tool-button" type="button" title="ขยายหน้า" aria-label="ขยายหน้า">＋</button>
+          <button id="reader-fullscreen" class="reader-tool-button" type="button" title="เต็มจอ" aria-label="เปิดเต็มจอ">⛶</button>
         </div>
       </div>
       <div id="reader-message" class="reader-message" role="status" hidden></div>
-      <div id="flip-stage" class="paper-stage" tabindex="0" aria-label="พื้นที่พลิกหน้าหนังสือ ใช้ลูกศรซ้ายขวาหรือจับมุมกระดาษ"><div id="flip-engine" class="flip-engine"></div></div>
-      <div id="scroll-stage" class="scroll-stage" hidden></div>
-      <div class="reader-controls">
-        <button id="reader-prev" type="button" aria-label="ย้อนหน้าก่อนหน้า">← ก่อนหน้า</button>
-        <span id="page-indicator" aria-live="polite">—</span>
-        <button id="reader-next" type="button" aria-label="ไปหน้าถัดไป">ถัดไป →</button>
+      <div class="reader-canvas">
+        <div id="flip-stage" class="paper-stage" tabindex="0" aria-label="พื้นที่พลิกหน้าหนังสือ ลากมุมกระดาษหรือใช้ปุ่มก่อนหน้าและถัดไป">
+          <div id="flip-engine" class="flip-engine"></div>
+        </div>
+        <div id="scroll-stage" class="scroll-stage" aria-label="พื้นที่อ่านแบบเลื่อน" hidden></div>
       </div>
-      <div class="reader-progress"><span id="reader-progress-fill"></span></div>
-      <p class="reader-hint">บนจอใหญ่แสดงหน้าคู่ เมื่อพื้นที่แคบแสดงทีละหน้า · ใช้ลูกศรหรือปุ่มเพื่อเปลี่ยนหน้า</p>
+      <div class="reader-bottom">
+        <div class="reader-controls" aria-label="เปลี่ยนหน้าหนังสือ">
+          <button id="reader-prev" type="button" aria-label="หน้าก่อนหน้า">‹ <span>ก่อนหน้า</span></button>
+          <span id="page-indicator" aria-live="polite">—</span>
+          <button id="reader-next" type="button" aria-label="หน้าถัดไป"><span>ถัดไป</span> ›</button>
+        </div>
+        <div class="reader-mode-row">
+          <div class="reader-modes" role="group" aria-label="รูปแบบการอ่าน">
+            <button id="mode-flip" type="button" aria-pressed="false">พลิกหน้า</button>
+            <button id="mode-scroll" type="button" aria-pressed="false">อ่านแบบเลื่อน</button>
+          </div>
+          <p id="reader-hint">ลากมุมกระดาษเพื่อพลิกหน้า · ใช้ลูกศรซ้ายขวาได้</p>
+        </div>
+        <div class="reader-progress" aria-hidden="true"><span id="reader-progress-fill"></span></div>
+      </div>
     </section>
-    <p class="reader-back"><a href="./#books">← กลับไปยังชั้นหนังสือ</a></p>
   </main>
-  <footer class="site-footer"><div class="wrap footer-inner"><span>© 2569 โรงเรียนบ้านวังด้ง</span><span>Powered by StPageFlip · MIT License</span></div></footer>
+  <dialog id="reader-toc-dialog" class="reader-sheet" aria-labelledby="reader-toc-title">
+    <div class="reader-sheet-head"><h2 id="reader-toc-title">สารบัญหนังสือ</h2><button id="reader-toc-close" type="button" aria-label="ปิดสารบัญ">×</button></div>
+    <label class="reader-toc-select" for="reader-toc">ไปยังหน้า <select id="reader-toc" aria-label="เลือกหน้า"><option value="0">หน้าปก</option></select></label>
+    <div id="reader-toc-list" class="reader-toc-list" role="navigation" aria-label="รายการหน้า"></div>
+  </dialog>
+  <dialog id="reader-info-dialog" class="reader-sheet" aria-labelledby="reader-info-title">
+    <div class="reader-sheet-head"><h2 id="reader-info-title">เกี่ยวกับหนังสือ</h2><button id="reader-info-close" type="button" aria-label="ปิดรายละเอียด">×</button></div>
+    <p id="reader-info-copy">BWD Newsroom · ห้องอ่านจดหมายข่าวโรงเรียนบ้านวังด้ง</p>
+    <p class="reader-privacy-note">หน้าอ่านทดลองจะแสดงตัวอย่างที่ระบุ DEMO ชัดเจน ไม่ใช่จดหมายข่าวที่เผยแพร่จริง</p>
+    <small>Powered by StPageFlip · MIT License</small>
+  </dialog>
 </body>
 </html>
