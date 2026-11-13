@@ -60,3 +60,31 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 
 ### L4–L5 — gate
 **READY_FOR_SCHOOL_REVIEW / N01-G MOBILE AND PUBLICATION QA PENDING.** Keep this checkpoint PR #6 draft and unmerged. Next iteration should validate the actual Gallery route on desktop and mobile (or capture an explicit NOT RUN with reason), then inspect private event photo permissions/consent with school authority before proposing any individual album for approval. Never add private Shared Drive URLs or IDs to the public repo.
+
+## 2026-11-14 02:00 Asia/Bangkok — live-source QA reconciliation (L0–L5)
+
+**Single task chosen:** N01-G acceptance evidence update in **existing draft PR #6**. No new feature PR or publication. Previous checkpoints remain historical evidence.
+
+### L0 — current facts (fresh read)
+- **main HEAD:** `630b9638ff139cfa99c18ca2123ba78c52404f44` (newer than the prior checkpoint's `87ec0eef`). Existing open draft PRs: **#6** (`de28f39387243261078b9beabe4ee7fe6cf92afd` before this edit) and **#10** (`24cb5d3a49d2682d49c303a55f274a550ed33256`, separate first-issue Canva export preflight). Original N01-G **#5 merged**, N02-MOBILE **#3 merged**. Do not duplicate any of them.
+- Current main static QA **PASS**, GitHub Actions [43472403839](https://github.com/infobwd/bwd-newsroom/actions/runs/43472403839); Pages build/deployment workflow **PASS** [43472402014](https://github.com/infobwd/bwd-newsroom/actions/runs/43472402014). These do not prove visual Safari/mobile functionality.
+- Freshly read current main README, AGENTS, MASTER_PLAN, DATA_AND_STORAGE, PUBLISHING_AND_QA, AI_DEVELOPMENT_LOOP, GALLERY_CHAT_UI_PWA_PLAN, N01_G_CHECKPOINT; read branch #6 checkpoint, current Gallery HTML/JS and `data/galleries.json`. **PASS:** catalogue has `galleries: []` (no real album publicly registered). N04-P and PWA remain separate future milestones.
+- School `info@bwd.ac.th` Drive account: **PASS** metadata listing of six BWD Newsroom root folders and Shared Drive academic-year root (17 PDF files plus `01_ภาพกิจกรรม`). **PASS** event-folder hierarchy listing under November 2569 with an Event ID folder. No files moved, uploaded, copied, or published. Private folder IDs/URLs are intentionally excluded from this public checkpoint. `source_visibility_status=access_not_verified` remains **NOT VERIFIED** for the inspected folders/files.
+- Canva design discovery returned no confirmed canonical issue design in this run. Saved design pages, persisted QA, QR comparison, and exports **NOT RUN**. WD Books FLIP03/FLIP04 **NOT RUN** (no reader code changes).
+
+### L1–L3 — acceptance QA
+| Check | Status | Evidence |
+|---|---|---|
+| GitHub main SHA, PR #3/#5 merged and #6/#10 open draft | PASS | GitHub branch and PR API |
+| Main static CI and Pages deployment workflow | PASS | Actions runs linked above |
+| Gallery HTML/JS present and public catalogue empty | PASS | GitHub main file readback |
+| Shared Drive folder layout and November Event ID folder | PASS | School-account Drive listing |
+| Per-file photo sharing, consent, student privacy, rights | NOT VERIFIED | Listing does not prove permission |
+| Actual live Gallery HTTP rendering | NOT RUN | External page fetch unavailable from execution environment |
+| iPhone/iPad Safari, lightbox, touch, orientation, performance | NOT RUN | No real-device/browser session |
+| Local Node Gallery validator rerun | NOT RUN | Only remote CI evidence collected |
+| Canva persisted pages, PDF/photo visual and QR QA | NOT RUN | No approved canonical issue or export |
+| Approved Gallery publication | NOT RUN | No school-reviewed album |
+
+### L4–L5 — gate and next step
+**READY_FOR_SCHOOL_REVIEW — N01-G real-browser/mobile and photo-rights QA still pending.** Preserve PR #6 as **draft**; no main merge or Pages change. Next run should obtain actual browser/mobile evidence (including Safari iPhone/iPad) or a documented device QA artifact, then inspect event-file sharing and school consent before any public album proposal. Existing 17 PDF files remain untouched. PR #10 is independent and must not be treated as an N01-G duplicate.
