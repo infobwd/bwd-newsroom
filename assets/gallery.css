@@ -1,0 +1,50 @@
+/* N01-G approved-only Gallery. Editorial palette shared with main site; no PWA/service worker in this milestone. */
+.gallery-hero{background:linear-gradient(125deg,#0b203a,#173d66);color:#fff;padding:56px 0 54px}
+.gallery-hero .section-label{color:#e4bd6e}.gallery-hero h1{font-family:Kanit,sans-serif;font-weight:600;font-size:clamp(29px,4vw,49px);line-height:1.22;margin:8px 0 12px}
+.gallery-hero h1 span{display:block;color:#f3dfaa}.gallery-hero p:last-child{font-size:14px;line-height:1.8;color:#d9e1ea;margin:0;max-width:680px}
+.gallery-content{padding:55px 0 85px;min-height:430px}
+.gallery-filters{display:grid;grid-template-columns:minmax(200px,1fr) 130px 150px auto;gap:10px;padding:13px;border:1px solid #e3e9ee;border-radius:12px;background:#f7f9fb;margin-bottom:25px}
+.gallery-filters input,.gallery-filters select{height:44px;border:1px solid #dbe3e9;border-radius:8px;background:#fff;padding:0 12px;width:100%;color:#263449;font:400 13px "Noto Sans Thai",sans-serif}
+.gallery-filters input:focus-visible,.gallery-filters select:focus-visible{outline:3px solid #d9b15b}
+.gallery-clear{min-height:44px;border:0;background:transparent;color:#21476d;padding:0 12px;font:500 13px Kanit,sans-serif}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.gallery-card{border:1px solid #e0e6eb;background:#fff;overflow:hidden;border-radius:13px;box-shadow:0 4px 18px #0b203a0b}
+.gallery-cover{aspect-ratio:4/3;background:#eaf0f4;overflow:hidden;position:relative}
+.gallery-cover img{width:100%;height:100%;object-fit:cover}
+.gallery-cover .gallery-pill{position:absolute;bottom:10px;left:10px;background:#112b4ee8;color:#fff;padding:6px 10px;border-radius:6px;font-size:11px}
+.gallery-card-body{padding:17px}
+.gallery-card h3{font:600 19px/1.4 Kanit,sans-serif;color:#112b4e;margin:0 0 5px}
+.gallery-card time{display:block;color:#708094;font-size:12px;margin-bottom:8px}
+.gallery-card p{font-size:12px;color:#64788d;line-height:1.8;min-height:42px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.gallery-open{width:100%;min-height:43px;border:1px solid #d7e1ea;border-radius:8px;background:#f4f7fa;color:#112b4e;font:500 13px Kanit,sans-serif}
+.gallery-card:hover{box-shadow:0 12px 30px #0b203a17}
+.gallery-empty{text-align:center;border:1px dashed #cbd9e5;background:linear-gradient(145deg,#fff,#f7f9fc);padding:58px 18px;border-radius:14px}
+.gallery-empty-symbol{font-size:28px;color:#d9b15b}.gallery-empty h3{font:600 23px Kanit,sans-serif;color:#112b4e;margin:8px 0}.gallery-empty p{font-size:13px;color:#718297;line-height:1.9}
+.gallery-error{padding:20px;border:1px solid #eeccd0;color:#8e293a;background:#fff3f4;border-radius:10px}
+.album-view{padding:0 0 60px}.album-back{display:inline-block;margin:0 0 25px;color:#21476d;text-decoration:none;font:500 14px Kanit,sans-serif}
+.album-head{border-bottom:1px solid #dee6ee;padding-bottom:20px;margin-bottom:25px}
+.album-head h2{font:600 clamp(27px,4vw,42px)/1.35 Kanit,sans-serif;color:#112b4e;margin:4px 0 9px}
+.album-head>p:last-of-type{line-height:1.85;color:#53677d;font-size:14px;max-width:800px}
+.album-meta{font-size:13px;color:#7e8b98}
+.album-related{display:flex;flex-wrap:wrap;gap:10px;margin-top:17px}
+.album-related a{display:inline-flex;align-items:center;min-height:40px;padding:9px 12px;background:#f4f7fa;border:1px solid #dbe3e9;border-radius:8px;color:#173a5e;text-decoration:none;font:500 13px Kanit,sans-serif}
+.album-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.album-photo{display:block;text-align:left;background:#fff;border:1px solid #e1e7ec;border-radius:10px;padding:0;overflow:hidden;color:#20374b}
+.album-photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:#e9eef3}
+.album-photo span{display:block;padding:10px 12px;font-size:12px;line-height:1.5;min-height:40px}
+.album-photo:hover{box-shadow:0 8px 25px #0b203a22}
+.gallery-lightbox{border:0;width:100vw;max-width:100vw;height:100vh;height:100dvh;max-height:100dvh;padding:0;margin:0;background:#071626;color:#fff}
+.gallery-lightbox::backdrop{background:#061322ed}
+.lightbox-shell{height:100%;display:flex;flex-direction:column;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.lightbox-top{display:flex;justify-content:space-between;align-items:center;gap:15px;min-height:56px;padding:7px 18px;color:#cbd9e6;font-size:13px}
+.lightbox-top button{border:1px solid #ffffff48;background:#ffffff15;color:#fff;border-radius:50%;width:43px;height:43px;font-size:20px}
+.lightbox-stage{flex:1;min-height:0;display:grid;grid-template-columns:58px minmax(0,1fr) 58px;align-items:stretch;gap:5px;padding:4px 14px 16px}
+.lightbox-stage button{align-self:center;min-height:54px;background:#ffffff15;border:1px solid #ffffff3a;color:#fff;border-radius:9px;font-size:29px}
+.lightbox-stage button:disabled{opacity:.24;cursor:default}
+.lightbox-stage figure{margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:0;gap:12px}
+.lightbox-stage img{object-fit:contain;max-width:100%;max-height:calc(100dvh - 165px);min-height:0}
+.lightbox-stage figcaption{text-align:center;color:#dce4ef;line-height:1.65;font-size:13px;max-height:4em;overflow:auto}
+@media(max-width:900px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.album-photos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:630px){.head-nav{flex-wrap:wrap;justify-content:end;max-width:210px;gap:6px 10px}.head-nav a:nth-child(2){display:inline}.head-nav a:nth-child(3),.head-nav a:nth-child(4){display:none}.gallery-hero{padding:38px 0 40px}.gallery-content{padding-top:42px}.gallery-filters{grid-template-columns:1fr 1fr}.gallery-search{grid-column:1/-1}.gallery-clear{grid-column:1/-1}.gallery-grid{grid-template-columns:1fr;gap:17px}.album-photos{gap:9px}.lightbox-stage{grid-template-columns:39px minmax(0,1fr) 39px;padding:0 5px 12px;gap:2px}.lightbox-stage button{min-height:44px;font-size:24px}.lightbox-top{padding:5px 10px}.lightbox-stage img{max-height:calc(100dvh - 145px)}}
+@media(max-width:350px){.album-photos{grid-template-columns:1fr}.gallery-hero h1{font-size:28px}}
+@media(prefers-reduced-motion:reduce){.gallery-card,.album-photo{transition:none!important}}

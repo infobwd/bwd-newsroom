@@ -14,3 +14,10 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 
 /* N02 reader and bookshelf styles load from assets/reader.css. */
+
+/* N01-G homepage entry: Gallery is part of the same Newsroom, not a second app. */
+.gallery-teaser{display:flex;align-items:center;justify-content:space-between;gap:25px;background:linear-gradient(130deg,#f5f8fb,#fff9ec);border:1px solid #e1e8ef;border-radius:14px;padding:30px 34px;margin-bottom:72px}
+.gallery-teaser h2{font:600 clamp(24px,3vw,32px)/1.35 Kanit,sans-serif;color:#112b4e;margin:0 0 8px}
+.gallery-teaser p:last-child{font-size:13px;color:#64788d;line-height:1.8;max-width:650px;margin:0}
+.gallery-teaser-link{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:46px;border-radius:8px;background:#112b4e;padding:10px 17px;color:#fff;white-space:nowrap;text-decoration:none;font:500 13px Kanit,sans-serif}
+@media(max-width:630px){.head-nav a:nth-child(2){display:inline}.head-nav a:nth-child(3),.head-nav a:nth-child(4){display:none}.gallery-teaser{flex-direction:column;align-items:stretch;padding:23px 20px;margin-bottom:56px}.gallery-teaser-link{width:100%}}
