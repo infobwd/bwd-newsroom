@@ -104,6 +104,8 @@
   }
   function publicFileLink(value) {
     if (typeof value !== 'string') return null;
+    if (/^assets\/issues\/WDNEWS-\d{4}-\d{4}\/issue-v\d{2,}\.pdf$/.test(value))
+      return new URL('./' + value, document.baseURI).href;
     try {
       const u = new URL(value);
       if (u.protocol !== 'https:') return null;
@@ -132,7 +134,9 @@
     const actions = textEl('div', '', 'dialog-actions');
     const driveLink = publicFileLink(issue.public_pdf_url);
     if (driveLink) {
-      const a = textEl('a', 'เปิด PDF ต้นฉบับ ↗'); a.href = driveLink; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      const localPdf = typeof issue.public_pdf_url === 'string' && /^assets\/issues\//.test(issue.public_pdf_url);
+      const a = textEl('a', localPdf ? 'ดาวน์โหลด PDF ฉบับเต็ม' : 'เปิด PDF ต้นฉบับ ↗'); a.href = driveLink; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      if (localPdf) a.download = issue.id + '-' + issue.approved_version + '.pdf';
       actions.append(a);
     }
     const copy = textEl('button', 'คัดลอกลิงก์ข่าว'); copy.type = 'button';
