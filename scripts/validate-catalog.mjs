@@ -10,6 +10,7 @@ const TEMPLATE = new Set(['WD-01','WD-02','WD-03','WD-04','WD-05']);
 const CATEGORY = new Set(['academic','activity','sports','community','administration','awards','other']);
 const DIGIT_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const IMAGE_MIMES = new Set(['.png', '.jpg', '.jpeg', '.webp']);
+const PDF_ASSET = /^assets\/issues\/WDNEWS-\d{4}-\d{4}\/issue-v\d{2,}\.pdf$/;
 const FORBIDDEN = /(?:\/\.\.|\\|\.\.\/|drive\.google\.com\/uc\?|canva\.com\/design\/|https?:\/\/)/i;
 
 export function isRealDate(date) {
@@ -19,6 +20,10 @@ export function isRealDate(date) {
 }
 export function validAsset(asset) {
   return typeof asset === 'string' && ASSET.test(asset) && !FORBIDDEN.test(asset) && !asset.includes('..');
+}
+export function validPdfAsset(asset, issueId) {
+  return typeof asset === 'string' && PDF_ASSET.test(asset) &&
+    asset.startsWith('assets/issues/' + issueId + '/') && !asset.includes('..');
 }
 export function validateCatalogue(data, { root = ROOT, checkFiles = true } = {}) {
   const errors = [];
@@ -49,8 +54,15 @@ export function validateCatalogue(data, { root = ROOT, checkFiles = true } = {})
       if (checkFiles && !fs.existsSync(path.join(root, p.web_image))) errors.push(label + ': missing local web image');
     }
     if (issue.public_pdf_url) {
-      let u; try { u = new URL(issue.public_pdf_url); } catch (_) { errors.push(at + ': invalid PDF link'); }
-      if (u && !(u.protocol === 'https:' && u.hostname === 'drive.google.com' && /^\/file\/d\/[A-Za-z0-9_-]+\/view\/?$/.test(u.pathname))) errors.push(at + ': PDF link must be an explicitly approved Google Drive file view URL');
+      if (validPdfAsset(issue.public_pdf_url, issue.id)) {
+        if (checkFiles && !fs.existsSync(path.join(root, issue.public_pdf_url))) errors.push(at + ': missing published local PDF file');
+      } else {
+        let u;
+        try { u = new URL(issue.public_pdf_url); } catch (_) { /* Invalid URL is reported below */ }
+        if (!u || !(u.protocol === 'https:' && u.hostname === 'drive.google.com' &&
+          /^\/file\/d\/[A-Za-z0-9_-]+\/view\/?$/.test(u.pathname)))
+          errors.push(at + ': PDF must be a versioned local issue asset or an approved Drive file view URL');
+      }
     }
     if (Object.hasOwn(issue, 'private_drive_folder_id') || Object.hasOwn(issue, 'original_drive_file_id')) errors.push(at + ': private Drive IDs belong in restricted operational records, not public JSON');
   }

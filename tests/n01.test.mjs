@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateCatalogue, validAsset, isRealDate } from '../scripts/validate-catalog.mjs';
+import { validateCatalogue, validAsset, validPdfAsset, isRealDate } from '../scripts/validate-catalog.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'data/catalog.json'), 'utf8'));
@@ -17,6 +17,9 @@ assert.equal(isRealDate('2026-02-30'), false);
 assert.equal(validAsset('assets/issues/WDNEWS-2569-0001/page-01-v01.webp'), true);
 assert.equal(validAsset('https://drive.google.com/file/preview'), false);
 assert.equal(validAsset('../private/image.png'), false);
+assert.equal(validPdfAsset('assets/issues/WDNEWS-2569-0001/issue-v01.pdf','WDNEWS-2569-0001'), true);
+assert.equal(validPdfAsset('assets/issues/WDNEWS-2569-0002/issue-v01.pdf','WDNEWS-2569-0001'), false);
+assert.equal(validPdfAsset('https://drive.google.com/file/d/foo/view','WDNEWS-2569-0001'), false);
 const fixture = {
  id: 'WDNEWS-2569-0001',
  title_th: 'ข่าวที่ผ่านการตรวจรับ (fixture only)',
@@ -32,6 +35,8 @@ const fixture = {
  pages: [{ page_no: 1, web_image: 'assets/issues/WDNEWS-2569-0001/page-01-v01.webp', alt_th: 'ภาพสำหรับทดสอบ' }]
 };
 assert.deepEqual(validateCatalogue({ schema_version: 1, issues: [fixture] }, { checkFiles: false }), []);
+assert.deepEqual(validateCatalogue({ schema_version: 1, issues: [{...fixture, public_pdf_url: 'assets/issues/WDNEWS-2569-0001/issue-v01.pdf'}] }, { checkFiles: false }), []);
+assert.ok(validateCatalogue({ schema_version: 1, issues: [{...fixture, public_pdf_url: '../secret.pdf'}] }, { checkFiles: false }).length);
 for (const wrong of [
   { ...fixture, status: 'draft' },
   { ...fixture, visibility_approved_at: null },
@@ -45,5 +50,6 @@ assert.ok(index.includes('id="search"') && index.includes('id="news-grid"') && i
 assert.ok(index.includes('./assets/styles.css') && index.includes('./assets/app.js'));
 assert.ok(app.includes("fetch('./data/catalog.json'"));
 assert.ok(app.includes('validIssue(issue)') && app.includes('published'));
+assert.ok(app.includes('ดาวน์โหลด PDF ฉบับเต็ม') && app.includes('issue-v'));
 assert.ok(css.includes('@media(max-width:630px)') && css.includes('prefers-reduced-motion'));
 console.log('PASS: N01 schema, no unapproved news, static shell, app wiring and responsive CSS');
