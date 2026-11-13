@@ -15,7 +15,8 @@ const publishedNews=JSON.parse(fs.readFileSync(path.join(ROOT,'data/catalog.json
 const knownIssueIds=new Set((publishedNews.issues||[]).filter(i=>i.status==='published').map(i=>i.id));
 assert.deepEqual(validateGalleries(data,{root:ROOT,knownIssueIds}),[]);
 assert.deepEqual(validateSourceParity(data,{root:ROOT}),[]);
-assert.equal(data.galleries.length,0,'never publish a fabricated Gallery album');
+assert.ok(data.galleries.every(g => g.status === 'published' && g.visibility_approved_at && g.approved_version && g.published_at),
+  'N01-G public albums must be approved published Galleries; genuine approved albums are allowed');
 assert.equal(isRealISODate('2026-11-13'),true);
 assert.equal(isRealISODate('2026-02-30'),false);
 assert.equal(isPublicGalleryAsset('assets/galleries/WDGAL-2569-0001/cover-v01.webp','WDGAL-2569-0001'),true);
@@ -41,6 +42,14 @@ const fixture={
 };
 const valid={schema_version:1,generated_at:'2026-11-13',galleries:[fixture]};
 assert.deepEqual(validateGalleries(valid,{checkFiles:false,knownIssueIds}),[]);
+// A real approved issue may be linked from a Gallery after the first newsletter is published.
+if (knownIssueIds.size) {
+  const approvedIssueId = [...knownIssueIds][0];
+  assert.deepEqual(validateGalleries({
+    ...valid, galleries: [{...fixture, linked_issue_ids: [approvedIssueId]}]
+  }, {checkFiles:false,knownIssueIds}), []);
+}
+assert.ok(!knownIssueIds.has('WDNEWS-2569-9999'), 'Reserved unknown-link test ID must remain unregistered');
 const invalid=[
   {...fixture,status:'draft'},
   {...fixture,visibility_approved_at:null},
@@ -48,7 +57,7 @@ const invalid=[
   {...fixture,cover_image:'assets/galleries/WDGAL-2569-0001/other-v01.webp'},
   {...fixture,private_drive_folder_id:'sensitive'},
   {...fixture,event_id:'EVT-2568-0001'},
-  {...fixture,linked_issue_ids:['WDNEWS-2569-0001']},
+  {...fixture,linked_issue_ids:['WDNEWS-2569-9999']},
   {...fixture,photos:[{...fixture.photos[0],original_drive_file_id:'sensitive'}]},
   {...fixture,photos:[{...fixture.photos[0],web_image:'https://drive.google.com/uc?id=xxx'}]},
   {...fixture,photos:[{...fixture.photos[0],web_image:'assets/galleries/WDGAL-2569-0001/photo01-web-v02.webp'}]},
