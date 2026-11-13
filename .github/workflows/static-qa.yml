@@ -28,6 +28,13 @@ jobs:
           node scripts/validate-catalog.mjs
           node scripts/validate-books.mjs
           node scripts/validate-galleries.mjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify Canva export preparation safeguards (synthetic fixtures only)
+        run: |
+          python -m pip install 'Pillow>=11,<13' 'PyMuPDF>=1.24,<2'
+          python -m unittest discover -s tests -p test_prepare_issue_export.py -v
       - name: Regression tests
         run: |
           node tests/n01.test.mjs
