@@ -3,7 +3,7 @@
 **Date:** 13 November 2026 Asia/Bangkok
 **Branch:** feat/n01-g-public-gallery
 **Base:** main (following merged docs-only PR #4)
-**Status:** CODE IN FEATURE BRANCH; publication blocked pending PR review, CI and school approval. No real student images imported or published.
+**Status:** DRAFT PR #5 OPEN; GitHub Actions static QA PASS; school visual/release approval and real-device/live QA still pending. No student images imported or published.
 
 ## Implemented in this branch
 - \`gallery.html\`: standalone Gallery route within existing BWD Newsroom top navigation; search/year/category filters, empty/error states, album view and full-screen photo dialog.
@@ -22,15 +22,15 @@
 - This branch does not alter reader.html, assets/reader.js, reader.css or GitHub Pages settings.
 
 ## QA evidence to collect
-- GitHub connector readback / diff: PENDING.
+- GitHub connector readback / diff: PASS — 12 scoped files on branch versus main, no N02 reader changes.
 - Node: \`node --check assets/gallery.js && node --check scripts/validate-galleries.mjs\`
 - Data and regression: \`node scripts/validate-galleries.mjs && node tests/n01-gallery.test.mjs\`.
-- Existing N01/N02 tests, GitHub Actions: PENDING.
+- Existing N01/N02 tests: PASS in the same GitHub Actions job (validated job id 131934220862, conclusion success).
 - Manual desktop/iPhone/iPad/real image Gallery visual/touch QA: NOT RUN.
 - Deploy/live Pages: NOT VERIFIED; no newly approved album.
 
 ## Next gates
-1. Review CI/logs and fix errors in same PR rather than create duplicates.
+1. Follow Draft PR #5 (https://github.com/infobwd/bwd-newsroom/pull/5); initial Actions CI completed successfully. Any fixes stay in the same PR.
 2. School reviews Gallery empty-state design and mobile interaction.
 3. Merge code only after school release approval. Merge does not authorize any real student photos.
 4. Secure teacher upload (N04-P) may follow independently after the empty public Gallery UI is stable.
