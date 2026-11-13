@@ -141,7 +141,9 @@
       try { await navigator.clipboard.writeText(link.href); copy.textContent = 'คัดลอกแล้ว'; }
       catch (_) { copy.textContent = 'ไม่สามารถคัดลอกอัตโนมัติได้'; }
     });
-    actions.append(copy); content.append(actions);
+    actions.append(copy);
+    const read = textEl('a', 'อ่านแบบพลิกหน้า ↗');read.href = './reader.html?issue=' + encodeURIComponent(issue.id);actions.append(read);
+    content.append(actions);
     if (!dialog.open) dialog.showModal();
     if (updateHash) history.pushState(null, '', '#issue=' + encodeURIComponent(issue.id));
   }
@@ -163,6 +165,26 @@
     window.addEventListener('hashchange', routeHash);
     window.addEventListener('popstate', routeHash);
   }
+
+  function renderBooks(data) {
+    const node=$('books-list'), emptyNode=$('books-empty');if(!node||!emptyNode)return;
+    const books=Array.isArray(data?.books)?data.books.filter(b=>b&&b.status==='published'&&b.approved_at&&b.published_at&&
+      typeof b.title_th==='string'&&b.title_th.trim()&&Array.isArray(b.contents)&&b.contents.length&&
+      b.contents.every(c=>published.some(i=>i.id===c.issue_id&&i.approved_version===c.approved_version))&&
+      Array.isArray(b.pages)&&b.pages.length&&b.pages.every((p,i)=>p.page_no===i+1&&validAsset(p.web_image))):[];
+    books.sort((a,b)=>String(b.date_end).localeCompare(String(a.date_end)));
+    node.replaceChildren();
+    books.forEach(b=>{
+      const card=textEl('article','','books-card'),cover=textEl('div','','books-card-cover');
+      const img=document.createElement('img');img.src=new URL('./'+b.pages[0].web_image,document.baseURI).href;
+      img.alt=b.pages[0].alt_th||'ปกหนังสือ';img.loading='lazy';img.addEventListener('error',()=>{img.replaceWith(textEl('p','ภาพปกไม่พร้อมใช้งาน'));},{once:true});
+      cover.append(img);const body=textEl('div','','books-card-body');
+      body.append(textEl('h3',b.title_th),textEl('p',(b.contents.length)+' ข่าว · '+b.pages.length+' หน้า'));
+      const open=textEl('a','เปิดอ่านแบบพลิกหน้า ↗');open.href='./reader.html?book='+encodeURIComponent(b.id);
+      body.append(open);card.append(cover,body);node.append(card);
+    });emptyNode.hidden=books.length>0;
+  }
+
   async function init() {
     setupEvents();
     try {
@@ -176,6 +198,7 @@
         ids.add(issue.id); return true;
       }).sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
       buildFilters(); render(); routeHash();
+      try {const bres=await fetch('./data/books.json',{cache:'no-store'});if(!bres.ok)throw new Error('Book manifest unavailable');const bdata=await bres.json();renderBooks(bdata);} catch(e) { console.warn('BWD bookshelf loading error',e); }
     } catch (e) {
       console.error('BWD Newsroom catalog error', e);
       loadFailed = true; grid.setAttribute('aria-busy', 'false'); error.hidden = false;

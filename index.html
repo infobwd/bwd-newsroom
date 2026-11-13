@@ -8,6 +8,7 @@
   <title>BWD Newsroom | จดหมายข่าวโรงเรียนบ้านวังด้ง</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/styles.css">
+  <link rel="stylesheet" href="./assets/reader.css">
   <script defer src="./assets/app.js"></script>
 </head>
 <body>
@@ -75,9 +76,10 @@
           <div><p class="section-label">02 / THE COLLECTION</p><h2 id="books-title">หนังสือข่าวรวมเล่ม</h2></div>
           <p class="section-note">Flipbook & PDF Collection</p>
         </div>
-        <div class="books-empty">
+        <div class="books-list" id="books-list" aria-live="polite"></div>
+        <div class="books-empty" id="books-empty">
           <div class="book-mini" aria-hidden="true"><span>BWD<br>NEWS</span><b>BOOKS</b></div>
-          <div><span class="soon">COMING NEXT · N02 / N03</span><h3>จากข่าวรายฉบับ สู่หนังสือความทรงจำ</h3><p>เตรียมระบบรวมเล่มรายปักษ์ รายเดือน และรายปี พร้อมเปิดอ่านแบบพลิกหน้ากระดาษและดาวน์โหลด PDF โดยใช้เฉพาะข่าวที่ได้รับอนุมัติ</p></div>
+          <div><span class="soon">N02 READER DEMO · N03 PDF NEXT</span><h3>จากข่าวรายฉบับ สู่หนังสือความทรงจำ</h3><p>หนังสือรวมเล่มจะแสดงเมื่อผ่านการตรวจรับและอนุมัติแล้ว ในระหว่างนี้สามารถทดลองเปิดหนังสือตัวอย่างของระบบอ่านได้</p><p><a class="demo-link" href="./reader.html?demo=1">ทดลองพลิกหน้าแบบ WD Books ↗</a></p></div>
         </div>
       </section>
       <section class="about" id="about" aria-labelledby="about-title">
