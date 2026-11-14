@@ -21,3 +21,118 @@
 .gallery-teaser p:last-child{font-size:13px;color:#64788d;line-height:1.8;max-width:650px;margin:0}
 .gallery-teaser-link{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:46px;border-radius:8px;background:#112b4e;padding:10px 17px;color:#fff;white-space:nowrap;text-decoration:none;font:500 13px Kanit,sans-serif}
 @media(max-width:630px){.head-nav a:nth-child(2){display:inline}.head-nav a:nth-child(3),.head-nav a:nth-child(4){display:none}.gallery-teaser{flex-direction:column;align-items:stretch;padding:23px 20px;margin-bottom:56px}.gallery-teaser-link{width:100%}}
+
+/* UI-MOTION / 2569: restrained desktop sticky navigation + 3D paper hero.
+   Browsing pages only. reader.html retains its immersive controls unchanged. */
+@media (min-width:901px) {
+  .site-header {
+    position:sticky;
+    top:0;
+    z-index:60;
+    height:84px;
+    background:rgba(255,255,255,.97);
+    transition:height .24s ease,box-shadow .24s ease,background-color .24s ease;
+  }
+  .site-header.is-compact {
+    height:64px;
+    background:rgba(255,255,255,.985);
+    box-shadow:0 6px 22px rgba(11,32,58,.12);
+  }
+  .site-header .brand-mark {transition:width .24s ease,height .24s ease,font-size .24s ease}
+  .site-header.is-compact .brand-mark {width:42px;height:42px;font-size:21px}
+  .site-header .brand-copy small {max-height:22px;opacity:1;overflow:hidden;transition:max-height .24s ease,opacity .18s ease}
+  .site-header.is-compact .brand-copy small {max-height:0;opacity:0}
+  .site-header .head-nav a {position:relative;padding:10px 0}
+  .site-header .head-nav a::after {content:"";position:absolute;bottom:3px;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .22s ease}
+  .site-header .head-nav a:hover::after,
+  .site-header .head-nav a.active::after,
+  .site-header .head-nav a[aria-current="page"]::after {transform:scaleX(1)}
+}
+@supports (backdrop-filter:blur(10px)) {
+  @media (min-width:901px) {
+    .site-header.is-compact {background:rgba(255,255,255,.91);backdrop-filter:blur(12px)}
+  }
+}
+/* Both the News and Gallery hero share one book illustration; no image/issue assets. */
+.hero-art .hero-book-scene {
+  position:absolute;inset:0;perspective:1100px;
+  transform:rotateX(var(--bwd-tilt-x,0deg)) rotateY(var(--bwd-tilt-y,0deg));
+  transition:transform .3s ease-out;pointer-events:none;
+}
+.hero-art .hero-book {
+  position:absolute;left:52%;top:49%;width:248px;height:336px;
+  transform:translate(-28%,-50%) rotate(-5deg);transform-style:preserve-3d;
+  animation:bwd-book-arrive .8s ease-out both;
+  filter:drop-shadow(0 17px 15px rgba(0,0,0,.3));
+}
+.hero-book .paper {
+  position:absolute;inset:0;left:0;top:0;width:100%;height:100%;
+  transform:none;border-radius:3px 8px 8px 3px;box-sizing:border-box;
+}
+.hero-book .paper-back {
+  background:linear-gradient(150deg,#fefcf6,#f0eee6);
+  box-shadow:5px 0 0 #e4dac7,8px 0 0 #cbd3dc,14px 16px 32px #0004;
+  overflow:hidden;
+}
+.paper-inside {
+  display:flex;flex-direction:column;height:100%;padding:23px 21px;
+  border-left:7px solid #dad1bf;color:var(--navy);background:linear-gradient(100deg,#eee7d8,#fffdf8 15%,#faf9f3);
+}
+.paper-inside-kicker{font-size:8px;font-weight:700;letter-spacing:1.1px;color:#a28142;border-bottom:2px solid var(--gold);padding-bottom:9px}
+.paper-inside-title{font:700 28px/1.14 Kanit,sans-serif;margin:16px 0 13px}
+.paper-inside-art{height:102px;position:relative;overflow:hidden;background:linear-gradient(145deg,#d9e3e7 0%,#a2bdd0 48%,#4e789d 48%,#153e64 100%)}
+.paper-inside-art::before{content:"";position:absolute;bottom:0;left:13px;width:90px;height:62px;background:#294d6d;clip-path:polygon(0 65%,52% 3%,100% 65%,100% 100%,0 100%)}
+.paper-inside-art span{position:absolute;right:7px;bottom:7px;color:#fff;font:500 9px Kanit,sans-serif}
+.paper-inside .paper-lines{padding-top:14px}
+.paper-inside-footer{margin-top:auto;padding-top:10px;border-top:1px solid #d2c8b5;font-size:7px;letter-spacing:1.5px;color:#58708a}
+.paper-inside-footer span{color:#ae8747}
+.hero-book .paper-flap {
+  position:absolute;inset:0;transform-origin:left center;
+  transform-style:preserve-3d;
+  animation:bwd-book-open 2.3s cubic-bezier(.22,.74,.25,1) .5s both;
+}
+.hero-book .paper-front {
+  display:flex;flex-direction:column;transform:translateZ(1px);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  padding:22px;background:#fcfbf6;box-shadow:0 5px 15px #0b203a35;
+}
+.hero-book .paper-verso {
+  display:flex;flex-direction:column;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  transform:rotateY(180deg) translateZ(1px);
+  padding:23px 18px 19px;background:linear-gradient(120deg,#f5f0e4,#fffaf0);
+  color:var(--navy);box-shadow:inset -8px 0 18px #0b203a12;
+  border-right:7px solid #e0d7c8;
+}
+.paper-verso-label{font:600 8px Kanit,sans-serif;color:#9d7a3f;letter-spacing:.9px}
+.paper-verso-rule{width:45%;height:4px;background:var(--gold);margin:14px 0 22px}
+.paper-verso-quote{font:600 25px/1.38 Kanit,sans-serif}
+.paper-verso-lines{display:flex;flex-direction:column;gap:8px;margin-top:25px}
+.paper-verso-lines i{height:4px;width:100%;background:#d6dce0}
+.paper-verso-lines i:nth-child(2){width:85%}
+.paper-verso-lines i:nth-child(3){width:94%}
+.paper-verso-lines i:nth-child(4){width:70%}
+.paper-verso-footer{margin-top:auto;border-top:1px solid #d6cfc1;padding-top:10px;font:500 9px Kanit,sans-serif}
+@keyframes bwd-book-arrive {
+  from{opacity:0;transform:translate(-28%,-46%) rotate(-5deg) scale(.94)}
+  to{opacity:1;transform:translate(-28%,-50%) rotate(-5deg) scale(1)}
+}
+@keyframes bwd-book-open {
+  0%,13%{transform:rotateY(-6deg)}
+  72%{transform:rotateY(-155deg)}
+  100%{transform:rotateY(-142deg)}
+}
+@media (min-width:631px) and (max-width:900px) {
+  .hero-art .hero-book{transform:translate(-28%,-50%) rotate(-5deg) scale(.78);animation:none}
+  .hero-book .paper-flap{animation:none;transform:rotateY(-142deg)}
+}
+@media (max-width:630px) {
+  .hero-art .hero-book{top:55%;transform:translate(-28%,-44%) rotate(-5deg) scale(.84);animation:none}
+  .hero-book .paper-flap{animation:none;transform:rotateY(-142deg)}
+  .hero-art .hero-book-scene{transform:none}
+}
+@media (prefers-reduced-motion:reduce) {
+  .site-header,.site-header *,.hero-art .hero-book-scene{transition:none!important}
+  .hero-art .hero-book{animation:none!important;opacity:1}
+  .hero-book .paper-flap{animation:none!important;transform:rotateY(-142deg)}
+  .hero-art .hero-book-scene{transform:none!important}
+}

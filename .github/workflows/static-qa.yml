@@ -18,6 +18,7 @@ jobs:
         run: |
           node --check assets/app.js
           node --check assets/gallery.js
+          node --check assets/ui-motion.js
           node --check assets/reader.js
           node --check assets/reader-geometry.js
           node --check scripts/validate-catalog.mjs
@@ -39,5 +40,6 @@ jobs:
         run: |
           node tests/n01.test.mjs
           node tests/n01-gallery.test.mjs
+          node tests/n01-ui-motion.test.mjs
           node tests/n02.test.mjs
           node tests/n02-mobile.test.mjs
