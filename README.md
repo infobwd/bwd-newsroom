@@ -3,7 +3,7 @@
 **Project:** โรงเรียนบ้านวังด้ง สพป.กาญจนบุรี เขต 4  
 **Repo:** https://github.com/infobwd/bwd-newsroom  
 **Target GitHub Pages:** https://infobwd.github.io/bwd-newsroom/  
-**Status (13 Nov 2026, GitHub readback):** N01/N02/N02-MOBILE PR #3 merged (PR #3 merge commit `0bbfc9cd`); publication/site-device verification must be confirmed separately. Gallery/photo workflow/PWA are planned, not implemented.
+**Status (14 Nov 2026, GitHub readback):** N01/N02/N02-MOBILE and N01-G UI are merged; the first school-approved WD’NEWS issue `WDNEWS-2569-0001` and its five-photo `WDGAL-2569-0001` album are published. Static QA and live public HTTP image/PDF checks passed; actual iPhone/iPad visual QA remains separate. Chat-led photo review is in use; authenticated teacher upload UI, Drive-direct public image hosting, PDF collection compiler and PWA offline are not yet implemented.
 
 BWD Newsroom is planned as a public, mobile-first archive of approved WD’NEWS school newsletters, with a searchable issue catalogue, multi-layout Canva templates, photo-based e-books, realistic page-turn reading like WD Books, and compiled PDFs by **half-month (รายปักษ์)**, month, semester, and year.
 
@@ -19,8 +19,8 @@ BWD Newsroom is planned as a public, mobile-first archive of approved WD’NEWS 
 ## Ownership boundaries
 
 - **Canva:** design masters WD-01–WD-05, single canonical Design ID per news issue; do not confuse draft preview with persisted design.
-- **Google Drive:** school account folder named **BWD Newsroom | คลังจดหมายข่าวโรงเรียนบ้านวังด้ง** for originals, drafts, high-resolution published exports, PDFs, archive. Private folder identifiers and draft contents are deliberately not published here.
-- **GitHub Pages:** search, public catalogue metadata, approved low-size web images and flipbook display; large print PDFs remain in school Drive and are publicly linked only at file level after approval.
+- **Google Drive:** the school-selected academic-year Shared Drive is the primary activity-photo / existing-PDF intake, with restricted review and approved-version WebP storage. A pre-existing separate BWD Newsroom archive may keep Canva exports and approval evidence, but not duplicate the same original photo binaries. Drive folder IDs and restricted records are not published here.
+- **GitHub Pages:** deployed news/Gallery/reader, public catalogue metadata, approved optimized web images and the first vetted one-page PDF. Larger future print/PDF collections may use carefully approved public file-level storage elsewhere. Direct Drive WebP serving is a *pilot*, not the current production image provider.
 
 ## Phases
 
@@ -31,9 +31,9 @@ BWD Newsroom is planned as a public, mobile-first archive of approved WD’NEWS 
 | N02 | Flipbook + N02-MOBILE immersive reader (merged PR #3) | MERGED; real-device QA separate |
 | N03 | Image-to-PDF biweekly / monthly book workflow | NOT STARTED |
 | N04 | Guarded import, long-term archive; N04-P photo chat workflow | IMPLEMENTATION PENDING |
-| N01-G | Public activity Gallery | PLANNED; no live school Gallery |
+| N01-G | Public activity Gallery | MERGED; 1 approved public event album (5 photos); live HTTP QA pass |
 | N04-W | Installable read-only PWA | PLANNED; not implemented |
-| Deploy | GitHub Pages live/device QA | VERIFY INDEPENDENTLY FROM MERGE |
+| Deploy | GitHub Pages live/device QA | LIVE HTTP PASS for approved issue and Gallery; manual iPhone/iPad QA PENDING |
 
 **รายปักษ์** is defined for planning as days 1–15 and 16–the last day of each month, not a rolling 14-day window.
 
@@ -51,13 +51,13 @@ WD Books source: https://github.com/infobwd/manual. Its StPageFlip 2.0.7 based e
 
 ## Operational next step
 
-Verify N02 demo reader and GitHub Pages deployment. Publish real news only after Canva export and school approval; never publish a fabricated issue.
+Keep the first approved issue/Gallery available with verified public URLs. Next: manual iPhone/iPad QA, guarded teacher intake, storage review, and N03 book compiler. Do not publish unapproved source images or treat Drive file links as permanent image endpoints.
 
 ## N01/N02 checkpoint and Gallery/PWA extension (13 Nov 2026)
 
 - PR #1 (N01), PR #2 (N02) and PR #3 (N02-MOBILE) have been merged; keep existing archive, bookshelf and immersive demo reader. This is not evidence any real student photo/PDF is published.
 - Current N02-MOBILE source/checkpoint in main guides safe-area, page flip, zoom and fallback behavior; do not replace it for Gallery/PWA.
-- No real news published yet; Canva/Drive export approval and actual deployed browser/device QA are still required.
+- Historical checkpoint (13 Nov): no real news was published at that time. As of 14 Nov, the first real issue and approved Gallery are published; only actual-device visual QA is still pending.
 - Google Drive images/PDF can be imported through an authenticated editorial workflow, then optimized approved public web images go into Pages. Direct private Drive hotlinking is not production image delivery; link approved PDF files individually when permitted.
 - AI Loop runtime/schedule is separate from repository documentation; check actual Automation state when running it. Do not disable other automations as part of this Gallery/PWA work.
 
@@ -68,12 +68,16 @@ Verify N02 demo reader and GitHub Pages deployment. Publish real news only after
 - **N04-P:** Teachers upload to school Shared Drive through authenticated mobile UI; image curation and separate Gallery/newsletter approval run **by command in ChatGPT**, not via an extra Curator Dashboard.
 - **N04-W:** Future public-reading PWA with install metadata, project-scoped offline shell/cache and update notification. Preserve N02-MOBILE immersive reader. No new Supabase project for MVP.
 - Keep the academic-year selected Drive folder's existing 17 PDFs untouched; never automatically expose original school/student photos.
-- Detailed contract: [docs/GALLERY_CHAT_UI_PWA_PLAN.md](docs/GALLERY_CHAT_UI_PWA_PLAN.md). This plan does NOT deliver a new upload service, live Gallery or PWA yet.
+- Detailed contract: [docs/GALLERY_CHAT_UI_PWA_PLAN.md](docs/GALLERY_CHAT_UI_PWA_PLAN.md). N01-G public Gallery now exists; upload service/PWA remain pending.
 
 ## N01-G Public Gallery implementation (feature branch)
 
 - Branch `feat/n01-g-public-gallery`: approved-only `gallery.html` with album search/year/category filters, responsive cards, deep link `#album=WDGAL-...`, full-screen lightbox and related WDNEWS links.
-- New `data/galleries.json` catalogue is deliberately empty until the school approves actual albums. Future per-album records live at `data/galleries/<gallery-id>.json`. No Drive originals or student photos are published by the UI work.
+- Historical implementation checkpoint: `data/galleries.json` was empty before approval. It now holds one approved public album; the site's public images are versioned derivatives, never the original Drive photos.
 - Validation: `node scripts/validate-galleries.mjs` and `node tests/n01-gallery.test.mjs`. These checks also run in GitHub Actions.
 - This is **N01-G only**; authenticated teacher upload, AI image curation through ChatGPT and installation/offline PWA remain N04-P/N04-W.
 - Checkpoint: [N01-G](docs/N01_G_CHECKPOINT.md). Publication and real-device/browser QA are independent gates; feature branch/PR is not automatically live.
+
+## Drive-first WebP pilot (14 Nov 2026)
+
+The school-owner-selected academic-year Shared Drive now stores versioned WebP derivatives in `03_ภาพเว็บ_รอตรวจ` and `04_ภาพเว็บ_เผยแพร่`. These files do **not** prove anonymous access or reliable hotlink delivery. Existing GitHub Pages image paths remain live; no auto-publication from Drive, and no new backend was deployed. See [Drive-first WebP pilot](docs/DRIVE_FIRST_WEBP_PILOT.md).

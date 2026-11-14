@@ -3,7 +3,7 @@
 ## 1. Three systems / no duplicate sources of truth
 
 - **GitHub infobwd/bwd-newsroom**: source of truth for public news manifest, public publication status, searchable news copy, approved asset path, version and compiled book manifest.
-- **Google Drive: BWD Newsroom | คลังจดหมายข่าวโรงเรียนบ้านวังด้ง**: source of truth for original photos, approved full-resolution Canva PNG/PDF, book PDFs, archival files; the school account manages access.
+- **Google Drive:** The school-owned Shared Drive academic-year folder selected by the owner is the primary original-photo/PDF intake. The existing BWD Newsroom Drive archive may still store Canva masters/exports and restricted evidence; do not duplicate originals between these trees. The school account manages access.
 - **Canva**: layout/design workspace; one canonical design ID per published news issue and independent master design(s) for WD-01..WD-05.
 - Never use a temporary Canva thumbnail URL as a permanent public asset. Never hotlink a Google Drive preview URL as a production image.
 - Private Drive folder IDs, private Canva collaboration tokens, credentials and individual consent records must not be committed into this public repository.
@@ -147,3 +147,13 @@ Full specification: [GALLERY_CHAT_UI_PWA_PLAN.md](GALLERY_CHAT_UI_PWA_PLAN.md). 
 - Existing WDNEWS issue may reference `event_id` and `related_gallery_ids`, but an issue remains valid without a Gallery. Gallery and issue image subsets/approval gates are separate.
 - The academic-year school Shared Drive can receive `01_ภาพกิจกรรม/<month>/<event-id>` in a later implementation. Existing `03_Source_Photos` should index/shortcut original files, not duplicate large image binaries.
 - Publishing generates approved optimized web image derivatives, with stable versioned paths and separate approval history; do not hotlink Google Drive thumbnails. PWA may cache only bounded public derivatives, never private originals.
+
+## 12. Drive-first WebP pilot and public-delivery decision (14 Nov 2026)
+
+The school-selected academic-year Shared Drive now contains `01_ภาพกิจกรรม` (original events), `02_จดหมายข่าวย้อนหลัง_PDF` (17 preserved PDFs), `03_ภาพเว็บ_รอตรวจ` (private review) and `04_ภาพเว็บ_เผยแพร่` (approved derivative copies). The first approved album's five web WebPs and five thumbnails have been stored and read back in the approved-derivative area. No original event photo was moved or broadly shared.
+
+**Do not interpret an approved-derivative folder name as verified public Viewer access or an image CDN.** Drive Viewer pages and temporary `thumbnailLink` URLs are not reliable production `image/webp` URLs. The existing first-party GitHub Pages Gallery paths and manifests remain the live production source; no new provider is activated from this pilot.
+
+Only if approved image rights, per-file anonymous Viewer access, stable image-byte responses, cache/security/withdrawal QA and live anonymous-device tests are all verified may a later PR introduce an explicit vetted remote image provider. Keep current versioned GitHub image assets as rollback until the replacement is proven. Do not put private Drive file/folder IDs, authentication headers or editor URLs into the public manifest.
+
+See [DRIVE_FIRST_WEBP_PILOT.md](DRIVE_FIRST_WEBP_PILOT.md) for exact folder naming, test gates, storage thresholds and chat-first operating flow. This pilot does not authorize new Supabase, Auth, backend or PWA work.
