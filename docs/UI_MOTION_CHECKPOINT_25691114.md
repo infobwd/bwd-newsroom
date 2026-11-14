@@ -30,8 +30,8 @@
 | GitHub persisted-file readback, two hero variants, nav anchors, static isolation | PASS | Re-read feature branch after updates; 17 source checks |
 | JavaScript syntax | PASS | Parsed new JS in V8 |
 | CSS delimiter consistency | PASS | Curly braces balance verified |
-| CI Node script + N01/N02 regressions | PENDING | GitHub Actions Static QA: https://github.com/infobwd/bwd-newsroom/actions/runs/43581083679 |
-| Live public Pages content smoke | PENDING | PR-triggered smoke: https://github.com/infobwd/bwd-newsroom/actions/runs/43581083698 — only main deployment, NOT a preview of this PR |
+| CI Node script + N01/N02 regressions | PASS | GitHub Actions Static QA run #53: https://github.com/infobwd/bwd-newsroom/actions/runs/43581158427 (success) |
+| Live public Pages content smoke | PASS (existing main only) | PR-triggered smoke run #17: https://github.com/infobwd/bwd-newsroom/actions/runs/43581158531 (success); this is NOT branch preview nor live UI verification |
 | Desktop browser 1280+/1440 hover + scroll screenshot | NOT RUN | Browser visual session needed |
 | Tablet/mobile responsive, real-device reduced motion | NOT RUN | Must verify mobile 360–430, tablet 768–1024 |
 | Reader StPageFlip/zoom/touch/TOC interaction | NOT RUN | Reader files untouched is source isolation, not device QA |
