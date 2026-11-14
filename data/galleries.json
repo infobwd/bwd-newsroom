@@ -133,7 +133,9 @@
           "sha256": "5d64be209fb6f613c1b5d6c690ee50bb23a83fdbe4636a533940f407592ac40d"
         }
       ],
-      "linked_issue_ids": []
+      "linked_issue_ids": [
+        "WDNEWS-2569-0002"
+      ]
     },
     {
       "gallery_id": "WDGAL-2569-0001",
