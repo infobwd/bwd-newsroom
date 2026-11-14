@@ -147,3 +147,31 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 
 ### L4–L5 — gate and next action
 **READY_FOR_SCHOOL_REVIEW — real-device/mobile and source-rights evidence pending.** The first album **is already public from PR #13**; do not claim an empty public Gallery or try to reverse publication without a separate explicit safety decision. Preserve this PR #6 as **draft/unmerged**. Next independent task: review actual published five-photo Gallery on iPhone/iPad Safari (layout, image loading, lightbox, keyboard and touch) and audit exact source-photo consent/rights and EXIF with school authority; independently assess the new event `EVT-2569-0002` before any proposed publication. No additional photos, PDF files, Drive links or secrets were published by this checkpoint.
+
+
+## 2026-11-14 08:03 Asia/Bangkok — current public catalogue reconciliation (L0–L5)
+
+**Single task:** N01-G acceptance/status reconciliation on existing **draft PR #6**. This entry supersedes older statements above that the public Gallery is empty. No new PR, no publication or main merge.
+
+### L0 — verified fresh sources
+- GitHub main HEAD **`529d17dacc3de0bb2280ee4f4325f0b1e9c49fbb`**. Open draft PRs **#6** (this QA checkpoint) and **#15** (Drive-first WebP/chat publishing documentation). Original N01-G #5 and N02-MOBILE #3 were merged earlier. The main SHA is newer than all previous checkpoints.
+- Read main README, AGENTS, MASTER_PLAN, DATA_AND_STORAGE, PUBLISHING_AND_QA, AI_DEVELOPMENT_LOOP, GALLERY_CHAT_UI_PWA_PLAN, N01_G_CHECKPOINT, N02_MOBILE_CHECKPOINT and current `data/galleries.json` / `data/catalog.json`. Some baseline documentation still describes the Gallery as planned/empty; current catalogues are authoritative for **public metadata**.
+- **Current public manifests:** `WDGAL-2569-0001` has **5** registered WebP photos; `WDGAL-2569-0002` has **11** registered WebP photos. Both are marked `published` with non-null `visibility_approved_at`. `WDNEWS-2569-0001` and `WDNEWS-2569-0002` are also marked `published`. These are *metadata claims*, not independent evidence of consent or school authorization.
+- Main SHA GitHub Actions **PASS**: static QA [43531529386](https://github.com/infobwd/bwd-newsroom/actions/runs/43531529386), live Pages smoke [43531529398](https://github.com/infobwd/bwd-newsroom/actions/runs/43531529398), Pages deployment [43531527815](https://github.com/infobwd/bwd-newsroom/actions/runs/43531527815). Workflow smoke PASS is not physical iPhone/iPad Safari proof.
+- School-account Drive metadata **PASS**: Newsroom root contains six expected folders; academic-year Shared Drive root has `01_ภาพกิจกรรม`, `02_จดหมายข่าวย้อนหลัง_PDF`, `03_ภาพเว็บ_รอตรวจ`, `04_ภาพเว็บ_เผยแพร่`. November 2569 photo folder contains two Event ID folders `EVT-2569-0001` and `EVT-2569-0002`. Private IDs/links are deliberately not recorded in this public checkpoint. The original PDFs were not moved or changed.
+- Canva saved canonical design/pages, exported image parity and QR: **NOT RUN**; no Canva edits. WD Books reference: **NOT RUN** because no flipbook code changes.
+
+### L1–L3 — QA
+| Check | Result | Evidence / limitation |
+|---|---|---|
+| Actual main SHA and two existing draft PRs | PASS | GitHub branch and PR API |
+| Public Gallery/issue catalogue readback | PASS | 2 galleries / 16 photo entries; 2 published issue entries |
+| Main static CI, Pages smoke, deployment workflows | PASS | Three successful runs above |
+| School Shared Drive folder layout and Event ID presence | PASS | School-account metadata listing |
+| Browser-rendered visual/touch, Safari iPhone/iPad, performance | NOT RUN | No real-device or browser session performed in this loop |
+| Per-photo consent, authorization, GPS/EXIF and image visual QA | NOT VERIFIED | Published manifest flags do not independently prove source rights |
+| Canva persisted design, export and QR parity | NOT RUN | No canonical design inspection this loop |
+| Local Node validator re-execution | NOT RUN | GitHub Actions evidence used, not a local checkout |
+
+### L4–L5 — gate and next action
+**READY_FOR_SCHOOL_REVIEW — published content exists; source-permission and real-device QA remain unverified.** Do not describe the public Gallery as empty. No automatic photo upload, no additional public manifest, no modification of published images, no merge/deploy. Preserve PR #6 draft. Next loop should prioritize independent permission evidence and iPhone/iPad Safari Gallery review for the two existing published albums; investigate any mismatch before proposing more images. Keep private Drive URLs, source photo identifiers and consent records out of the public repository.
