@@ -53,11 +53,7 @@
     field.focus({preventScroll:true});
     rootStyle.scrollBehavior=originalBehavior;
   });
-  const banner=document.getElementById('app-network-banner');
-  const setOnline=()=>{if(banner)banner.hidden=navigator.onLine;};
-  window.addEventListener('online',setOnline);
-  window.addEventListener('offline',setOnline);
-  setOnline();
+  // Online/offline banners are owned by BWDNotify on every page, including Reader.
 
   // Original select controls remain the single source of filter state and desktop UI.
   // The mobile dialog mirrors their options only while open; it never maintains a second catalogue.
@@ -139,16 +135,22 @@
     function notifyUpdate(){
       if(!reg.waiting||!navigator.serviceWorker.controller||updateShown)return;
       updateShown=true;
-      const region=document.createElement('div');
-      region.className='app-update-notice';
-      region.setAttribute('role','status');
-      region.textContent='มีเวอร์ชันใหม่ของ BWD Newsroom';
-      const button=document.createElement('button');button.type='button';button.textContent='อัปเดต';
-      region.append(button);document.body.append(region);
       let requested=false;
-      button.addEventListener('click',()=>{
-        if(document.querySelector('dialog[open]')){region.firstChild.textContent='ปิดหน้าที่กำลังอ่านก่อนอัปเดต';return;}
-        requested=true;reg.waiting?.postMessage({type:'SKIP_WAITING'});
+      window.BWDNotify?.banner('pwa-update','มีเวอร์ชันใหม่ของ BWD Newsroom พร้อมใช้งาน',{
+        type:'info',title:'อัปเดตแอป',
+        actionText:'อัปเดต',
+        onAction:()=>{
+          const reading=document.querySelector('dialog[open]');
+          if(reading){
+            window.BWDNotify?.toast('ปิดหน้าที่กำลังอ่านก่อนอัปเดต',{
+              type:'warning',mount:reading,key:'pwa-update-wait'
+            });
+            return;
+          }
+          if(!reg.waiting)return;
+          requested=true;reg.waiting.postMessage({type:'SKIP_WAITING'});
+          window.BWDNotify?.dismissBanner('pwa-update');
+        }
       });
       navigator.serviceWorker.addEventListener('controllerchange',()=>{if(requested)location.reload();},{once:true});
     }
