@@ -35,7 +35,7 @@ assert.match(css,/#issue-dialog \.dialog-tools-options/);
 assert.match(css,/#issue-dialog \.dialog-actions \.dialog-share-primary/);
 assert.match(css,/padding:8px 15px calc\(8px \+ env\(safe-area-inset-bottom\)\)/);
 assert.match(css,/@media\(prefers-reduced-motion:reduce\)/);
-assert.match(sw,/bwd-public-shell-2569-11-15-v16-issue-image-first/);
+assert(Number(sw.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=16,'new PWA shell retains issue image-first UX');
 const shell=sw.slice(sw.indexOf('const SHELL='),sw.indexOf('const PATHS='));
 assert.doesNotMatch(shell,/assets\/issues\/|assets\/galleries\/|data\/|\.pdf/);
 assert.match(workflow,/node tests\/issue-image-first\.test\.mjs/);
