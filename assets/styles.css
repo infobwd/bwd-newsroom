@@ -396,3 +396,33 @@ body.newsroom-page.issue-background-locked{
     grid-column:1/-1;order:1;
   }
 }
+
+
+/* Approved Gallery link inside the issue reading pane. Never float on a Canva image. */
+#issue-dialog .dialog-gallery-links:empty{display:none}
+#issue-dialog .dialog-gallery-links{display:grid;gap:9px;margin:14px 2px 0}
+#issue-dialog .dialog-gallery-link{
+  display:flex;align-items:center;gap:12px;min-height:66px;
+  padding:10px 12px;border:1px solid #e4d2a4;border-radius:12px;
+  background:#fbf8ef;color:var(--navy);text-decoration:none;
+  font-family:Kanit,"Noto Sans Thai",sans-serif;
+}
+#issue-dialog .dialog-gallery-link:hover{background:#f5edda;border-color:#caa45b}
+#issue-dialog .dialog-gallery-link:focus-visible{outline:3px solid #c28f28;outline-offset:2px}
+#issue-dialog .dialog-gallery-icon{
+  display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;
+  border-radius:10px;background:#112b4e;color:#efd18e;
+}
+#issue-dialog .dialog-gallery-text{display:flex;flex:1;min-width:0;flex-direction:column;gap:2px}
+#issue-dialog .dialog-gallery-text strong{font-size:14px;line-height:1.4;font-weight:600}
+#issue-dialog .dialog-gallery-text small{
+  font-size:11px;line-height:1.5;color:#65748a;
+  overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+#issue-dialog .dialog-gallery-arrow{flex:0 0 auto;font-size:26px;line-height:1;color:#a17b34}
+@media(max-width:630px){
+  #issue-dialog .dialog-gallery-links{order:1;margin:12px 2px 0}
+  #issue-dialog .dialog-issue-copy{order:2;margin-top:16px}
+  #issue-dialog .dialog-gallery-link{min-height:64px;padding:10px}
+}
