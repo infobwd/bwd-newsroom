@@ -25,7 +25,7 @@ assert.match(app,/window\.scrollTo\(0, savedY\)/,'scroll location preserved');
 assert.match(base,/body\.newsroom-page\.issue-background-locked/);
 assert.match(base,/html\.issue-overlay-open\{overflow:hidden/);
 assert.match(base,/#issue-dialog \.dialog-content\{overscroll-behavior-y:contain\}/);
-assert.match(worker,/v12-carousel-lock/,'PWA shell cache invalidated');
+assert(Number(worker.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=12,'PWA shell version stays at v1.4 or later');
 assert.match(workflow,/node tests\/app-ux-v14\.test\.mjs/);
 assert.doesNotMatch(app,/drive\.google\.com\/uc\?/i,'no private Drive image hotlinks');
 console.log('Mobile UX v1.4 static contracts PASS; physical iPhone touch/scroll QA NOT RUN');
