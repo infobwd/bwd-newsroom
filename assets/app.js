@@ -145,18 +145,20 @@
     $('dialog-title').textContent = issue.title_th;
     $('dialog-meta').textContent = dateThai(issue.date) + ' · ' + (CATEGORY_NAMES[issue.category] || 'ข่าวโรงเรียน') + ' · ' + issue.template_code;
     const requestToken = ++activeIssueRequest;
-    dialog.classList.remove('issue-title-collapsed');
     $('dialog-tools').open = false;
     const content = $('dialog-content');
     content.replaceChildren();
     if (issue.body_th) content.append(textEl('p', issue.body_th, 'dialog-issue-copy'));
     const images = textEl('div', '', 'dialog-images');
-    issue.pages.forEach(page => {
+    issue.pages.forEach((page, pageIndex) => {
       const figure = document.createElement('figure');
       figure.classList.add('bwd-page-pending');
       const image = document.createElement('img');
       image.src = new URL('./' + page.web_image, document.baseURI).href;
-      image.alt = page.alt_th; image.loading = 'lazy'; image.decoding = 'async';
+      image.alt = page.alt_th;
+      // Current approved WD'NEWS issues are A4 portrait: reserve image geometry before decode.
+      image.width = 794; image.height = 1123;
+      image.loading = pageIndex === 0 ? 'eager' : 'lazy'; image.decoding = 'async';
       image.addEventListener('load',()=>figure.classList.remove('bwd-page-pending'),{once:true});
       image.addEventListener('error',()=>{figure.classList.remove('bwd-page-pending');image.replaceWith(textEl('p','ภาพไม่พร้อมใช้งาน','app-dashboard-error'));},{once:true});
       const caption = textEl('figcaption', 'หน้า ' + page.page_no, 'dialog-image-label');
@@ -229,7 +231,12 @@
     const read = textEl('a', 'อ่านแบบพลิกหน้า ↗', 'dialog-read');
     read.href = './reader.html?issue=' + encodeURIComponent(issue.id);
     moreOptions.prepend(read);
-    actions.append(photoShare,status);
+    // Keep the one primary share action and an adjacent close target in the fixed mobile footer.
+    const closeMobile = textEl('button', '× ปิด', 'dialog-close-mobile');
+    closeMobile.type = 'button';
+    closeMobile.setAttribute('aria-label', 'ปิดรายละเอียดข่าว');
+    closeMobile.addEventListener('click', () => dialog.close());
+    actions.append(photoShare, closeMobile, status);
     if(shareKit){
       shareKit.prepareFiles(issue).then(result=>{
         if(requestToken!==activeIssueRequest)return; // Ignore a previous issue's async file result.
@@ -270,12 +277,9 @@
     document.addEventListener('keydown',()=>{lastIssueInputWasPointer=false;});
     [search, year, category, template].forEach(el => el.addEventListener(el === search ? 'input' : 'change', render));
     $('filters').addEventListener('reset', () => setTimeout(render, 0));
-    const issueContent=$('dialog-content'), issueTools=$('dialog-tools');
-    const syncIssueHeading=()=>{
-      dialog.classList.toggle('issue-title-collapsed',issueContent.scrollTop>72 && !issueTools.open);
-    };
-    issueContent.addEventListener('scroll',syncIssueHeading,{passive:true});
-    issueTools.addEventListener('toggle',syncIssueHeading);
+    // Do not resize the modal heading during touch scrolling: it causes a visible
+    // vertical jump at the collapse threshold on iOS Safari / installed PWA.
+    const issueTools=$('dialog-tools');
     dialog.addEventListener('keydown',e=>{
       if(e.key==='Escape' && issueTools.open){e.preventDefault();issueTools.open=false;}
     });
