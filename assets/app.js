@@ -136,12 +136,16 @@
     content.append(images);
     const actions = $('dialog-actions');
     actions.replaceChildren();
+    const more=document.createElement('details');more.className='dialog-share-more';
+    const summary=textEl('summary','เพิ่มเติม · ดาวน์โหลด / คัดลอก','');
+    more.append(summary);
+    const moreOptions=textEl('div','','dialog-share-more-options');more.append(moreOptions);
     const driveLink = publicFileLink(issue.public_pdf_url);
     if (driveLink) {
       const localPdf = typeof issue.public_pdf_url === 'string' && /^assets\/issues\//.test(issue.public_pdf_url);
       const a = textEl('a', localPdf ? 'ดาวน์โหลด PDF ฉบับเต็ม' : 'เปิด PDF ต้นฉบับ ↗'); a.href = driveLink; a.target = '_blank'; a.rel = 'noopener noreferrer';
       if (localPdf) a.download = issue.id + '-' + issue.approved_version + '.pdf';
-      actions.append(a);
+      moreOptions.append(a);
     }
     const shareKit=window.BWDShare;
     const status=textEl('p','','dialog-share-status');status.hidden=true;
@@ -171,7 +175,7 @@
     const downloadImage=textEl('button','ดาวน์โหลดภาพข่าว','dialog-image-download');
     downloadImage.type='button';downloadImage.disabled=true;
     downloadImage.addEventListener('click',()=>{if(files?.length)shareKit.downloadFile(files[0]);});
-    actions.append(downloadImage);
+    moreOptions.append(downloadImage);
     const copy=textEl('button','คัดลอกข้อความ','dialog-copy-action');
     copy.type='button';
     copy.addEventListener('click',async()=>{
@@ -179,11 +183,11 @@
       try{await shareKit.copyText(shareKit.message(issue));report('คัดลอกข้อความข่าวแล้ว สามารถวางลงใน LINE ได้');}
       catch(_){report('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาใช้ปุ่มเปิด LINE');}
     });
-    actions.append(copy);
+    moreOptions.append(copy);
     const read = textEl('a', 'อ่านแบบพลิกหน้า ↗', 'dialog-read');
     read.href = './reader.html?issue=' + encodeURIComponent(issue.id);
     actions.prepend(read);
-    actions.append(status);
+    actions.append(more,status);
     if(shareKit){
       shareKit.prepareFiles(issue).then(result=>{
         files=result;
@@ -191,7 +195,7 @@
         if(shareKit.canShareFiles(files)){
           photoShare.disabled=false;
           photoShare.textContent='แชร์ภาพข่าวพร้อมข้อความ';
-          report('เมื่อเมนูแชร์ปรากฏ ให้เลือก LINE; บางรุ่นอาจไม่แนบข้อความไปพร้อมภาพ');
+          report('');
         }else{
           photoShare.textContent='อุปกรณ์ไม่รองรับแชร์ภาพโดยตรง';
           report('ยังดาวน์โหลดภาพและส่งข้อความเข้า LINE ได้');

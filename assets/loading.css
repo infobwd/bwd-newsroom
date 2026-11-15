@@ -42,3 +42,15 @@ html.app-launching .app-launch{display:flex;position:fixed;inset:0;z-index:100;a
 @media(prefers-reduced-motion:reduce){
  .bwd-skeleton .bwd-skel-picture,.bwd-skel-lines>span,.bwd-shimmer,.bwd-page-pending:before{animation:none!important;background-image:none}
 }
+
+/* Maintain album card and image dimensions as individual approved files decode. */
+.gallery-cover,.album-photo,.issue-thumb,.books-card-cover{position:relative}
+.gallery-cover.bwd-image-pending:before,.album-photo.bwd-image-pending:before,
+.issue-thumb.bwd-image-pending:before,.books-card-cover.bwd-image-pending:before{
+ content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;
+ background-image:linear-gradient(100deg,#e5ebf2 0%,#f5f8fb 46%,#e5ebf2 100%);
+ background-size:220% 100%;animation:bwd-skeleton-shimmer 1.6s ease-in-out infinite
+}
+@media(prefers-reduced-motion:reduce){
+ .gallery-cover.bwd-image-pending:before,.album-photo.bwd-image-pending:before,.issue-thumb.bwd-image-pending:before,.books-card-cover.bwd-image-pending:before{animation:none;background:#e5ebf2}
+}
