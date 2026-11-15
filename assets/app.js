@@ -60,12 +60,13 @@
   }
   function cardFor(issue) {
     const card = textEl('article', '', 'issue-card');
-    const thumb = textEl('div', '', 'issue-thumb');
+    const thumb = textEl('div', '', 'issue-thumb bwd-image-pending');
     const image = document.createElement('img');
     image.src = new URL('./' + issue.pages[0].web_image, document.baseURI).href;
     image.alt = issue.pages[0].alt_th; image.loading = 'lazy'; image.decoding = 'async';
+    image.addEventListener('load',()=>thumb.classList.remove('bwd-image-pending'),{once:true});
     image.addEventListener('error', () => {
-      image.remove();
+      thumb.classList.remove('bwd-image-pending');image.remove();
       thumb.append(textEl('p', 'ไม่สามารถแสดงภาพฉบับนี้ได้', 'error'));
     }, { once: true });
     thumb.append(image);
@@ -236,9 +237,11 @@
     books.sort((a,b)=>String(b.date_end).localeCompare(String(a.date_end)));
     node.replaceChildren();
     books.forEach(b=>{
-      const card=textEl('article','','books-card'),cover=textEl('div','','books-card-cover');
+      const card=textEl('article','','books-card'),cover=textEl('div','','books-card-cover bwd-image-pending');
       const img=document.createElement('img');img.src=new URL('./'+b.pages[0].web_image,document.baseURI).href;
-      img.alt=b.pages[0].alt_th||'ปกหนังสือ';img.loading='lazy';img.addEventListener('error',()=>{img.replaceWith(textEl('p','ภาพปกไม่พร้อมใช้งาน'));},{once:true});
+      img.alt=b.pages[0].alt_th||'ปกหนังสือ';img.loading='lazy';
+      img.addEventListener('load',()=>cover.classList.remove('bwd-image-pending'),{once:true});
+      img.addEventListener('error',()=>{cover.classList.remove('bwd-image-pending');img.replaceWith(textEl('p','ภาพปกไม่พร้อมใช้งาน'));},{once:true});
       cover.append(img);const body=textEl('div','','books-card-body');
       body.append(textEl('h3',b.title_th),textEl('p',(b.contents.length)+' ข่าว · '+b.pages.length+' หน้า'));
       const open=textEl('a','เปิดอ่านแบบพลิกหน้า ↗');open.href='./reader.html?book='+encodeURIComponent(b.id);

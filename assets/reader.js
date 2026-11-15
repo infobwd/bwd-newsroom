@@ -237,7 +237,6 @@
     });
   }
   function ready(title,subtitle){
-    byId('reader-loading').hidden=true;
     byId('reader-title').textContent=title;
     byId('reader-subtitle').textContent=subtitle;
     byId('reader-info-copy').textContent=title+' — '+subtitle;
@@ -246,6 +245,12 @@
     buildToc();drawScroll();setZoom(1);setCurrent(state.current,false);
     byId('mode-flip').disabled=!flipAvailable();
     activate(flipAvailable()?'flip':'scroll');
+    const pending=byId('reader-loading');
+    if(isDemo){pending.hidden=true;return;}
+    // Let the first approved page decode before dismissing the paper placeholder.
+    const first=new Image();
+    first.onload=()=>{pending.hidden=true;};first.onerror=()=>{pending.hidden=true;};
+    first.src=urlImage(state.pages[state.current].web_image);
   }
   function fail(message){
     byId('reader-loading').hidden=true;

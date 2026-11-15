@@ -54,3 +54,11 @@ html.app-launching .app-launch{display:flex;position:fixed;inset:0;z-index:100;a
 @media(prefers-reduced-motion:reduce){
  .gallery-cover.bwd-image-pending:before,.album-photo.bwd-image-pending:before,.issue-thumb.bwd-image-pending:before,.books-card-cover.bwd-image-pending:before{animation:none;background:#e5ebf2}
 }
+
+.lightbox-figure.bwd-image-pending{position:relative}
+.lightbox-figure.bwd-image-pending:before{
+ content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+ background-image:linear-gradient(100deg,#e5ebf2,#f5f8fb,#e5ebf2);
+ background-size:220% 100%;animation:bwd-skeleton-shimmer 1.6s ease-in-out infinite
+}
+@media(prefers-reduced-motion:reduce){.lightbox-figure.bwd-image-pending:before{animation:none;background:#e5ebf2}}
