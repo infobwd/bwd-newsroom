@@ -18,6 +18,7 @@
   let published = [];
   let loadFailed = false;
   let issueScrollY = null;
+  let lastIssueInputWasPointer = false;
 
   // iOS standalone Safari can rubber-band the page behind a native dialog.
   // Freeze it at its current scroll offset; restore that offset on every close path.
@@ -244,12 +245,21 @@
     } else if (dialog.open) dialog.close();
   }
   function setupEvents() {
+    // Preserve keyboard focus while clearing touch-only Safari outlines on modal close.
+    document.addEventListener('pointerdown',()=>{lastIssueInputWasPointer=true;},{passive:true});
+    document.addEventListener('keydown',()=>{lastIssueInputWasPointer=false;});
     [search, year, category, template].forEach(el => el.addEventListener(el === search ? 'input' : 'change', render));
     $('filters').addEventListener('reset', () => setTimeout(render, 0));
     $('dialog-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
     dialog.addEventListener('close', () => {
       unlockIssueBackground();
+      if (lastIssueInputWasPointer) {
+        requestAnimationFrame(()=>{
+          const active=document.activeElement;
+          if (active?.closest?.('.app-latest-track')) active.blur();
+        });
+      }
       if (location.hash.startsWith('#issue=')) history.replaceState(null, '', location.pathname + location.search + '#news');
     });
     window.addEventListener('hashchange', routeHash);
