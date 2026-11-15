@@ -37,7 +37,7 @@
     display:flex;justify-content:center;align-items:center;gap:2px;margin:9px 0 0;
   }
   .app-carousel-dot{
-    width:38px;height:40px;display:grid;place-items:center;
+    width:40px;height:44px;display:grid;place-items:center;
     border:0;background:transparent;padding:0;border-radius:50%;
   }
   .app-carousel-dot::before{
@@ -48,7 +48,7 @@
     background:#b48a38;transform:scale(1.3);
   }
   .app-carousel-play-toggle{
-    margin-left:9px;min-width:40px;min-height:40px;padding:8px;
+    margin-left:9px;min-width:44px;min-height:44px;padding:8px;
     background:transparent;border:0;border-radius:12px;
     color:#7b8ba0;font:500 13px/1 Kanit,sans-serif;
   }
