@@ -22,7 +22,8 @@ assert.equal(links.get('WDNEWS-2569-0001')?.[0]?.id,'WDGAL-2569-0001');
 assert.equal(links.get('WDNEWS-2569-0001')?.[0]?.count,5);
 
 // Fail closed when either side is draft, unpublished, unapproved or unlinked.
-const g=galleries[0], issue=issues[0];
+const g=galleries[0], issue=issues.find(item=>g.linked_issue_ids?.includes(item.id));
+assert.ok(issue,'fixture must choose an existing news issue linked by the approved gallery');
 for(const patch of [
   {status:'draft'}, {visibility_approved_at:''}, {approved_version:''},
   {published_at:''}, {linked_issue_ids:[]}, {linked_issue_ids:['WDNEWS-2569-9999']},
