@@ -34,16 +34,29 @@
     min-width:0;text-decoration:none;color:inherit;
   }
   .app-carousel-controls{
-    display:flex;justify-content:center;align-items:center;gap:17px;margin:9px 0 0;
+    display:flex;justify-content:center;align-items:center;gap:2px;margin:9px 0 0;
   }
-  .app-carousel-arrow{
-    width:35px;height:35px;display:grid;place-items:center;border:1px solid #dce5ee;
-    border-radius:50%;background:#f5f8fb;color:var(--navy);font-size:25px;line-height:1;
+  .app-carousel-dot{
+    width:38px;height:40px;display:grid;place-items:center;
+    border:0;background:transparent;padding:0;border-radius:50%;
   }
-  .app-carousel-arrow:disabled{opacity:.35;cursor:default}
-  .app-carousel-position{
-    min-width:44px;text-align:center;font:500 12px Kanit,sans-serif;color:#52667c;
-    font-variant-numeric:tabular-nums;
+  .app-carousel-dot::before{
+    content:'';width:8px;height:8px;border-radius:50%;
+    background:#c7d2df;transition:background-color .25s ease,transform .25s ease;
+  }
+  .app-carousel-dot[aria-current='true']::before{
+    background:#b48a38;transform:scale(1.3);
+  }
+  .app-carousel-play-toggle{
+    margin-left:9px;min-width:40px;min-height:40px;padding:8px;
+    background:transparent;border:0;border-radius:12px;
+    color:#7b8ba0;font:500 13px/1 Kanit,sans-serif;
+  }
+  .app-carousel-play-toggle[aria-pressed='true']{color:var(--navy)}
+  .app-latest-track:focus:not(:focus-visible){outline:none}
+  .app-latest-track:focus-visible{outline:2px solid #b48a38;outline-offset:2px;border-radius:9px}
+  .app-carousel-dot:focus-visible,.app-carousel-play-toggle:focus-visible{
+    outline:2px solid #b48a38;outline-offset:0;
   }
   .app-featured-issue{display:grid;grid-template-columns:103px minmax(0,1fr);gap:13px;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;padding:10px;box-shadow:0 5px 20px #112b4e0a}
   .app-featured-issue img{width:103px;height:145px;border-radius:10px;object-fit:contain;background:#f1f3f5}
@@ -214,4 +227,36 @@
   .site-footer{padding-bottom:calc(69px + env(safe-area-inset-bottom))}
   .gallery-page .gallery-content{padding-bottom:36px}
   .gallery-page #gallery-main{min-height:0}
+}
+
+/* Mobile UX v1.5: restrained entrance and slow atmospheric hero motion. */
+@media(max-width:630px){
+  .app-welcome{
+    position:relative;isolation:isolate;overflow:hidden;
+    background-size:170% 170%;
+    animation:bwd-welcome-enter .65s cubic-bezier(.2,.7,.2,1) both,
+              bwd-welcome-gradient 20s ease-in-out 1s infinite alternate;
+  }
+  .app-welcome::after{
+    content:'';position:absolute;inset:-20%;z-index:0;pointer-events:none;
+    background:radial-gradient(ellipse at 60% 32%,rgba(240,212,146,.075),transparent 53%);
+    animation:bwd-welcome-light 16s ease-in-out 1s infinite alternate;
+  }
+  .app-welcome > *{position:relative;z-index:1}
+}
+@keyframes bwd-welcome-enter{
+  from{opacity:0;transform:translateY(9px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes bwd-welcome-gradient{
+  from{background-position:0% 35%}
+  to{background-position:95% 65%}
+}
+@keyframes bwd-welcome-light{
+  from{transform:translateX(-5%)}
+  to{transform:translateX(5%)}
+}
+@media(prefers-reduced-motion:reduce){
+  .app-welcome,.app-welcome::after{animation:none!important}
+  .app-carousel-dot::before{transition:none!important}
 }
