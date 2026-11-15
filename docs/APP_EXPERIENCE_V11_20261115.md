@@ -14,7 +14,8 @@
 5. Worker shell version bumped to v11 so an installed PWA can request a safe user-controlled update. No additional offline media caching.
 
 ## QA gates
-- GitHub Actions syntax, public manifest validation, existing N01/N02/Gallery/PWA regressions and v1.1 source contracts: **PENDING** until green CI on final PR head.
+- GitHub Actions syntax, public manifest validation, existing N01/N02/Gallery/PWA regressions and v1.1 source contracts: **PASS** in initial [PR #21 static QA run 43676773886](https://github.com/infobwd/bwd-newsroom/actions/runs/43676773886). Final head still requires a passing rerun.
+- Initial [live Pages smoke run 43676773880](https://github.com/infobwd/bwd-newsroom/actions/runs/43676773880): **PASS** for existing published site only, not unpublished PR visual acceptance.
 - GitHub Pages deployment/live smoke: **PENDING** until after merge; a baseline smoke run is not a mobile-device test.
 - Real iPhone Safari (360–430px), iPad/Android, focus-mode flip geometry, keyboard/VoiceOver, install/offline and photo crop check: **NOT RUN** from GitHub CI.
 - Security/privacy: no new media, Drive source originals, tokens or private URLs committed.

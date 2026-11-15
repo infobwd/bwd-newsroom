@@ -41,8 +41,9 @@
 @media(prefers-reduced-motion:reduce){.reader-progress>span{transition:none}html{scroll-behavior:auto}}
 
 /* App Experience v1.1: explicit, reversible focus reader; preserve page-flip/scroll fallback. */
-.reader-focus-restore{display:none}
+.reader-focus-restore,.reader-focus-toggle{display:none}
 @media(max-width:760px){
+  .reader-focus-toggle{display:inline-flex}
   .reader-focus-toggle{min-width:38px}
   .reader-body.is-focus-mode .reader-toolbar{display:none}
   .reader-body.is-focus-mode .reader-mode-row{display:none}
