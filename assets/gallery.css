@@ -184,3 +184,31 @@ body.gallery-page{
 @media(prefers-reduced-motion:reduce){
   .gallery-card,.album-photo{transition:none!important}
 }
+
+
+/* Mobile-first photo archive polish: less vertical scrolling, no face cropping. */
+@media (max-width:630px) {
+  .gallery-page .gallery-content {padding:35px 0 55px}
+  .gallery-page.is-album-open .gallery-content {padding-top:20px}
+  .gallery-page .gallery-filters {gap:8px;margin-bottom:18px}
+  .gallery-page .gallery-clear {min-height:32px;justify-self:end;padding:0 8px}
+  .gallery-grid {gap:13px}
+  .gallery-cover {aspect-ratio:16/10}
+  .gallery-cover img {object-fit:contain}
+  .gallery-card-body {padding:13px 14px 14px}
+  .gallery-card h3 {font-size:16px;line-height:1.35;margin-bottom:4px}
+  .gallery-card time {margin-bottom:7px}
+  .gallery-card p {min-height:0;margin-bottom:10px;line-height:1.65}
+  .gallery-open {min-height:44px}
+  .album-back {margin-bottom:12px}
+  .album-head {padding-bottom:14px;margin-bottom:15px}
+  .album-head h2 {font-size:26px;line-height:1.28;margin:7px 0 8px}
+  .album-head>p:last-of-type {font-size:13px;line-height:1.7}
+  .album-related {margin-top:10px}
+  .album-photos {gap:9px}
+  .album-photo span {
+    display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+    overflow:hidden;min-height:43px;max-height:49px;
+    padding:8px 9px;font-size:11px;line-height:1.5;
+  }
+}
