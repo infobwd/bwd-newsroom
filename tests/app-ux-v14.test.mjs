@@ -15,7 +15,7 @@ assert.match(app,/holder\.append\(controls\)/,'position and direction controls a
 assert.match(app,/addEventListener\('click',e=>\{e\.preventDefault\(\);openIssue/,'entire issue card opens existing detail dialog');
 assert.match(css,/scroll-snap-type:x mandatory/);
 assert.match(css,/overscroll-behavior-x:contain/);
-assert.match(css,/\.app-carousel-position/);
+assert.match(css,/\.app-carousel-dot/,'v1.5 dot indicator replaces the earlier numeric pager');
 assert(css.includes('.app-latest-track::-webkit-scrollbar{display:none}'));
 assert.match(app,/function lockIssueBackground\(\)/);
 assert.match(app,/function unlockIssueBackground\(\)/);
