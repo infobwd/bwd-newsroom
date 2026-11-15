@@ -82,7 +82,7 @@ assert.match(shell,/window\.addEventListener\('resize',/);
 assert.match(css,/scroll-margin-top:calc\(76px \+ env\(safe-area-inset-top\)\)/,'search remains clear of compact header');
 assert.match(css,/\.app-bottom-nav a:active\{transform:scale\(\.96\)\}/);
 assert.match(css,/prefers-reduced-motion:reduce/);
-assert.match(sw,/v15-hero-session/,'PWA shell changes for v1.7');
+assert(Number(sw.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=15,'PWA shell retains v1.7 or newer');
 const precache=sw.slice(sw.indexOf('const SHELL='),sw.indexOf('const PATHS='));
 assert.doesNotMatch(precache,/assets\/galleries\/|data\/|assets\/issues\/|\.pdf/,'no private media or manifest caching');
 assert.match(workflow,/node tests\/app-ux-v17\.test\.mjs/);
