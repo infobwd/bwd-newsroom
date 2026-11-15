@@ -35,7 +35,7 @@ for(const issue of catalog.issues){
 const runtime=read('assets/app.js');
 const share=read('assets/share.js');
 assert.match(read('index.html'),/assets\/share\.js/);
-assert(runtime.indexOf("actions.prepend(read)")>=0);
+assert(runtime.indexOf("moreOptions.prepend(read)")>=0); // Reader in secondary tools
 assert.match(runtime,/shareKit\.prepareFiles\(issue\)/);
 assert.match(runtime,/shareKit\.shareFiles\(issue,files\)/);
 assert.match(runtime,/shareKit\.lineTextUrl\(issue\)/);

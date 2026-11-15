@@ -19,6 +19,7 @@
   let loadFailed = false;
   let issueScrollY = null;
   let lastIssueInputWasPointer = false;
+  let activeIssueRequest = 0;
 
   // iOS standalone Safari can rubber-band the page behind a native dialog.
   // Freeze it at its current scroll offset; restore that offset on every close path.
@@ -143,6 +144,9 @@
     if (!issue || !dialog || typeof dialog.showModal !== 'function') return;
     $('dialog-title').textContent = issue.title_th;
     $('dialog-meta').textContent = dateThai(issue.date) + ' · ' + (CATEGORY_NAMES[issue.category] || 'ข่าวโรงเรียน') + ' · ' + issue.template_code;
+    const requestToken = ++activeIssueRequest;
+    dialog.classList.remove('issue-title-collapsed');
+    $('dialog-tools').open = false;
     const content = $('dialog-content');
     content.replaceChildren();
     if (issue.body_th) content.append(textEl('p', issue.body_th, 'dialog-issue-copy'));
@@ -161,10 +165,10 @@
     content.append(images);
     const actions = $('dialog-actions');
     actions.replaceChildren();
-    const more=document.createElement('details');more.className='dialog-share-more';
-    const summary=textEl('summary','เพิ่มเติม · ดาวน์โหลด / คัดลอก','');
-    more.append(summary);
-    const moreOptions=textEl('div','','dialog-share-more-options');more.append(moreOptions);
+    // One persistent action at the bottom; secondary actions live in the header menu.
+    const more=$('dialog-tools');
+    const moreOptions=$('dialog-tools-options');
+    moreOptions.replaceChildren();
     const driveLink = publicFileLink(issue.public_pdf_url);
     if (driveLink) {
       const localPdf = typeof issue.public_pdf_url === 'string' && /^assets\/issues\//.test(issue.public_pdf_url);
@@ -179,14 +183,19 @@
     const photoShare=textEl('button','กำลังเตรียมภาพข่าว…','dialog-share-primary');
     photoShare.type='button';photoShare.disabled=true;
     photoShare.addEventListener('click',()=>{
-      if(!files||!shareKit?.canShareFiles(files))return;
-      try{
-        const request=shareKit.shareFiles(issue,files);
-        Promise.resolve(request).then(()=>report('เปิดการแชร์แล้ว โปรดตรวจข้อความและผู้รับใน LINE ก่อนส่ง'))
-          .catch(err=>{if(err?.name!=='AbortError')report('แชร์ไฟล์ไม่สำเร็จ ลองใช้ปุ่มส่งข้อความเข้า LINE หรือดาวน์โหลดภาพ');});
-      }catch(_){report('อุปกรณ์นี้ไม่รองรับการแชร์ไฟล์ กรุณาดาวน์โหลดภาพแทน');}
+      if(!shareKit)return;
+      if(files?.length && shareKit.canShareFiles(files)){
+        try{
+          // The native share request must stay inside the actual click gesture.
+          const request=shareKit.shareFiles(issue,files);
+          Promise.resolve(request).then(()=>report('เปิดการแชร์แล้ว โปรดตรวจข้อความและผู้รับก่อนส่ง'))
+            .catch(err=>{if(err?.name!=='AbortError')report('แชร์ภาพไม่สำเร็จ ใช้เมนูเพิ่มเติมเพื่อเปิด LINE หรือดาวน์โหลดภาพได้');});
+        }catch(_){report('แชร์ภาพไม่สำเร็จ ใช้เมนูเพิ่มเติมเพื่อดาวน์โหลดภาพได้');}
+      }else{
+        // Text-only fallback is explicit in the button label; never claim the image was attached.
+        window.location.assign(shareKit.lineTextUrl(issue));
+      }
     });
-    actions.append(photoShare);
     const line=textEl('button','คัดลอกข้อความ + เปิด LINE','dialog-line-action');
     line.type='button';
     line.addEventListener('click',()=>{
@@ -196,7 +205,7 @@
       const navigate=()=>{window.location.assign(url);};
       shareKit.copyText(shareKit.message(issue)).then(navigate).catch(navigate);
     });
-    actions.append(line);
+    moreOptions.append(line);
     const downloadImage=textEl('button','ดาวน์โหลดภาพข่าว','dialog-image-download');
     downloadImage.type='button';downloadImage.disabled=true;
     downloadImage.addEventListener('click',()=>{if(files?.length)shareKit.downloadFile(files[0]);});
@@ -211,22 +220,25 @@
     moreOptions.append(copy);
     const read = textEl('a', 'อ่านแบบพลิกหน้า ↗', 'dialog-read');
     read.href = './reader.html?issue=' + encodeURIComponent(issue.id);
-    actions.prepend(read);
-    actions.append(more,status);
+    moreOptions.prepend(read);
+    actions.append(photoShare,status);
     if(shareKit){
       shareKit.prepareFiles(issue).then(result=>{
+        if(requestToken!==activeIssueRequest)return; // Ignore a previous issue's async file result.
         files=result;
         downloadImage.disabled=!files.length;
-        if(shareKit.canShareFiles(files)){
-          photoShare.disabled=false;
-          photoShare.textContent='แชร์ภาพข่าวพร้อมข้อความ';
-          report('');
-        }else{
-          photoShare.textContent='อุปกรณ์ไม่รองรับแชร์ภาพโดยตรง';
-          report('ยังดาวน์โหลดภาพและส่งข้อความเข้า LINE ได้');
-        }
-      }).catch(()=>{photoShare.textContent='เตรียมไฟล์ภาพไม่สำเร็จ';
-        report('โหลดไฟล์ภาพไม่สำเร็จ กรุณาลองเมื่อออนไลน์หรือเปิด PDF');});
+        photoShare.disabled=false;
+        photoShare.textContent=shareKit.canShareFiles(files)
+          ? 'แชร์ภาพข่าวพร้อมข้อความ' : 'แชร์ข้อความข่าว (ไม่แนบภาพ)';
+        report('');
+      }).catch(()=>{
+        if(requestToken!==activeIssueRequest)return;
+        photoShare.disabled=false;
+        photoShare.textContent='แชร์ข้อความข่าว (ไม่แนบภาพ)';
+        report('');
+      });
+    }else{
+      photoShare.textContent='ไม่สามารถเปิดการแชร์ได้';
     }
     content.scrollTop = 0;
     actions.scrollTop = 0;
@@ -250,6 +262,18 @@
     document.addEventListener('keydown',()=>{lastIssueInputWasPointer=false;});
     [search, year, category, template].forEach(el => el.addEventListener(el === search ? 'input' : 'change', render));
     $('filters').addEventListener('reset', () => setTimeout(render, 0));
+    const issueContent=$('dialog-content'), issueTools=$('dialog-tools');
+    const syncIssueHeading=()=>{
+      dialog.classList.toggle('issue-title-collapsed',issueContent.scrollTop>72 && !issueTools.open);
+    };
+    issueContent.addEventListener('scroll',syncIssueHeading,{passive:true});
+    issueTools.addEventListener('toggle',syncIssueHeading);
+    dialog.addEventListener('keydown',e=>{
+      if(e.key==='Escape' && issueTools.open){e.preventDefault();issueTools.open=false;}
+    });
+    dialog.addEventListener('click',e=>{
+      if(issueTools.open && !issueTools.contains(e.target))issueTools.open=false;
+    });
     $('dialog-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
     dialog.addEventListener('close', () => {
