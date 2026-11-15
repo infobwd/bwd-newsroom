@@ -1,5 +1,5 @@
 /* BWD Newsroom N04-W: offline shell only, project-scoped. No media, PDF, Drive or catalogue cache. */
-const VERSION='bwd-public-shell-2569-11-15-v18-issue-mobile-reading';
+const VERSION='bwd-public-shell-2569-11-15-v19-issue-gallery-cta';
 const ROOT=self.registration.scope;
 const SHELL=[
   './','./index.html','./gallery.html','./offline.html',

@@ -41,7 +41,7 @@ assert.match(app,/lockIssueBackground\(\)/);
 assert.match(events,/unlockIssueBackground\(\)/);
 
 // A fresh PWA shell version surfaces the fix without caching school photographs.
-assert.match(sw,/v18-issue-mobile-reading/);
+assert(Number(sw.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=18,'PWA shell retains mobile reading stability fix');
 const shell=sw.slice(sw.indexOf('const SHELL='),sw.indexOf('const PATHS='));
 assert(!/assets\/issues\/|assets\/galleries\/|data\/|\.pdf/.test(shell),'never precache public photo/PDF bytes');
 assert.match(ci,/node tests\/issue-mobile-stability\.test\.mjs/);

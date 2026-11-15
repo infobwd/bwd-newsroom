@@ -61,6 +61,7 @@ jobs:
           node tests/app-ux-v17.test.mjs
           node tests/issue-image-first.test.mjs
           node tests/issue-mobile-stability.test.mjs
+          node tests/issue-gallery-link.test.mjs
           node tests/bwd-notify.test.mjs
           node tests/n04-p0-policy.test.mjs
           node tests/n02.test.mjs

@@ -20,6 +20,8 @@
   let issueScrollY = null;
   let lastIssueInputWasPointer = false;
   let activeIssueRequest = 0;
+  let approvedGalleriesByIssue = new Map();
+  const RETURN_TO_ISSUE_KEY = 'bwd-issue-gallery-return-v1';
 
   // iOS standalone Safari can rubber-band the page behind a native dialog.
   // Freeze it at its current scroll offset; restore that offset on every close path.
@@ -139,6 +141,91 @@
       return null;
     } catch (_) { return null; }
   }
+
+  // Gallery manifest owns issue-to-album associations; never infer IDs or expose drafts.
+  function approvedIssueGalleryLinks(galleries, issues) {
+    const links = new Map();
+    if (!Array.isArray(galleries) || !Array.isArray(issues)) return links;
+    const publicIds = new Set(issues.filter(i =>
+      i && i.status === 'published' && i.visibility_approved_at && i.published_at &&
+      i.approved_version && /^WDNEWS-\d{4}-\d{4}$/.test(i.id || '')
+    ).map(i => i.id));
+    galleries.forEach(g => {
+      if (!g || g.status !== 'published' || !g.visibility_approved_at || !g.published_at ||
+          !g.approved_version || !/^WDGAL-\d{4}-\d{4}$/.test(g.gallery_id || '') ||
+          typeof g.title_th !== 'string' || !g.title_th.trim() ||
+          !Array.isArray(g.photos) || !g.photos.length ||
+          !Array.isArray(g.linked_issue_ids)) return;
+      g.linked_issue_ids.forEach(issueId => {
+        if (!publicIds.has(issueId)) return;
+        const list = links.get(issueId) || [];
+        if (list.some(album => album.id === g.gallery_id)) return;
+        list.push({id:g.gallery_id,title:g.title_th,count:g.photos.length});
+        links.set(issueId,list);
+      });
+    });
+    return links;
+  }
+
+  function rememberGalleryReturn(issueId) {
+    try {
+      sessionStorage.setItem(RETURN_TO_ISSUE_KEY,JSON.stringify({
+        issueId,scrollTop:$('dialog-content').scrollTop,savedAt:Date.now()
+      }));
+    } catch (_) { /* Storage access may be restricted inside LINE or private Safari. */ }
+  }
+  function restoreGalleryReturn(issueId,content) {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(RETURN_TO_ISSUE_KEY) || 'null');
+      if (!saved || saved.issueId !== issueId || !Number.isFinite(saved.scrollTop) ||
+          !Number.isFinite(saved.savedAt) || Date.now()-saved.savedAt>30*60*1000) return;
+      sessionStorage.removeItem(RETURN_TO_ISSUE_KEY);
+      requestAnimationFrame(() => {
+        if (dialog.open && dialog.dataset.issueId === issueId)
+          content.scrollTop = Math.max(0,saved.scrollTop);
+      });
+    } catch (_) { /* Normal deep-link opening remains available without storage. */ }
+  }
+  function galleryIcon() {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns,'svg');
+    svg.setAttribute('viewBox','0 0 24 24');
+    svg.setAttribute('width','22');svg.setAttribute('height','22');
+    svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');
+    svg.setAttribute('stroke-width','1.8');svg.setAttribute('stroke-linecap','round');
+    svg.setAttribute('stroke-linejoin','round');svg.setAttribute('aria-hidden','true');
+    for (const [tag,attrs] of [
+      ['path',{d:'M3 16V5a2 2 0 0 1 2-2h11'}],
+      ['rect',{x:'6',y:'6',width:'15',height:'15',rx:'2'}],
+      ['circle',{cx:'16.5',cy:'10.5',r:'1.5'}],
+      ['path',{d:'m6 18 4.5-4.5 3.2 3.2 2.1-2.1 5.2 4.4'}]
+    ]) {
+      const node = document.createElementNS(ns,tag);
+      for (const [key,value] of Object.entries(attrs)) node.setAttribute(key,value);
+      svg.append(node);
+    }
+    return svg;
+  }
+  function renderIssueGalleryLinks(slot,issueId) {
+    if (!slot || slot.dataset.issueId !== issueId) return;
+    slot.replaceChildren();
+    for (const g of approvedGalleriesByIssue.get(issueId) || []) {
+      const link = textEl('a','','dialog-gallery-link');
+      link.href = './gallery.html#album=' + encodeURIComponent(g.id);
+      link.setAttribute('aria-label','ชมภาพกิจกรรมทั้งหมด '+g.count+' ภาพ '+g.title);
+      const emblem = textEl('span','','dialog-gallery-icon');
+      emblem.setAttribute('aria-hidden','true');emblem.append(galleryIcon());
+      const copy = textEl('span','','dialog-gallery-text');
+      copy.append(textEl('strong','ชมภาพกิจกรรมทั้งหมด'),
+        textEl('small',g.count.toLocaleString('th-TH')+' ภาพ · '+g.title));
+      const arrow = textEl('span','›','dialog-gallery-arrow');
+      arrow.setAttribute('aria-hidden','true');
+      link.append(emblem,copy,arrow);
+      link.addEventListener('click',()=>rememberGalleryReturn(issueId));
+      slot.append(link);
+    }
+  }
+
   function openIssue(id, updateHash) {
     const issue = published.find(x => x.id === id);
     if (!issue || !dialog || typeof dialog.showModal !== 'function') return;
@@ -148,7 +235,8 @@
     $('dialog-tools').open = false;
     const content = $('dialog-content');
     content.replaceChildren();
-    if (issue.body_th) content.append(textEl('p', issue.body_th, 'dialog-issue-copy'));
+    dialog.dataset.issueId = issue.id;
+    const bodyCopy = issue.body_th ? textEl('p', issue.body_th, 'dialog-issue-copy') : null;
     const images = textEl('div', '', 'dialog-images');
     issue.pages.forEach((page, pageIndex) => {
       const figure = document.createElement('figure');
@@ -164,7 +252,12 @@
       const caption = textEl('figcaption', 'หน้า ' + page.page_no, 'dialog-image-label');
       figure.append(image, caption); images.append(figure);
     });
-    content.append(images);
+    // Album action follows the entire issue page and page number, before news copy.
+    const gallerySlot = textEl('div','','dialog-gallery-links');
+    gallerySlot.dataset.issueId = issue.id;
+    content.append(images,gallerySlot);
+    renderIssueGalleryLinks(gallerySlot,issue.id);
+    if (bodyCopy) content.append(bodyCopy);
     const actions = $('dialog-actions');
     actions.replaceChildren();
     // One persistent action at the bottom; secondary actions live in the header menu.
@@ -263,6 +356,7 @@
       catch (e) { unlockIssueBackground(); throw e; }
     }
     if (updateHash) history.pushState(null, '', '#issue=' + encodeURIComponent(issue.id));
+    else restoreGalleryReturn(issue.id,content);
   }
   function routeHash() {
     const hash = location.hash.slice(1);
@@ -289,6 +383,7 @@
     $('dialog-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
     dialog.addEventListener('close', () => {
+      delete dialog.dataset.issueId;
       unlockIssueBackground();
       if (lastIssueInputWasPointer) {
         requestAnimationFrame(()=>{
@@ -300,6 +395,12 @@
     });
     window.addEventListener('hashchange', routeHash);
     window.addEventListener('popstate', routeHash);
+    // Back/forward cache preserves the already-scrolled dialog; consume saved fallback.
+    window.addEventListener('pageshow',event=>{
+      if(event.persisted && dialog.open) {
+        try { sessionStorage.removeItem(RETURN_TO_ISSUE_KEY); } catch (_) {}
+      }
+    });
   }
 
   function renderBooks(data) {
@@ -526,6 +627,11 @@
       const data=await response.json();
       if(data.schema_version!==1||!Array.isArray(data.galleries))throw new Error('Invalid Gallery catalogue');
       setWelcomeSessionPhoto(data.galleries);
+      approvedGalleriesByIssue = approvedIssueGalleryLinks(data.galleries,published);
+      if(dialog.open && dialog.dataset.issueId) {
+        const slot=$('dialog-content').querySelector('.dialog-gallery-links');
+        renderIssueGalleryLinks(slot,dialog.dataset.issueId);
+      }
       const albums=data.galleries.filter(g=>{
         if(!g||g.status!=='published'||!g.visibility_approved_at||!g.published_at||!g.approved_version||
           typeof g.title_th!=='string'||!g.title_th.trim()||typeof g.gallery_id!=='string'||

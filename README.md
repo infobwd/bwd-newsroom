@@ -112,3 +112,8 @@ The News, Gallery and Flipbook surfaces now use a shared first-party Toast / per
 ## Mobile Issue Reading Stability — 15 November 2026
 
 The phone WD’NEWS issue viewer now places **Close** at the bottom-right beside **Share**; its heading no longer collapses on scroll, the first A4 image reserves layout space before decoding, loading shimmer is suppressed in the issue dialog, and Thai body text is 16px. The change is limited to UI/CSS/JS and the public PWA shell version, with no content/Canva/Drive/photo/PDF modifications. See [issue reading QA checkpoint](docs/ISSUE_MOBILE_READING_STABILITY_20261115.md) and [PR #33](https://github.com/infobwd/bwd-newsroom/pull/33). Static QA passed; actual iPhone/PWA visual validation is separate.
+
+
+## WD’NEWS → Approved Gallery (15 November 2026)
+
+Each published WD’NEWS issue can show a compact **“ชมภาพกิจกรรมทั้งหมด”** action beneath its full-page image and above the news copy, linked directly to an already approved public Gallery album via existing `linked_issue_ids` (11 photos for `WDGAL-2569-0002`, 5 for `WDGAL-2569-0001`). Unlinked/unapproved news and galleries show no action. Return navigation keeps the issue and modal scroll position where supported; the bottom Share/Close bar remains unchanged. See [PR #34](https://github.com/infobwd/bwd-newsroom/pull/34) and [QA checkpoint](docs/ISSUE_GALLERY_LINK_20261115.md). No media or approval versions change; real iPhone LINE/Safari/PWA visual QA remains separate from source tests.
