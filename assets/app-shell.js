@@ -39,7 +39,7 @@
     const rootStyle=document.documentElement.style;
     const originalBehavior=rootStyle.scrollBehavior;
     rootStyle.scrollBehavior='auto';
-    field.scrollIntoView({block:'center',behavior:'auto'});
+    field.scrollIntoView({block:'start',behavior:'auto'});
     field.focus({preventScroll:true});
     rootStyle.scrollBehavior=originalBehavior;
   });
