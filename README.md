@@ -107,3 +107,8 @@ Following the approved/latest N04-P plan, the first implementation slice is a **
 ## BWD Notify — unified site feedback (15 November 2026)
 
 The News, Gallery and Flipbook surfaces now use a shared first-party Toast / persistent banner system for share/copy feedback, media/reader errors, connectivity and optional PWA updates. A styled accessible confirmation dialog API is available for future actions requiring explicit acceptance; the site does not replace native iOS sharing or install prompts. School Canva, approved issue manifests, photos and PDF source files are unchanged. See [BWD Notify QA checkpoint](docs/BWD_NOTIFY_20261115.md); passing source checks must not be confused with physical iPhone Safari/PWA testing.
+
+
+## Mobile Issue Reading Stability — 15 November 2026
+
+The phone WD’NEWS issue viewer now places **Close** at the bottom-right beside **Share**; its heading no longer collapses on scroll, the first A4 image reserves layout space before decoding, loading shimmer is suppressed in the issue dialog, and Thai body text is 16px. The change is limited to UI/CSS/JS and the public PWA shell version, with no content/Canva/Drive/photo/PDF modifications. See [issue reading QA checkpoint](docs/ISSUE_MOBILE_READING_STABILITY_20261115.md) and [PR #33](https://github.com/infobwd/bwd-newsroom/pull/33). Static QA passed; actual iPhone/PWA visual validation is separate.
