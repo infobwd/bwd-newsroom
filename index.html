@@ -7,12 +7,18 @@
   <meta name="description" content="คลังจดหมายข่าวประชาสัมพันธ์โรงเรียนบ้านวังด้ง รวบรวมข่าวกิจกรรมและหนังสือข่าวดิจิทัล">
   <title>BWD Newsroom | จดหมายข่าวโรงเรียนบ้านวังด้ง</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="stylesheet" href="./assets/styles.css">
   <link rel="stylesheet" href="./assets/reader.css">
+  <link rel="stylesheet" href="./assets/app-shell.css">
   <script defer src="./assets/ui-motion.js"></script>
+  <script defer src="./assets/app-shell.js"></script>
   <script defer src="./assets/app.js"></script>
 </head>
-<body>
+<body class="newsroom-page">
   <a class="skip" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
   <header class="site-header">
     <div class="wrap topbar">
@@ -20,6 +26,7 @@
         <span class="brand-mark" aria-hidden="true">WD<span class="brand-dot">.</span></span>
         <span class="brand-copy"><strong>BWD NEWSROOM</strong><small>โรงเรียนบ้านวังด้ง · สพป.กาญจนบุรี เขต 4</small></span>
       </a>
+      <a class="app-quick-search" href="#news" aria-label="ค้นหาจดหมายข่าว"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></a>
       <nav class="head-nav" aria-label="เมนูหลัก">
         <a class="active" href="#news">จดหมายข่าว</a>
         <a href="./gallery.html">ภาพกิจกรรม</a>
@@ -74,6 +81,20 @@
       </div>
     </section>
     <div class="wrap">
+      <section id="app-home" class="app-dashboard" aria-labelledby="app-home-title">
+  <div class="app-welcome">
+    <p>WD’NEWS · SCHOOL STORIES</p>
+    <h1 id="app-home-title">เรื่องราวของวังด้ง</h1>
+    <span>จดหมายข่าว ภาพกิจกรรม และหนังสือดิจิทัล</span>
+  </div>
+  <div class="app-section-heading"><h2>จดหมายข่าวล่าสุด</h2><a href="#news">ทั้งหมด <span aria-hidden="true">›</span></a></div>
+  <div id="app-latest-issue" class="app-latest-issue" aria-live="polite"><p class="app-loading">กำลังโหลดจดหมายข่าว…</p></div>
+  <div class="app-section-heading"><h2>ภาพกิจกรรมล่าสุด</h2><a href="./gallery.html">ทั้งหมด <span aria-hidden="true">›</span></a></div>
+  <div id="app-latest-galleries" class="app-latest-galleries" aria-live="polite"><p class="app-loading">กำลังโหลดภาพกิจกรรม…</p></div>
+  <div class="app-section-heading"><h2>ชั้นหนังสือ</h2><a href="#books">เปิดดู <span aria-hidden="true">›</span></a></div>
+  <a class="app-books-shortcut" href="#books"><span class="app-books-symbol" aria-hidden="true">▤</span><span><strong>หนังสือข่าวรวมเล่ม</strong><small>อ่านแบบพลิกหน้าและ PDF เมื่อมีเล่มเผยแพร่</small></span><span aria-hidden="true">›</span></a>
+  <details class="app-install-guide" id="app-install-guide"><summary>เพิ่ม BWD Newsroom ไว้บนหน้าจอหลัก</summary><p>บน iPhone เปิดเว็บผ่าน Safari แล้วแตะปุ่มแชร์ เลือก “เพิ่มไปยังหน้าจอโฮม” บนอุปกรณ์อื่นใช้เมนูติดตั้งแอปของเบราว์เซอร์เมื่อรองรับ</p><button type="button" id="app-install-button" hidden>ติดตั้งแอป</button></details>
+</section>
       <section class="archive" id="news" aria-labelledby="news-title">
         <div class="section-head">
           <div><p class="section-label">01 / OUR STORIES</p><h2 id="news-title">คลังจดหมายข่าว</h2></div>
@@ -120,6 +141,13 @@
       </section>
     </div>
   </main>
+  <div class="app-network-banner" id="app-network-banner" role="status" hidden>ไม่มีอินเทอร์เน็ต · อ่านข้อมูลใหม่ไม่ได้ในขณะนี้</div>
+  <nav class="app-bottom-nav" aria-label="เมนูหลักของแอป">
+  <a data-app-tab="home" href="#app-home"><svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>หน้าแรก</span></a>
+  <a data-app-tab="news" href="#news"><svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h7M7 12h10M7 16h10M17 8h.01"/></svg><span>ข่าว</span></a>
+  <a data-app-tab="gallery" href="./gallery.html"><svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>ภาพกิจกรรม</span></a>
+  <a data-app-tab="books" href="#books"><svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-2.5-2.5-5.6-2.9-9-2v14c3.4-.9 6.5-.5 9 2 2.5-2.5 5.6-2.9 9-2V5c-3.4-.9-6.5-.5-9 2ZM12 7v14"/></svg><span>หนังสือ</span></a>
+</nav>
   <footer class="site-footer"><div class="wrap footer-inner"><span>© 2569 โรงเรียนบ้านวังด้ง</span><span>ข่าวสาร · ความทรงจำ · การเติบโต</span></div></footer>
   <dialog id="issue-dialog" aria-labelledby="dialog-title">
     <div class="dialog-frame"><div class="dialog-top"><div><span class="section-label">WD’NEWS / ISSUE</span><h2 id="dialog-title"></h2><p id="dialog-meta"></p></div><button id="dialog-close" type="button" class="dialog-close" aria-label="ปิดรายละเอียด">×</button></div><div id="dialog-content" class="dialog-content"></div><div id="dialog-actions" class="dialog-actions"></div></div>
