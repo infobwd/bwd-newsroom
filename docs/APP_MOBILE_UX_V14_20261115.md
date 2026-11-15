@@ -5,7 +5,10 @@
 **Base main:** fed3abd74a308fedabf27619d6f6ec46ee97afc7  
 **Feature branch:** feat/app-v14-latest-carousel-scroll-lock-20261115  
 **Authorization:** School owner explicitly requested implementation **and Merge** in chat on 15 พฤศจิกายน 2569.  
-**PR:** See the v1.4 PR opened against main after the implementation commit.
+**PR:** https://github.com/infobwd/bwd-newsroom/pull/25
+**QA code-head:** de90b7c3417b94755cc08a32adc2039196f2ed0a
+**Static QA:** PASS https://github.com/infobwd/bwd-newsroom/actions/runs/43686540084
+**Live Pages smoke:** PASS for previous deployed main only https://github.com/infobwd/bwd-newsroom/actions/runs/43686540108
 
 ## Scope and protections
 
@@ -32,3 +35,9 @@
 - Physical device verification (NOT RUN by this workflow): actual iPhone Safari and installed PWA on 360/390/430px; swipe two through five cards, buttons, browser back, modal top/bottom rubber-band lock, saved scroll return, LINE native share and orientation changes.
 - Public deployment checks are separate from source tests. Merge requires explicit authorization, given here; do not report new media as editorially approved.
 - Rollback: revert only this UI PR. Previously installed app users may need to approve the available PWA update on next online session.
+
+## Release tracking
+
+- Branch source checked against main at fed3abd74a308fedabf27619d6f6ec46ee97afc7; prior PR #24 remains intact.
+- Previous app-v1.1/v1.2/v1.3 hard-coded cache-version tests were updated to accept a monotonically advancing shell version rather than freeze older releases.
+- The final documentation commit must pass the same CI before Merge; record the actual merge SHA and post-merge Pages deployment separately. Physical device QA is still pending.
