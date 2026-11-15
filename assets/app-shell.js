@@ -28,9 +28,20 @@
   updateActive();
 
   const search=document.querySelector('.app-quick-search');
-  search?.addEventListener('click',()=>{
+  search?.addEventListener('click',event=>{
+    // Do not combine anchor navigation, smooth scrolling and asynchronous focus:
+    // iOS Safari can zoom/pan a sub-16px search field during keyboard opening.
+    // Keep focus synchronous within the tap, which also preserves iOS keyboard access.
+    if(document.body.classList.contains('is-album-open'))return;
     const field=document.getElementById(isGallery?'gallery-search':'search');
-    if(field && !document.body.classList.contains('is-album-open'))setTimeout(()=>field.focus({preventScroll:true}),0);
+    if(!field)return;
+    event.preventDefault();
+    const rootStyle=document.documentElement.style;
+    const originalBehavior=rootStyle.scrollBehavior;
+    rootStyle.scrollBehavior='auto';
+    field.scrollIntoView({block:'center',behavior:'auto'});
+    field.focus({preventScroll:true});
+    rootStyle.scrollBehavior=originalBehavior;
   });
   const banner=document.getElementById('app-network-banner');
   const setOnline=()=>{if(banner)banner.hidden=navigator.onLine;};
