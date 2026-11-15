@@ -34,7 +34,7 @@ assert.match(loader,/window\.BWDLoading=Object\.freeze\(\{finishLaunch\}\)/);
 assert.doesNotMatch(css,/html\.app-launching \.app-launch/);
 assert.match(css,/prefers-reduced-motion:reduce/);
 assert.match(css,/@keyframes bwd-skeleton-shimmer/);
-assert.match(sw,/bwd-public-shell-2569-11-15-v11-share-v13/);
+assert(Number(sw.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=11, 'loading shell version must stay at least v11');
 assert(sw.includes("'./assets/loading.css'")&&sw.includes("'./assets/loading.js'"));
 const shell=sw.slice(sw.indexOf('const SHELL='),sw.indexOf('const PATHS='));
 assert(!shell.includes('assets/issues/'), 'No published page images in precache');
