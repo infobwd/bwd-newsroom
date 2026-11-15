@@ -12,7 +12,7 @@ assert.match(home,/id="dialog-actions" class="dialog-actions"/);
 assert(home.indexOf('id="dialog-content"') < home.indexOf('id="dialog-actions"'));
 assert.match(app,/const actions = \$\('dialog-actions'\)/);
 assert.match(app,/actions\.replaceChildren\(\)/);
-assert.match(app,/actions\.prepend\(read\)/);
+assert.match(app,/moreOptions\.prepend\(read\)/); // Reader remains in the header menu
 assert.match(app,/content\.scrollTop = 0/);
 assert.match(css,/Mobile UI polish \(15 Nov 2026\)/);
 assert.match(css,/height:100dvh;max-height:100vh;max-height:100dvh/);
