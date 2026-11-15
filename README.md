@@ -103,3 +103,7 @@ Plan-only acceptance is separate from actual uploader implementation and proof o
 ## N04-P0 implementation started — offline feasibility only (15 Nov 2026)
 
 Following the approved/latest N04-P plan, the first implementation slice is a **non-deployed** server-side upload policy prototype and regression suite: [N04-P0 feasibility and acceptance](docs/N04_P0_FEASIBILITY_20261115.md). It exercises synthetic Workspace/personal Gmail authorization, private allowlist and event roles, revoked/unknown users, CORS policy and basic JPEG/PNG/WebP intake checks. It does **not** provide a live login, a GitHub Pages upload page, a cross-origin production API, actual Google token cryptographic verification or a school Drive write. The existing public Gallery, PWA, approved news and source photos remain unchanged. Do not move to live P1 until the real P0 auth/CORS/Drive-write pilot passes.
+
+## BWD Notify — unified site feedback (15 November 2026)
+
+The News, Gallery and Flipbook surfaces now use a shared first-party Toast / persistent banner system for share/copy feedback, media/reader errors, connectivity and optional PWA updates. A styled accessible confirmation dialog API is available for future actions requiring explicit acceptance; the site does not replace native iOS sharing or install prompts. School Canva, approved issue manifests, photos and PDF source files are unchanged. See [BWD Notify QA checkpoint](docs/BWD_NOTIFY_20261115.md); passing source checks must not be confused with physical iPhone Safari/PWA testing.
