@@ -178,7 +178,15 @@
     }
     const shareKit=window.BWDShare;
     const status=textEl('p','','dialog-share-status');status.hidden=true;
-    const report=(message)=>{status.textContent=message;status.hidden=!message;};
+    // Toasts are nonblocking and overlay the open native issue dialog.
+    // Inline status remains a safe fallback if the shared notifier fails to load.
+    const report=(message,type='info')=>{
+      status.textContent=message;
+      status.hidden=!message || Boolean(window.BWDNotify);
+      if(message && window.BWDNotify)window.BWDNotify.toast(message,{
+        type,mount:dialog.open?dialog:null,key:'issue-'+issue.id+'-'+message
+      });
+    };
     let files=null;
     const photoShare=textEl('button','กำลังเตรียมภาพข่าว…','dialog-share-primary');
     photoShare.type='button';photoShare.disabled=true;
@@ -188,9 +196,9 @@
         try{
           // The native share request must stay inside the actual click gesture.
           const request=shareKit.shareFiles(issue,files);
-          Promise.resolve(request).then(()=>report('เปิดการแชร์แล้ว โปรดตรวจข้อความและผู้รับก่อนส่ง'))
-            .catch(err=>{if(err?.name!=='AbortError')report('แชร์ภาพไม่สำเร็จ ใช้เมนูเพิ่มเติมเพื่อเปิด LINE หรือดาวน์โหลดภาพได้');});
-        }catch(_){report('แชร์ภาพไม่สำเร็จ ใช้เมนูเพิ่มเติมเพื่อดาวน์โหลดภาพได้');}
+          Promise.resolve(request).then(()=>report('ปิดหน้าต่างแชร์แล้ว โปรดตรวจสอบปลายทางก่อนส่ง','success'))
+            .catch(err=>{if(err?.name!=='AbortError')report('แชร์ภาพไม่สำเร็จ ใช้เมนูเพิ่มเติมเพื่อเปิด LINE หรือดาวน์โหลดภาพได้','error');});
+        }catch(_){report('แชร์ภาพไม่สำเร็จ ใช้เมนูเพิ่มเติมเพื่อดาวน์โหลดภาพได้','error');}
       }else{
         // Text-only fallback is explicit in the button label; never claim the image was attached.
         window.location.assign(shareKit.lineTextUrl(issue));
@@ -214,8 +222,8 @@
     copy.type='button';
     copy.addEventListener('click',async()=>{
       if(!shareKit)return;
-      try{await shareKit.copyText(shareKit.message(issue));report('คัดลอกข้อความข่าวแล้ว สามารถวางลงใน LINE ได้');}
-      catch(_){report('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาใช้ปุ่มเปิด LINE');}
+      try{await shareKit.copyText(shareKit.message(issue));report('คัดลอกข้อความข่าวแล้ว สามารถวางลงใน LINE ได้','success');}
+      catch(_){report('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาใช้ปุ่มเปิด LINE','error');}
     });
     moreOptions.append(copy);
     const read = textEl('a', 'อ่านแบบพลิกหน้า ↗', 'dialog-read');

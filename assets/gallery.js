@@ -156,7 +156,10 @@
     const frame=img.closest('figure');
     frame?.classList.add('bwd-image-pending');
     img.onload=()=>frame?.classList.remove('bwd-image-pending');
-    img.onerror=()=>frame?.classList.remove('bwd-image-pending');
+    img.onerror=()=>{
+      frame?.classList.remove('bwd-image-pending');
+      window.BWDNotify?.toast('ไม่สามารถโหลดภาพนี้ได้ กรุณาตรวจสอบการเชื่อมต่อ',{type:'error',mount:lightbox,key:'gallery-image-error'});
+    };
     img.src=new URL('./'+p.web_image,document.baseURI).href;
     img.alt=p.alt_th;
     $('lightbox-caption').textContent=p.caption_th || p.alt_th;
@@ -237,6 +240,7 @@
       }catch (_) { /* Gallery remains browsable without issue crosslinks. */ }
       initFilters();renderList();route();
     }catch(e){
+      window.BWDNotify?.toast('ไม่สามารถโหลดคลังภาพได้ในขณะนี้ กรุณาลองอีกครั้ง',{type:'error'});
       console.error('Gallery catalogue unavailable',e);
       loadFailed=true;grid.setAttribute('aria-busy','false');
       grid.replaceChildren();error.hidden=false;empty.hidden=true;count.textContent='โหลดข้อมูลไม่สำเร็จ';

@@ -57,7 +57,10 @@
       if(isDemo)fig.append(makeDemoSheet(demo[i],i));
       else {
         const img=make('img');img.src=urlImage(page.web_image);img.alt=page.alt_th||'หน้า '+(i+1);img.loading=i?'lazy':'eager';img.decoding='async';
-        img.addEventListener('error',()=>img.replaceWith(make('p','reader-message','ภาพหน้านี้ไม่สามารถโหลดได้')), {once:true});
+        img.addEventListener('error',()=>{
+          img.replaceWith(make('p','reader-message','ภาพหน้านี้ไม่สามารถโหลดได้'));
+          window.BWDNotify?.toast('ไม่สามารถโหลดภาพหน้านี้ได้',{type:'error',key:'reader-image-error'});
+        }, {once:true});
         fig.append(img);
       }
       fig.append(make('figcaption','','หน้า '+(i+1)));
@@ -128,8 +131,10 @@
     catch(e){
       console.error('BWD Reader page flip error',e);
       stopEngine();state.mode='scroll';setModeButtons();
-      byId('reader-message').textContent='อุปกรณ์นี้ยังไม่พร้อมสำหรับการพลิกหน้า กำลังแสดงแบบเลื่อนหน้าแทน';
-      byId('reader-message').hidden=false;
+      const message='อุปกรณ์นี้ยังไม่พร้อมสำหรับการพลิกหน้า กำลังแสดงแบบเลื่อนหน้าแทน';
+      byId('reader-message').textContent=message;
+      byId('reader-message').hidden=Boolean(window.BWDNotify);
+      window.BWDNotify?.toast(message,{type:'warning',key:'reader-flip-fallback'});
       requestAnimationFrame(()=>scrollToCurrent(false));
     }
   }
@@ -203,7 +208,7 @@
     else{
       full.addEventListener('click',async()=>{
         try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}
-        catch(e){console.warn('Fullscreen not available',e);}
+        catch(e){console.warn('Fullscreen not available',e);window.BWDNotify?.toast('อุปกรณ์นี้ไม่รองรับการเปิดเต็มจอ',{type:'info',key:'reader-fullscreen'});}
       });
       document.addEventListener('fullscreenchange',()=>full.setAttribute('aria-label',document.fullscreenElement?'ออกจากเต็มจอ':'เปิดเต็มจอ'));
     }
