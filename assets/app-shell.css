@@ -260,3 +260,63 @@
   .app-welcome,.app-welcome::after{animation:none!important}
   .app-carousel-dot::before{transition:none!important}
 }
+
+/* Mobile UX v1.7: real approved Gallery photography stays decorative and
+   always sits BEHIND the navy-backed text. No auto-rotating within a session. */
+@media(max-width:630px){
+  .app-welcome{box-shadow:0 5px 18px #1028460c}
+  .app-welcome.has-approved-hero-photo::before{
+    content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:var(--bwd-welcome-image);
+    background-position:68% center;background-size:cover;background-repeat:no-repeat;
+    filter:grayscale(.25) saturate(.8);
+    opacity:.15;animation:bwd-hero-photo-reveal .6s ease-out both;
+  }
+  .app-welcome.has-approved-hero-photo::after{
+    background:radial-gradient(ellipse at 60% 32%,rgba(240,212,146,.08),transparent 54%);
+  }
+  /* Sticky app masthead: compact after scrolling, with safe touch targets. */
+  .site-header{
+    position:sticky;top:0;z-index:39;min-height:74px;
+    transition:min-height .2s ease,box-shadow .2s ease,background-color .2s ease;
+  }
+  .site-header .topbar{transition:padding .2s ease,min-height .2s ease}
+  .site-header .brand-mark,.site-header .app-quick-search{
+    transition:width .2s ease,height .2s ease,flex-basis .2s ease;
+  }
+  .site-header .brand-copy small{max-height:22px;opacity:1;overflow:hidden;transition:opacity .17s,max-height .2s}
+  .site-header.is-app-compact{
+    min-height:58px;background:rgba(255,255,255,.97);
+    box-shadow:0 4px 18px #112b4e14;
+  }
+  .site-header.is-app-compact .topbar{padding:5px 0;min-height:48px}
+  .site-header.is-app-compact .brand-mark{width:36px;height:36px;border-radius:11px;font-size:19px}
+  .site-header.is-app-compact .brand-copy strong{font-size:14px}
+  .site-header.is-app-compact .brand-copy small{max-height:0;opacity:0}
+  .site-header.is-app-compact .app-quick-search{
+    width:42px;height:42px;flex-basis:42px;min-height:42px;
+  }
+  /* Keep v1.6's 16px input and synchronous focus; reserve sticky-header clearance. */
+  html{scroll-padding-top:72px}
+  .filters .search-field input,
+  .gallery-page .gallery-filters .gallery-search input{
+    scroll-margin-top:calc(76px + env(safe-area-inset-top));
+  }
+  .app-section-heading a,.app-bottom-nav a,.app-books-shortcut{
+    transition:transform .17s ease,background-color .17s ease;
+  }
+  .app-section-heading a:active,.app-books-shortcut:active{
+    transform:translateY(1px);
+  }
+  .app-bottom-nav a:active{transform:scale(.96)}
+}
+@keyframes bwd-hero-photo-reveal{
+  from{opacity:0}
+  to{opacity:.15}
+}
+@media(prefers-reduced-motion:reduce){
+  .app-welcome.has-approved-hero-photo::before{animation:none!important;opacity:.15}
+  .site-header,.site-header .topbar,.site-header .brand-mark,
+  .site-header .app-quick-search,.site-header .brand-copy small,
+  .app-section-heading a,.app-bottom-nav a,.app-books-shortcut{transition:none!important}
+}

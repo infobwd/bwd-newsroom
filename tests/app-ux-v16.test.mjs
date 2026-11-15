@@ -29,7 +29,7 @@ for(const doc of [home,gallery]){
   assert.match(doc,/width=device-width, initial-scale=1, viewport-fit=cover/,'responsive viewport remains enabled');
   assert.doesNotMatch(doc,/user-scalable=no|maximum-scale=1/,'user zoom must remain available');
 }
-assert.match(sw,/v14-ios-search-focus/,'service worker shell refreshes iPhone app CSS/JS');
+assert(Number(sw.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=14,'PWA shell keeps the v1.6 search fix and later updates');
 const shellCache=sw.slice(sw.indexOf('const SHELL='),sw.indexOf('const PATHS='));
 assert.doesNotMatch(shellCache,/assets\/issues\/|assets\/galleries\/|data\/|\.pdf/,'no private/media assets added to shell cache');
 assert.match(workflow,/node tests\/app-ux-v16\.test\.mjs/);
