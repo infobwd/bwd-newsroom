@@ -15,6 +15,7 @@
   let currentAlbum = null;
   let currentPhoto = 0;
   let swipeStart = null;
+  let galleryListScroll = 0;
   let loadFailed = false;
 
   function dateValid(s) {
@@ -121,6 +122,7 @@
     }
   }
   function renderAlbum(g) {
+    if(!currentAlbum)galleryListScroll=window.scrollY;
     currentAlbum = g;
     $('album-title').textContent = g.title_th;
     $('album-meta').textContent = dateThai(g.date)+' · '+(CATEGORY_NAMES[g.category]||'กิจกรรม')+
@@ -176,10 +178,14 @@
       try {albumId=decodeURIComponent(hash.slice(6));} catch (_) { albumId=''; }
     }
     const album=galleries.find(g => g.gallery_id===albumId);
+    const returningFromAlbum=Boolean(currentAlbum)&&!album;
     if (lightbox.open) lightbox.close();
     document.body.classList.toggle('is-album-open', Boolean(album));
     if (album) renderAlbum(album);
-    else {currentAlbum=null;detail.hidden=true;section.hidden=false;}
+    else {
+      currentAlbum=null;detail.hidden=true;section.hidden=false;
+      if(returningFromAlbum)requestAnimationFrame(()=>window.scrollTo({top:galleryListScroll,behavior:'instant'}));
+    }
   }
   async function init() {
     search.addEventListener('input',renderList);
