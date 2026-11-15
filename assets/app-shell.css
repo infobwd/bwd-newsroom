@@ -156,7 +156,7 @@
     margin-bottom:20px;align-items:center;
   }
   .filters .search-field,.gallery-page .gallery-filters .gallery-search{grid-column:1;min-width:0}
-  .filters .search-field input,.gallery-page .gallery-filters .gallery-search input{height:46px;min-width:0;font-size:16px;line-height:1.35}
+  .filters .search-field input,.gallery-page .gallery-filters .gallery-search input{height:46px;min-width:0;font-size:16px;line-height:1.35;scroll-margin-top:calc(18px + env(safe-area-inset-top))}
   .filters > label:not(.search-field),.filters > .reset{display:none}
   .app-filter-trigger{
     display:inline-flex;align-items:center;justify-content:center;gap:6px;
