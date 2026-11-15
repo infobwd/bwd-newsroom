@@ -234,8 +234,8 @@
     }catch(e){
       console.error('Gallery catalogue unavailable',e);
       loadFailed=true;grid.setAttribute('aria-busy','false');
-      error.hidden=false;empty.hidden=true;count.textContent='โหลดข้อมูลไม่สำเร็จ';
-    }
+      grid.replaceChildren();error.hidden=false;empty.hidden=true;count.textContent='โหลดข้อมูลไม่สำเร็จ';
+    } finally { window.BWDLoading?.finishLaunch(); }
   }
   init();
 }());

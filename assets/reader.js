@@ -237,6 +237,7 @@
     });
   }
   function ready(title,subtitle){
+    byId('reader-loading').hidden=true;
     byId('reader-title').textContent=title;
     byId('reader-subtitle').textContent=subtitle;
     byId('reader-info-copy').textContent=title+' — '+subtitle;
@@ -247,6 +248,7 @@
     activate(flipAvailable()?'flip':'scroll');
   }
   function fail(message){
+    byId('reader-loading').hidden=true;
     byId('reader-title').textContent='ยังไม่มีหนังสือที่เปิดอ่านได้';
     byId('reader-subtitle').textContent='กลับไปที่ชั้นหนังสือเพื่อเลือกฉบับที่ได้รับอนุมัติ';
     byId('reader-message').textContent=message;byId('reader-message').hidden=false;

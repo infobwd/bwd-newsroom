@@ -124,9 +124,12 @@
     const images = textEl('div', '', 'dialog-images');
     issue.pages.forEach(page => {
       const figure = document.createElement('figure');
+      figure.classList.add('bwd-page-pending');
       const image = document.createElement('img');
       image.src = new URL('./' + page.web_image, document.baseURI).href;
       image.alt = page.alt_th; image.loading = 'lazy'; image.decoding = 'async';
+      image.addEventListener('load',()=>figure.classList.remove('bwd-page-pending'),{once:true});
+      image.addEventListener('error',()=>{figure.classList.remove('bwd-page-pending');image.replaceWith(textEl('p','ภาพไม่พร้อมใช้งาน','app-dashboard-error'));},{once:true});
       const caption = textEl('figcaption', 'หน้า ' + page.page_no, 'dialog-image-label');
       figure.append(image, caption); images.append(figure);
     });
@@ -236,7 +239,7 @@
       body.append(textEl('h3',b.title_th),textEl('p',(b.contents.length)+' ข่าว · '+b.pages.length+' หน้า'));
       const open=textEl('a','เปิดอ่านแบบพลิกหน้า ↗');open.href='./reader.html?book='+encodeURIComponent(b.id);
       body.append(open);card.append(cover,body);node.append(card);
-    });emptyNode.hidden=books.length>0;
+    });node.setAttribute('aria-busy','false');emptyNode.hidden=books.length>0;
   }
 
   /* Mobile dashboard previews are sourced exclusively from approved catalogues. */
@@ -306,14 +309,15 @@
         ids.add(issue.id); return true;
       }).sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
       buildFilters(); render(); renderAppHome(); void renderAppGalleries(); routeHash();
-      try {const bres=await fetch('./data/books.json',{cache:'no-store'});if(!bres.ok)throw new Error('Book manifest unavailable');const bdata=await bres.json();renderBooks(bdata);} catch(e) { console.warn('BWD bookshelf loading error',e); }
+      try {const bres=await fetch('./data/books.json',{cache:'no-store'});if(!bres.ok)throw new Error('Book manifest unavailable');const bdata=await bres.json();renderBooks(bdata);} catch(e) { console.warn('BWD bookshelf loading error',e);$('books-list')?.replaceChildren();$('books-list')?.setAttribute('aria-busy','false');$('books-empty').hidden=false; }
     } catch (e) {
       console.error('BWD Newsroom catalog error', e);
-      loadFailed = true; grid.setAttribute('aria-busy', 'false'); error.hidden = false;
+      loadFailed = true; grid.replaceChildren();grid.setAttribute('aria-busy', 'false'); error.hidden = false;
       count.textContent = 'โหลดข้อมูลไม่สำเร็จ';
       const home=$('app-latest-issue');if(home)home.replaceChildren(textEl('p','ไม่สามารถโหลดจดหมายข่าวล่าสุดได้','app-dashboard-error'));
       void renderAppGalleries();
-    }
+      $('books-list')?.replaceChildren();$('books-list')?.setAttribute('aria-busy','false');$('books-empty').hidden=false;
+    } finally { window.BWDLoading?.finishLaunch(); }
   }
   init();
 }());

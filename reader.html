@@ -9,6 +9,7 @@
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/styles.css">
   <link rel="stylesheet" href="./assets/reader.css">
+  <link rel="stylesheet" href="./assets/loading.css">
   <script defer src="./vendor/page-flip.browser.min.js"></script>
   <script defer src="./assets/reader-geometry.js"></script>
   <script defer src="./assets/reader.js"></script>
@@ -39,6 +40,7 @@
       </div>
       <div id="reader-message" class="reader-message" role="status" hidden></div>
       <div class="reader-canvas">
+        <div id="reader-loading" class="reader-loading" role="status" aria-live="polite"><span class="reader-loading-sheet bwd-shimmer" aria-hidden="true"><i></i><i></i><i></i></span><span class="reader-loading-caption">กำลังเตรียมหน้าจดหมายข่าว…</span></div>
         <button id="reader-focus-restore" class="reader-focus-restore" type="button" aria-label="แสดงเครื่องมืออ่านอีกครั้ง" hidden>แสดงเครื่องมือ</button>
         <div id="flip-stage" class="paper-stage" tabindex="0" aria-label="พื้นที่พลิกหน้าหนังสือ ลากมุมกระดาษหรือใช้ปุ่มก่อนหน้าและถัดไป">
           <div id="flip-engine" class="flip-engine"></div>

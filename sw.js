@@ -1,10 +1,10 @@
 /* BWD Newsroom N04-W: offline shell only, project-scoped. No media, PDF, Drive or catalogue cache. */
-const VERSION='bwd-public-shell-2569-11-15-v11-share-v1';
+const VERSION='bwd-public-shell-2569-11-15-v11-share-v12';
 const ROOT=self.registration.scope;
 const SHELL=[
   './','./index.html','./gallery.html','./offline.html',
   './assets/styles.css','./assets/gallery.css','./assets/reader.css',
-  './assets/app-shell.css','./assets/app-shell.js','./assets/share.js','./assets/app.js',
+  './assets/app-shell.css','./assets/app-shell.js','./assets/loading.css','./assets/loading.js','./assets/share.js','./assets/app.js',
   './assets/gallery.js','./assets/ui-motion.js','./favicon.svg',
   './manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'
 ];

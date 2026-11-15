@@ -14,12 +14,22 @@
   <link rel="stylesheet" href="./assets/styles.css">
   <link rel="stylesheet" href="./assets/reader.css">
   <link rel="stylesheet" href="./assets/app-shell.css">
+  <script>if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)document.documentElement.classList.add('app-launching');</script>
+  <link rel="stylesheet" href="./assets/loading.css">
+  <script defer src="./assets/loading.js"></script>
   <script defer src="./assets/ui-motion.js"></script>
   <script defer src="./assets/app-shell.js"></script>
   <script defer src="./assets/share.js"></script>
   <script defer src="./assets/app.js"></script>
 </head>
 <body class="newsroom-page">
+  <div id="app-launch" class="app-launch" aria-hidden="true">
+    <div class="app-launch-mark">WD<span>.</span></div>
+    <strong>BWD NEWSROOM</strong>
+    <p>โรงเรียนบ้านวังด้ง</p>
+    <small>จดหมายข่าว · ภาพกิจกรรม · หนังสือดิจิทัล</small>
+  </div>
+
   <a class="skip" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
   <header class="site-header">
     <div class="wrap topbar">
@@ -89,9 +99,9 @@
     <span>จดหมายข่าว ภาพกิจกรรม และหนังสือดิจิทัล</span>
   </div>
   <div class="app-section-heading"><h2>จดหมายข่าวล่าสุด</h2><a href="#news">ทั้งหมด <span aria-hidden="true">›</span></a></div>
-  <div id="app-latest-issue" class="app-latest-issue" aria-live="polite"><p class="app-loading">กำลังโหลดจดหมายข่าว…</p></div>
+  <div id="app-latest-issue" class="app-latest-issue" aria-live="polite"><div class="bwd-skeleton bwd-skel-feature" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span><span class="bwd-skel-action"></span></div></div><span class="visually-hidden" role="status">กำลังโหลดจดหมายข่าว</span></div>
   <div class="app-section-heading"><h2>ภาพกิจกรรมล่าสุด</h2><a href="./gallery.html">ทั้งหมด <span aria-hidden="true">›</span></a></div>
-  <div id="app-latest-galleries" class="app-latest-galleries" aria-live="polite"><p class="app-loading">กำลังโหลดภาพกิจกรรม…</p></div>
+  <div id="app-latest-galleries" class="app-latest-galleries" aria-live="polite"><div class="bwd-skeleton bwd-skel-album" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span><span class="bwd-skel-action"></span></div></div><div class="bwd-skeleton bwd-skel-album" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span><span class="bwd-skel-action"></span></div></div><span class="visually-hidden" role="status">กำลังโหลดภาพกิจกรรม</span></div>
   <div class="app-section-heading"><h2>ชั้นหนังสือ</h2><a href="#books">เปิดดู <span aria-hidden="true">›</span></a></div>
   <a class="app-books-shortcut" href="#books"><span class="app-books-symbol" aria-hidden="true">▤</span><span><strong>หนังสือข่าวรวมเล่ม</strong><small>อ่านแบบพลิกหน้าและ PDF เมื่อมีเล่มเผยแพร่</small></span><span aria-hidden="true">›</span></a>
   <details class="app-install-guide" id="app-install-guide"><summary>เพิ่ม BWD Newsroom ไว้บนหน้าจอหลัก</summary><p>บน iPhone เปิดเว็บผ่าน Safari แล้วแตะปุ่มแชร์ เลือก “เพิ่มไปยังหน้าจอโฮม” บนอุปกรณ์อื่นใช้เมนูติดตั้งแอปของเบราว์เซอร์เมื่อรองรับ</p><button type="button" id="app-install-button" hidden>ติดตั้งแอป</button></details>
@@ -109,7 +119,7 @@
           <label><span class="visually-hidden">เลือกรูปแบบจดหมายข่าว</span><select id="template" aria-label="เลือกรูปแบบ"><option value="">ทุกรูปแบบ</option></select></label>
           <button class="reset" type="reset">ล้างตัวกรอง</button>
         </form>
-        <div class="news-grid" id="news-grid" aria-live="polite" aria-busy="true"></div>
+        <div class="news-grid" id="news-grid" aria-live="polite" aria-busy="true"><div class="bwd-skeleton bwd-skel-news" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span><span class="bwd-skel-action"></span></div></div><div class="bwd-skeleton bwd-skel-news" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span><span class="bwd-skel-action"></span></div></div><div class="bwd-skeleton bwd-skel-news" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span><span class="bwd-skel-action"></span></div></div></div>
         <div class="empty" id="empty" hidden>
           <div class="empty-symbol" aria-hidden="true">✦</div>
           <h3 id="empty-title">ยังไม่มีจดหมายข่าวที่เผยแพร่</h3>
@@ -130,8 +140,8 @@
           <div><p class="section-label">03 / THE COLLECTION</p><h2 id="books-title">หนังสือข่าวรวมเล่ม</h2></div>
           <p class="section-note">Flipbook & PDF Collection</p>
         </div>
-        <div class="books-list" id="books-list" aria-live="polite"></div>
-        <div class="books-empty" id="books-empty">
+        <div class="books-list" id="books-list" aria-live="polite" aria-busy="true"><div class="bwd-skeleton bwd-skel-book" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span></div></div></div>
+        <div class="books-empty" id="books-empty" hidden>
           <div class="book-mini" aria-hidden="true"><span>BWD<br>NEWS</span><b>BOOKS</b></div>
           <div><span class="soon">N02 READER DEMO · N03 PDF NEXT</span><h3>จากข่าวรายฉบับ สู่หนังสือความทรงจำ</h3><p>หนังสือรวมเล่มจะแสดงเมื่อผ่านการตรวจรับและอนุมัติแล้ว ในระหว่างนี้สามารถทดลองเปิดหนังสือตัวอย่างของระบบอ่านได้</p><p><a class="demo-link" href="./reader.html?demo=1">ทดลองพลิกหน้าแบบ WD Books ↗</a></p></div>
         </div>
