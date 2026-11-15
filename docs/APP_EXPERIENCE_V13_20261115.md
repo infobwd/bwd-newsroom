@@ -3,6 +3,7 @@
 **Work ID:** BN-APP-2569-04  
 **Base main:** `a6c2265e9231b2d3b310e787f256fe4b8cdfcf74`  
 **Branch:** `fix/app-v13-launch-header-gallery-20261115`  
+**PR:** [#24](https://github.com/infobwd/bwd-newsroom/pull/24) (Merge explicitly authorized by school owner)  
 **Approval:** School owner explicitly authorized this UI change and Merge in chat (15 พฤศจิกายน 2569).  
 **Scope:** Cosmetic/mobile browser shell only. No news, Gallery records, approved Canva/media assets, QR, PDF, source Drive images or LINE share text changes.
 
@@ -13,7 +14,8 @@
 4. **PWA update:** Bump shell cache name to `v11-share-v13` so returning Home Screen users can opt into the latest CSS/JS. No image or data catalogues in Service Worker cache.
 
 ## QA and release gates
-- Source & regression checks (GitHub Actions): PENDING final PR CI, includes v1.3 source contract test, v1.2 loading tests (updated to reflect intentional removal of duplicate overlay), approved public manifests and previous N01/N02/Gallery/Share/PWA tests.
+- Source & regression checks (GitHub Actions): **PASS** for initial PR head `c6430ff158c7fd0c8c6297c42742a30d7cda4eb6` at [Static QA run #43683369277](https://github.com/infobwd/bwd-newsroom/actions/runs/43683369277). Includes v1.3 contract, revised v1.2 skeleton tests, public manifest validation and prior N01/N02/Gallery/Share/PWA tests. The final documentation-only head requires a second successful CI run before Merge.
+- [Live Pages smoke #43683369184](https://github.com/infobwd/bwd-newsroom/actions/runs/43683369184): **PASS for current deployed `main` baseline only**. This is not the unpublished v1.3 layout.
 - Public Pages deployment status: verify separately after explicit merged PR; do not equate CI green with iPhone visual acceptance.
 - Hardware QA: **NOT RUN**: actual standalone cold launch vs switching Gallery/Home, Safari, notch/Dynamic Island overlap, 360/390/430px safe area, screen rotation, bottom nav and footer at maximum scroll, reduced motion and VoiceOver. These require school iPhone/iPad review.
 - No screenshots/visual previews from physical devices claimed.
