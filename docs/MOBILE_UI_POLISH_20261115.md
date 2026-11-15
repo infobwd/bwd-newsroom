@@ -3,7 +3,7 @@
 **Work ID:** BN-UI-MOBILE-20261115-01
 **Base SHA:** `f300fb7094f89bddbca12902c69114b9fa106f4d`
 **Branch:** `fix/mobile-ui-polish-20261115`
-**PR:** draft, pending URL and CI evidence
+**PR:** [#19](https://github.com/infobwd/bwd-newsroom/pull/19) (draft, awaiting school approval)
 **Status:** READY_FOR_SCHOOL_REVIEW after code/test review; not merged or published.
 
 ## Scope and rationale
@@ -16,8 +16,8 @@ Five supplied iPhone screenshots show an attractive navy/gold editorial layout b
 - `tests/mobile-ui-polish.test.mjs`, `.github/workflows/static-qa.yml`: source contract regression checks in existing CI.
 
 ## QA and release gate
-- Source contract QA: PENDING CI execution (not browser validation).
-- JavaScript syntax + existing N01/N01-G/N02 static regressions: PENDING CI.
+- Source contract QA: PASS in initial GitHub Actions run [43672815641](https://github.com/infobwd/bwd-newsroom/actions/runs/43672815641); final follow-up commit still requires its own CI.
+- JavaScript syntax + existing N01/N01-G/N02 static regressions: PASS in initial CI run, final commit pending.
 - Real device iPhone Safari 360/390/430px, iPad portrait/landscape, desktop: NOT RUN.
 - Live Pages/incognito, keyboard focus, touch swipe, image/PDF link behavior and no horizontal overflow: NOT RUN.
 - Editorial media/assets/Canva/Drive/approval: UNCHANGED.
