@@ -131,7 +131,8 @@
       figure.append(image, caption); images.append(figure);
     });
     content.append(images);
-    const actions = textEl('div', '', 'dialog-actions');
+    const actions = $('dialog-actions');
+    actions.replaceChildren();
     const driveLink = publicFileLink(issue.public_pdf_url);
     if (driveLink) {
       const localPdf = typeof issue.public_pdf_url === 'string' && /^assets\/issues\//.test(issue.public_pdf_url);
@@ -146,8 +147,10 @@
       catch (_) { copy.textContent = 'ไม่สามารถคัดลอกอัตโนมัติได้'; }
     });
     actions.append(copy);
-    const read = textEl('a', 'อ่านแบบพลิกหน้า ↗');read.href = './reader.html?issue=' + encodeURIComponent(issue.id);actions.append(read);
-    content.append(actions);
+    const read = textEl('a', 'อ่านแบบพลิกหน้า ↗', 'dialog-read');
+    read.href = './reader.html?issue=' + encodeURIComponent(issue.id);
+    actions.prepend(read);
+    content.scrollTop = 0;
     if (!dialog.open) dialog.showModal();
     if (updateHash) history.pushState(null, '', '#issue=' + encodeURIComponent(issue.id));
   }

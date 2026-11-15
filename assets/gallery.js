@@ -177,6 +177,7 @@
     }
     const album=galleries.find(g => g.gallery_id===albumId);
     if (lightbox.open) lightbox.close();
+    document.body.classList.toggle('is-album-open', Boolean(album));
     if (album) renderAlbum(album);
     else {currentAlbum=null;detail.hidden=true;section.hidden=false;}
   }

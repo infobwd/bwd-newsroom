@@ -41,5 +41,6 @@ jobs:
           node tests/n01.test.mjs
           node tests/n01-gallery.test.mjs
           node tests/n01-ui-motion.test.mjs
+          node tests/mobile-ui-polish.test.mjs
           node tests/n02.test.mjs
           node tests/n02-mobile.test.mjs
