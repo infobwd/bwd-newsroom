@@ -184,7 +184,7 @@
       status.textContent=message;
       status.hidden=!message || Boolean(window.BWDNotify);
       if(message && window.BWDNotify)window.BWDNotify.toast(message,{
-        type,mount:dialog,key:'issue-'+issue.id+'-'+message
+        type,mount:dialog.open?dialog:null,key:'issue-'+issue.id+'-'+message
       });
     };
     let files=null;
