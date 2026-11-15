@@ -22,3 +22,13 @@
 - Physical iPhone/iPad QA remains **NOT RUN** without a connected device: tap dots, swipe to last/first, confirm pauses/resumes and offscreen stop, close modal without gold frame, VoiceOver, Safari standalone/Home Screen, reduced-motion preference.
 - The Live Pages workflow checks the currently deployed baseline and does not prove the PR's unpublished UX works on device; post-merge deployment status must be checked separately.
 - Rollback by reverting the scoped PR; no public content migration or student image permission changes.
+
+## Verification checkpoint before Merge (15 พฤศจิกายน 2569)
+
+- **PR:** https://github.com/infobwd/bwd-newsroom/pull/26
+- **Regression-fix head:** `e9dada4ca29071341aec07650f3da28c58ee1b6c`
+- **Static QA: PASS:** https://github.com/infobwd/bwd-newsroom/actions/runs/43688475232 — JavaScript syntax, approved manifest validators, prior suite plus v1.5.
+- **Live Pages smoke: PASS for previously deployed baseline ONLY:** https://github.com/infobwd/bwd-newsroom/actions/runs/43688475227 — not direct evidence of PR UI.
+- **Diff scope:** only `assets/app.js`, `assets/app-shell.css`, `sw.js`, CI workflow, v1.4 regression contract, this note and v1.5 regression. No data, image, issue, book, QR, Canva or reader.html changes.
+- **Physical iPhone / iPad QA: NOT RUN.** Verify manually after deployment.
+- This evidence-only documentation commit requires a **new final-head Static QA pass** before authorized Merge.
