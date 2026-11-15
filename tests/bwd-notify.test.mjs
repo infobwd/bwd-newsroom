@@ -111,7 +111,7 @@ assert.match(read('assets/notify.css'),/prefers-reduced-motion:reduce/);
 assert.match(read('assets/notify.css'),/safe-area-inset-bottom/);
 assert.doesNotMatch(read('assets/notify.js'),/innerHTML\s*=|window\.alert\(|window\.confirm\(/);
 const sw=read('sw.js');
-assert.match(sw,/bwd-public-shell-2569-11-15-v17-bwd-notify/);
+assert(Number(sw.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=17,'Notify remains in the updated PWA shell');
 const precache=sw.slice(sw.indexOf('const SHELL='),sw.indexOf('const PATHS='));
 assert(precache.includes("'./assets/notify.js'")&&precache.includes("'./assets/notify.css'"));
 assert.doesNotMatch(precache,/assets\/issues\/|assets\/galleries\/|data\/|\.pdf/);
