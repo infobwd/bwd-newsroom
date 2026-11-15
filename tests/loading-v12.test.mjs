@@ -40,13 +40,13 @@ const shell=sw.slice(sw.indexOf('const SHELL='),sw.indexOf('const PATHS='));
 assert(!shell.includes('assets/issues/'), 'No published page images in precache');
 assert(!shell.includes('assets/galleries/'), 'No Gallery images in precache');
 assert(!shell.includes('data/'), 'No public data manifest in precache');
-assert.match(app,/const more=document\.createElement\('details'\)/);
+assert.match(app,/const more=\$\('dialog-tools'\)/);
 assert.match(app,/moreOptions\.append\(a\)/); // PDF preserved
 assert.match(app,/moreOptions\.append\(downloadImage\)/);
 assert.match(app,/moreOptions\.append\(copy\)/);
 assert.match(app,/shareKit\.shareFiles\(issue,files\)/);
 assert.match(app,/shareKit\.lineTextUrl\(issue\)/);
-assert.match(app,/actions\.prepend\(read\)/);
-assert.match(styles,/\.dialog-share-more-options/);
+assert.match(app,/moreOptions\.prepend\(read\)/);
+assert.match(styles,/\.dialog-tools-options/);
 assert(!app.includes('setTimeout(()=>report('), 'No artificial share status delay');
 console.log('PASS App Experience v1.2 skeleton, launch and share source contracts (not device QA)');
