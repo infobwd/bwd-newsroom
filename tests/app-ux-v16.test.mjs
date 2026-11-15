@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8');
+const shell=read('assets/app-shell.js');
+const css=read('assets/app-shell.css');
+const home=read('index.html'), gallery=read('gallery.html');
+const sw=read('sw.js'), workflow=read('.github/workflows/static-qa.yml');
+const start=shell.indexOf("search?.addEventListener('click'");
+const end=shell.indexOf("  const banner=",start);
+assert(start>=0&&end>start,'app quick search handler must exist');
+const handler=shell.slice(start,end);
+assert.match(handler,/event\.preventDefault\(\)/,'avoid native hash jump while focusing');
+assert.match(handler,/field\.scrollIntoView\(\{block:'start',behavior:'auto'\}\)/,'align search above iPhone keyboard');
+assert.match(handler,/field\.focus\(\{preventScroll:true\}\)/,'focus on direct user tap without extra scrolling');
+assert(handler.indexOf('field.scrollIntoView(')<handler.indexOf('field.focus('),'finish positioning before opening keyboard');
+assert.doesNotMatch(handler,/setTimeout\(/,'delayed focus may lose iOS user gesture and keyboard');
+assert.match(handler,/rootStyle\.scrollBehavior='auto'/,'suppress competing smooth scroll');
+assert.match(handler,/rootStyle\.scrollBehavior=originalBehavior/,'restore page scroll preference');
+assert.match(handler,/is-album-open/,'gallery album navigation is preserved');
+assert.match(handler,/\? 'gallery-search'|'gallery-search':'search'/,'both news and gallery search IDs are supported');
+const mobile=css.slice(css.indexOf('/* App Experience v1.1'));
+assert.match(mobile,/\.filters \.search-field input,\.gallery-page \.gallery-filters \.gallery-search input\{height:46px;min-width:0;font-size:16px/);
+assert.match(mobile,/scroll-margin-top:calc\(18px \+ env\(safe-area-inset-top\)\)/);
+assert.match(mobile,/\.app-filter-fields select\{[\s\S]*?font:400 16px Kanit/,'iOS sheet selects also avoid zoom');
+assert.match(mobile,/grid-template-columns:minmax\(0,1fr\) auto/,'mobile filter row remains bounded');
+assert.match(home,/id="search" type="search"/);
+assert.match(gallery,/id="gallery-search" type="search"/);
+for(const doc of [home,gallery]){
+  assert.match(doc,/width=device-width, initial-scale=1, viewport-fit=cover/,'responsive viewport remains enabled');
+  assert.doesNotMatch(doc,/user-scalable=no|maximum-scale=1/,'user zoom must remain available');
+}
+assert.match(sw,/v14-ios-search-focus/,'service worker shell refreshes iPhone app CSS/JS');
+const shellCache=sw.slice(sw.indexOf('const SHELL='),sw.indexOf('const PATHS='));
+assert.doesNotMatch(shellCache,/assets\/issues\/|assets\/galleries\/|data\/|\.pdf/,'no private/media assets added to shell cache');
+assert.match(workflow,/node tests\/app-ux-v16\.test\.mjs/);
+console.log('PASS Mobile UX v1.6 iOS search source contracts; physical Safari/PWA QA not run');
