@@ -187,3 +187,27 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 - **L3 NOT RUN:** Real iPhone/iPad Safari, browser visual/touch/performance, per-photo EXIF, independent consent/rights records, public PDF contents and per-file release authorization, saved Canva design/pages, and local Node validator. No fresh CI execution claimed.
 - **L4:** Checkpoint-only update in existing draft PR #6. No source/photo/public manifest modifications; previous production content unchanged.
 - **L5 READY_FOR_SCHOOL_REVIEW:** School authority must audit **all 16 publicly indexed images and both public issue PDFs** against exact permission/approval evidence and real rendered output; if a privacy mismatch is confirmed, handle via separately authorized corrective release. Next loop: verify specific published assets and real-device Gallery/reader behavior; only then proceed to N04-P teacher upload implementation.
+
+
+## 2026-11-15 08:03 Asia/Bangkok — Drive-first WebP derivative metadata audit
+
+**One selected task:** inspect the existing first Gallery event's Drive-first approved-derivative folder for actual file metadata and privacy boundaries; update existing draft PR #6 only. This is a read-only audit plus checkpoint correction, not publication authorization.
+
+### L0 — fresh source readback
+- Read main README, AGENTS, MASTER_PLAN, DATA_AND_STORAGE, PUBLISHING_AND_QA, AI_DEVELOPMENT_LOOP, GALLERY_CHAT_UI_PWA_PLAN, N01_G_CHECKPOINT and public `data/galleries.json`; read existing PR #6 checkpoint and PR #15. PR #3 and #5 are merged; PR #6 and #15 remain open **draft**. PR #18 is merged as commit `f300fb7094f89bddbca12902c69114b9fa106f4d`, but this run did **not** independently resolve current main HEAD; do not equate a discovered commit with HEAD.
+- Current main public catalogue has **two `published` Gallery records, 16 image entries total**. This is a publication *manifest state*, not independent proof of photo consent, anonymous asset delivery or browser/device QA. Historical empty-catalogue statements above and in main README are obsolete.
+- School account metadata listing: Newsroom root has six expected folders; academic-year Shared Drive root has four categorized subfolders (activity photos, historical PDFs, review derivatives, published derivatives). Folder visibility metadata remains `access_not_verified`; no blanket-public permission inferred. Original 17-PDF count was **not recounted** this run.
+
+### L1–L3 — direct derivative inventory QA
+| Check | Result | Evidence / limitation |
+|---|---|---|
+| First event approved-derivative folder exists | PASS (metadata) | Direct school-account Shared Drive listing, event-ID subfolder |
+| 10 expected derivative files | PASS (metadata) | Five `photo01..05-web-v01.webp` plus five matching `photo01..05-thumb-v01.webp` |
+| MIME and byte sizes | PASS (metadata) | All 10 `image/webp`; full-image bytes 430368, 309692, 278396, 367376, 377338; thumbnail bytes 64724, 47650, 48650, 51988, 53226 |
+| Anonymous file access and public delivery | **NOT VERIFIED** | All ten have `source_visibility_status=access_not_verified`; no unauthenticated `image/webp` response checked |
+| Image content, EXIF/GPS, checksum, school consent | NOT RUN | No image bytes or release records inspected |
+| Live Pages, iPhone/iPad Safari, lightbox, touch, performance | NOT RUN | No rendered-browser/device evidence in this iteration |
+| Local Node validators, Canva persisted pages, PDF visual parity | NOT RUN | No local build, selected Canva issue or PDF processing in this iteration |
+
+### L4–L5 — gate
+**READY_FOR_SCHOOL_REVIEW.** The direct Drive listing corroborates PR #15's *file count/MIME* for the first-event WebP derivatives, but does **not** clear public access or consent gates. Keep PR #6 and #15 draft; no new N01-G PR, merge, deploy, source-photo move, permission change or Gallery manifest edit. Next action: obtain anonymous per-file delivery evidence and school image-rights approval; independently run live browser/mobile QA. The existing published catalogue should be treated as already public-facing, not as an empty demo.
