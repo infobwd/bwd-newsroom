@@ -251,3 +251,18 @@
   #issue-dialog .dialog-actions .dialog-line-action{grid-column:1/-1;order:-1;min-height:44px}
   #issue-dialog .dialog-actions .dialog-share-status:not([hidden]){grid-column:1/-1;font-size:10px;line-height:1.45}
 }
+
+/* v1.2: keep sharing primary actions visible, fold optional downloads into native details. */
+.dialog-share-more{flex:1 1 100%;min-width:0}
+.dialog-share-more summary{cursor:pointer;list-style:revert;min-height:44px;padding:10px 13px;border:1px solid #d4dce6;border-radius:9px;background:#f4f7fa;color:var(--navy);font:500 12px Kanit,sans-serif}
+.dialog-share-more-options{display:flex;flex-wrap:wrap;gap:8px;padding:9px 0 0}
+.dialog-share-more-options>a,.dialog-share-more-options>button{min-height:44px;flex:1 1 140px}
+@media(max-width:630px){
+ #issue-dialog .dialog-actions{max-height:min(52dvh,340px)}
+ #issue-dialog .dialog-share-more{grid-column:1/-1;order:2}
+ #issue-dialog .dialog-share-more-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #issue-dialog .dialog-share-more-options>a,#issue-dialog .dialog-share-more-options>button{
+  min-width:0;width:100%;min-height:44px;padding:9px 7px;font-size:11px;line-height:1.35
+ }
+ #issue-dialog .dialog-actions .dialog-share-status:not([hidden]){order:3}
+}

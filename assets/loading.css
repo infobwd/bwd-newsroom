@@ -1,0 +1,64 @@
+
+/* BWD v1.2 accessible lightweight placeholders. No network activity or artificial delays. */
+.bwd-skeleton{display:flex;gap:13px;min-width:0;padding:11px;background:#fff;border:1px solid #e5eaf0;border-radius:16px;overflow:hidden}
+.bwd-skeleton .bwd-skel-picture{display:block;flex:0 0 35%;align-self:stretch;min-height:100px;border-radius:10px;background:#e3eaf2}
+.bwd-skel-lines{display:flex;flex:1;min-width:0;flex-direction:column;gap:10px;padding:7px 0}
+.bwd-skel-lines>span{display:block;height:12px;width:85%;border-radius:7px;background:#e3eaf2}
+.bwd-skel-lines>span:nth-child(2){width:96%}.bwd-skel-lines>span:nth-child(3){width:68%}
+.bwd-skel-lines>span.bwd-skel-action{width:90px;height:32px;margin-top:auto;border-radius:9px}
+.bwd-skeleton .bwd-skel-picture,.bwd-skel-lines>span,.bwd-shimmer,.bwd-page-pending:before{
+  background-image:linear-gradient(100deg,#e5ebf2 0%,#f5f8fb 46%,#e5ebf2 100%);
+  background-size:220% 100%;
+  animation:bwd-skeleton-shimmer 1.6s ease-in-out infinite;
+}
+@keyframes bwd-skeleton-shimmer{from{background-position:110% 0}to{background-position:-110% 0}}
+.bwd-skel-feature{min-height:166px}.bwd-skel-feature .bwd-skel-picture{flex-basis:103px;min-height:145px}
+.app-latest-galleries>.bwd-skel-album{display:flex;flex-direction:column;padding:8px;gap:7px}
+.bwd-skel-album .bwd-skel-picture{width:100%;flex:0 0 auto;aspect-ratio:4/3;min-height:0}
+.bwd-skel-album .bwd-skel-lines{width:100%;padding:4px}
+.bwd-skel-album .bwd-skel-action{display:none}
+.news-grid>.bwd-skeleton{min-height:240px}.gallery-grid>.bwd-skeleton{min-height:170px}
+.bwd-skel-book{min-height:180px}.bwd-skel-book .bwd-skel-picture{flex-basis:120px;min-height:160px}
+.bwd-page-pending{position:relative;min-height:280px;isolation:isolate}
+.bwd-page-pending:before{content:"";position:absolute;z-index:1;inset:0;border-radius:3px;pointer-events:none}
+.reader-loading{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:radial-gradient(ellipse at 50% 38%,#e4ebf2,#b5c5d5);pointer-events:none}
+.reader-loading-sheet{display:flex;flex-direction:column;gap:14px;aspect-ratio:1/1.414;height:min(70%,600px);max-width:85%;background:#fbfcfe;border:1px solid #d9e3ec;box-shadow:0 10px 22px #1b355222;padding:9% 7%}
+.reader-loading-sheet i{display:block;background:#dbe4ed;height:13px;border-radius:7px;width:78%}
+.reader-loading-sheet i:nth-child(2){width:94%}.reader-loading-sheet i:nth-child(3){width:62%}
+.reader-loading-caption{font:500 13px Kanit,sans-serif;color:#264461}
+.app-launch{display:none}
+html.app-launching .app-launch{display:flex;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;flex-direction:column;background:#112b4e;color:#fff;gap:9px;text-align:center;padding:env(safe-area-inset-top) 20px env(safe-area-inset-bottom)}
+.app-launch-mark{width:92px;height:92px;border-radius:20px;background:#f9fbfe;color:#112b4e;display:flex;align-items:center;justify-content:center;font:700 42px Kanit,sans-serif;margin-bottom:16px}
+.app-launch-mark span{color:#d9b15b}
+.app-launch strong{font:700 23px Kanit,sans-serif;letter-spacing:1.5px}
+.app-launch p{font:500 15px Kanit,sans-serif;color:#f4dcaa;margin:0}
+.app-launch small{font:400 12px Kanit,sans-serif;color:#d9e3ed}
+@media(max-width:630px){
+ .news-grid>.bwd-skeleton{min-height:152px}
+ .gallery-grid>.bwd-skeleton{min-height:145px}
+ .bwd-skel-news .bwd-skel-picture,.bwd-skel-gallery .bwd-skel-picture{flex-basis:35%;min-height:105px}
+ .app-latest-galleries>.bwd-skel-album{min-height:176px}
+}
+@media(prefers-reduced-motion:reduce){
+ .bwd-skeleton .bwd-skel-picture,.bwd-skel-lines>span,.bwd-shimmer,.bwd-page-pending:before{animation:none!important;background-image:none}
+}
+
+/* Maintain album card and image dimensions as individual approved files decode. */
+.gallery-cover,.album-photo,.issue-thumb,.books-card-cover{position:relative}
+.gallery-cover.bwd-image-pending:before,.album-photo.bwd-image-pending:before,
+.issue-thumb.bwd-image-pending:before,.books-card-cover.bwd-image-pending:before{
+ content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;
+ background-image:linear-gradient(100deg,#e5ebf2 0%,#f5f8fb 46%,#e5ebf2 100%);
+ background-size:220% 100%;animation:bwd-skeleton-shimmer 1.6s ease-in-out infinite
+}
+@media(prefers-reduced-motion:reduce){
+ .gallery-cover.bwd-image-pending:before,.album-photo.bwd-image-pending:before,.issue-thumb.bwd-image-pending:before,.books-card-cover.bwd-image-pending:before{animation:none;background:#e5ebf2}
+}
+
+.lightbox-figure.bwd-image-pending{position:relative}
+.lightbox-figure.bwd-image-pending:before{
+ content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+ background-image:linear-gradient(100deg,#e5ebf2,#f5f8fb,#e5ebf2);
+ background-size:220% 100%;animation:bwd-skeleton-shimmer 1.6s ease-in-out infinite
+}
+@media(prefers-reduced-motion:reduce){.lightbox-figure.bwd-image-pending:before{animation:none;background:#e5ebf2}}

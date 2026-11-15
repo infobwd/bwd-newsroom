@@ -11,14 +11,27 @@
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-startup-image" href="./icons/startup-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./icons/startup-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./icons/startup-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <link rel="stylesheet" href="./assets/styles.css">
   <link rel="stylesheet" href="./assets/gallery.css">
   <link rel="stylesheet" href="./assets/app-shell.css">
+  <script>if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)document.documentElement.classList.add('app-launching');</script>
+  <link rel="stylesheet" href="./assets/loading.css">
+  <script defer src="./assets/loading.js"></script>
   <script defer src="./assets/ui-motion.js"></script>
   <script defer src="./assets/app-shell.js"></script>
   <script defer src="./assets/gallery.js"></script>
 </head>
 <body class="gallery-page">
+  <div id="app-launch" class="app-launch" aria-hidden="true">
+    <div class="app-launch-mark">WD<span>.</span></div>
+    <strong>BWD NEWSROOM</strong>
+    <p>โรงเรียนบ้านวังด้ง</p>
+    <small>จดหมายข่าว · ภาพกิจกรรม · หนังสือดิจิทัล</small>
+  </div>
+
   <a class="skip" href="#gallery-main">ข้ามไปยังภาพกิจกรรม</a>
   <header class="site-header">
     <div class="wrap topbar">
@@ -93,7 +106,7 @@
           <label><span class="visually-hidden">เลือกหมวด</span><select id="gallery-category" aria-label="เลือกหมวด"><option value="">ทุกหมวด</option></select></label>
           <button type="reset" class="reset gallery-clear">ล้างตัวกรอง</button>
         </form>
-        <div id="gallery-grid" class="gallery-grid" aria-live="polite" aria-busy="true"></div>
+        <div id="gallery-grid" class="gallery-grid" aria-live="polite" aria-busy="true"><div class="bwd-skeleton bwd-skel-gallery" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span><span class="bwd-skel-action"></span></div></div><div class="bwd-skeleton bwd-skel-gallery" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span><span class="bwd-skel-action"></span></div></div><div class="bwd-skeleton bwd-skel-gallery" aria-hidden="true"><span class="bwd-skel-picture"></span><div class="bwd-skel-lines"><span></span><span></span><span></span><span class="bwd-skel-action"></span></div></div></div>
         <div id="gallery-empty" class="empty gallery-empty" hidden>
           <span aria-hidden="true" class="empty-symbol gallery-empty-symbol">✦</span>
           <h3 id="gallery-empty-title">ยังไม่มีอัลบั้มที่เผยแพร่</h3>

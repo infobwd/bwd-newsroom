@@ -16,6 +16,7 @@ jobs:
           node-version: '22'
       - name: Check JavaScript syntax
         run: |
+          node --check assets/loading.js
           node --check assets/share.js
           node --check scripts/generate-share-pages.mjs
           node --check assets/app-shell.js
@@ -41,6 +42,7 @@ jobs:
         run: |
           python -m pip install 'Pillow>=11,<13' 'PyMuPDF>=1.24,<2'
           python -m unittest discover -s tests -p test_prepare_issue_export.py -v
+          python -m unittest discover -s tests -p test_startup_images.py -v
       - name: Regression tests
         run: |
           node tests/n01.test.mjs
@@ -50,5 +52,6 @@ jobs:
           node tests/app-experience.test.mjs
           node tests/app-ux-v11.test.mjs
           node tests/line-sharing.test.mjs
+          node tests/loading-v12.test.mjs
           node tests/n02.test.mjs
           node tests/n02-mobile.test.mjs

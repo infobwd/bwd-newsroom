@@ -60,12 +60,13 @@
   }
   function cardFor(issue) {
     const card = textEl('article', '', 'issue-card');
-    const thumb = textEl('div', '', 'issue-thumb');
+    const thumb = textEl('div', '', 'issue-thumb bwd-image-pending');
     const image = document.createElement('img');
     image.src = new URL('./' + issue.pages[0].web_image, document.baseURI).href;
     image.alt = issue.pages[0].alt_th; image.loading = 'lazy'; image.decoding = 'async';
+    image.addEventListener('load',()=>thumb.classList.remove('bwd-image-pending'),{once:true});
     image.addEventListener('error', () => {
-      image.remove();
+      thumb.classList.remove('bwd-image-pending');image.remove();
       thumb.append(textEl('p', 'ไม่สามารถแสดงภาพฉบับนี้ได้', 'error'));
     }, { once: true });
     thumb.append(image);
@@ -124,21 +125,28 @@
     const images = textEl('div', '', 'dialog-images');
     issue.pages.forEach(page => {
       const figure = document.createElement('figure');
+      figure.classList.add('bwd-page-pending');
       const image = document.createElement('img');
       image.src = new URL('./' + page.web_image, document.baseURI).href;
       image.alt = page.alt_th; image.loading = 'lazy'; image.decoding = 'async';
+      image.addEventListener('load',()=>figure.classList.remove('bwd-page-pending'),{once:true});
+      image.addEventListener('error',()=>{figure.classList.remove('bwd-page-pending');image.replaceWith(textEl('p','ภาพไม่พร้อมใช้งาน','app-dashboard-error'));},{once:true});
       const caption = textEl('figcaption', 'หน้า ' + page.page_no, 'dialog-image-label');
       figure.append(image, caption); images.append(figure);
     });
     content.append(images);
     const actions = $('dialog-actions');
     actions.replaceChildren();
+    const more=document.createElement('details');more.className='dialog-share-more';
+    const summary=textEl('summary','เพิ่มเติม · ดาวน์โหลด / คัดลอก','');
+    more.append(summary);
+    const moreOptions=textEl('div','','dialog-share-more-options');more.append(moreOptions);
     const driveLink = publicFileLink(issue.public_pdf_url);
     if (driveLink) {
       const localPdf = typeof issue.public_pdf_url === 'string' && /^assets\/issues\//.test(issue.public_pdf_url);
       const a = textEl('a', localPdf ? 'ดาวน์โหลด PDF ฉบับเต็ม' : 'เปิด PDF ต้นฉบับ ↗'); a.href = driveLink; a.target = '_blank'; a.rel = 'noopener noreferrer';
       if (localPdf) a.download = issue.id + '-' + issue.approved_version + '.pdf';
-      actions.append(a);
+      moreOptions.append(a);
     }
     const shareKit=window.BWDShare;
     const status=textEl('p','','dialog-share-status');status.hidden=true;
@@ -168,7 +176,7 @@
     const downloadImage=textEl('button','ดาวน์โหลดภาพข่าว','dialog-image-download');
     downloadImage.type='button';downloadImage.disabled=true;
     downloadImage.addEventListener('click',()=>{if(files?.length)shareKit.downloadFile(files[0]);});
-    actions.append(downloadImage);
+    moreOptions.append(downloadImage);
     const copy=textEl('button','คัดลอกข้อความ','dialog-copy-action');
     copy.type='button';
     copy.addEventListener('click',async()=>{
@@ -176,11 +184,11 @@
       try{await shareKit.copyText(shareKit.message(issue));report('คัดลอกข้อความข่าวแล้ว สามารถวางลงใน LINE ได้');}
       catch(_){report('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาใช้ปุ่มเปิด LINE');}
     });
-    actions.append(copy);
+    moreOptions.append(copy);
     const read = textEl('a', 'อ่านแบบพลิกหน้า ↗', 'dialog-read');
     read.href = './reader.html?issue=' + encodeURIComponent(issue.id);
     actions.prepend(read);
-    actions.append(status);
+    actions.append(more,status);
     if(shareKit){
       shareKit.prepareFiles(issue).then(result=>{
         files=result;
@@ -188,7 +196,7 @@
         if(shareKit.canShareFiles(files)){
           photoShare.disabled=false;
           photoShare.textContent='แชร์ภาพข่าวพร้อมข้อความ';
-          report('เมื่อเมนูแชร์ปรากฏ ให้เลือก LINE; บางรุ่นอาจไม่แนบข้อความไปพร้อมภาพ');
+          report('');
         }else{
           photoShare.textContent='อุปกรณ์ไม่รองรับแชร์ภาพโดยตรง';
           report('ยังดาวน์โหลดภาพและส่งข้อความเข้า LINE ได้');
@@ -229,14 +237,16 @@
     books.sort((a,b)=>String(b.date_end).localeCompare(String(a.date_end)));
     node.replaceChildren();
     books.forEach(b=>{
-      const card=textEl('article','','books-card'),cover=textEl('div','','books-card-cover');
+      const card=textEl('article','','books-card'),cover=textEl('div','','books-card-cover bwd-image-pending');
       const img=document.createElement('img');img.src=new URL('./'+b.pages[0].web_image,document.baseURI).href;
-      img.alt=b.pages[0].alt_th||'ปกหนังสือ';img.loading='lazy';img.addEventListener('error',()=>{img.replaceWith(textEl('p','ภาพปกไม่พร้อมใช้งาน'));},{once:true});
+      img.alt=b.pages[0].alt_th||'ปกหนังสือ';img.loading='lazy';
+      img.addEventListener('load',()=>cover.classList.remove('bwd-image-pending'),{once:true});
+      img.addEventListener('error',()=>{cover.classList.remove('bwd-image-pending');img.replaceWith(textEl('p','ภาพปกไม่พร้อมใช้งาน'));},{once:true});
       cover.append(img);const body=textEl('div','','books-card-body');
       body.append(textEl('h3',b.title_th),textEl('p',(b.contents.length)+' ข่าว · '+b.pages.length+' หน้า'));
       const open=textEl('a','เปิดอ่านแบบพลิกหน้า ↗');open.href='./reader.html?book='+encodeURIComponent(b.id);
       body.append(open);card.append(cover,body);node.append(card);
-    });emptyNode.hidden=books.length>0;
+    });node.setAttribute('aria-busy','false');emptyNode.hidden=books.length>0;
   }
 
   /* Mobile dashboard previews are sourced exclusively from approved catalogues. */
@@ -306,14 +316,15 @@
         ids.add(issue.id); return true;
       }).sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
       buildFilters(); render(); renderAppHome(); void renderAppGalleries(); routeHash();
-      try {const bres=await fetch('./data/books.json',{cache:'no-store'});if(!bres.ok)throw new Error('Book manifest unavailable');const bdata=await bres.json();renderBooks(bdata);} catch(e) { console.warn('BWD bookshelf loading error',e); }
+      try {const bres=await fetch('./data/books.json',{cache:'no-store'});if(!bres.ok)throw new Error('Book manifest unavailable');const bdata=await bres.json();renderBooks(bdata);} catch(e) { console.warn('BWD bookshelf loading error',e);$('books-list')?.replaceChildren();$('books-list')?.setAttribute('aria-busy','false');$('books-empty').hidden=false; }
     } catch (e) {
       console.error('BWD Newsroom catalog error', e);
-      loadFailed = true; grid.setAttribute('aria-busy', 'false'); error.hidden = false;
+      loadFailed = true; grid.replaceChildren();grid.setAttribute('aria-busy', 'false'); error.hidden = false;
       count.textContent = 'โหลดข้อมูลไม่สำเร็จ';
       const home=$('app-latest-issue');if(home)home.replaceChildren(textEl('p','ไม่สามารถโหลดจดหมายข่าวล่าสุดได้','app-dashboard-error'));
       void renderAppGalleries();
-    }
+      $('books-list')?.replaceChildren();$('books-list')?.setAttribute('aria-busy','false');$('books-empty').hidden=false;
+    } finally { window.BWDLoading?.finishLaunch(); }
   }
   init();
 }());

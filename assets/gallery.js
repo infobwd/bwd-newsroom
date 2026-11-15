@@ -58,7 +58,8 @@
     const el = document.createElement('img');
     el.src = new URL('./' + path, document.baseURI).href;
     el.alt = alt; el.loading = loading; el.decoding = 'async';
-    el.addEventListener('error', () => el.replaceWith(textEl('span', 'ภาพไม่พร้อมใช้งาน', 'gallery-image-fallback')), { once: true });
+    el.addEventListener('load',()=>el.parentElement?.classList.remove('bwd-image-pending'),{once:true});
+    el.addEventListener('error', () => {el.parentElement?.classList.remove('bwd-image-pending');el.replaceWith(textEl('span', 'ภาพไม่พร้อมใช้งาน', 'gallery-image-fallback'));}, { once: true });
     return el;
   }
   function dateThai(iso) {
@@ -84,7 +85,7 @@
   }
   function card(g) {
     const root = textEl('article', '', 'gallery-card');
-    const cover = textEl('div', '', 'gallery-cover');
+    const cover = textEl('div', '', 'gallery-cover bwd-image-pending');
     const coverPhoto = g.photos.find(p => p.thumb_image === g.cover_image);
     cover.append(imgEl(g.cover_image, coverPhoto.alt_th));
     cover.append(textEl('span', String(g.photos.length) + ' ภาพ', 'gallery-pill'));
@@ -137,7 +138,7 @@
     });
     const fragment = document.createDocumentFragment();
     g.photos.forEach((p,i) => {
-      const btn = textEl('button','','album-photo');
+      const btn = textEl('button','','album-photo bwd-image-pending');
       btn.type='button';btn.setAttribute('aria-label','ดูภาพที่ '+(i+1)+' '+p.alt_th);
       btn.append(imgEl(p.thumb_image,p.alt_th));
       btn.append(textEl('span',p.caption_th || p.alt_th));
@@ -152,6 +153,10 @@
     if (!currentAlbum || !currentAlbum.photos[currentPhoto]) return;
     const p = currentAlbum.photos[currentPhoto];
     const img=$('lightbox-image');
+    const frame=img.closest('figure');
+    frame?.classList.add('bwd-image-pending');
+    img.onload=()=>frame?.classList.remove('bwd-image-pending');
+    img.onerror=()=>frame?.classList.remove('bwd-image-pending');
     img.src=new URL('./'+p.web_image,document.baseURI).href;
     img.alt=p.alt_th;
     $('lightbox-caption').textContent=p.caption_th || p.alt_th;
@@ -234,8 +239,8 @@
     }catch(e){
       console.error('Gallery catalogue unavailable',e);
       loadFailed=true;grid.setAttribute('aria-busy','false');
-      error.hidden=false;empty.hidden=true;count.textContent='โหลดข้อมูลไม่สำเร็จ';
-    }
+      grid.replaceChildren();error.hidden=false;empty.hidden=true;count.textContent='โหลดข้อมูลไม่สำเร็จ';
+    } finally { window.BWDLoading?.finishLaunch(); }
   }
   init();
 }());

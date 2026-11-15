@@ -245,8 +245,15 @@
     buildToc();drawScroll();setZoom(1);setCurrent(state.current,false);
     byId('mode-flip').disabled=!flipAvailable();
     activate(flipAvailable()?'flip':'scroll');
+    const pending=byId('reader-loading');
+    if(isDemo){pending.hidden=true;return;}
+    // Let the first approved page decode before dismissing the paper placeholder.
+    const first=new Image();
+    first.onload=()=>{pending.hidden=true;};first.onerror=()=>{pending.hidden=true;};
+    first.src=urlImage(state.pages[state.current].web_image);
   }
   function fail(message){
+    byId('reader-loading').hidden=true;
     byId('reader-title').textContent='ยังไม่มีหนังสือที่เปิดอ่านได้';
     byId('reader-subtitle').textContent='กลับไปที่ชั้นหนังสือเพื่อเลือกฉบับที่ได้รับอนุมัติ';
     byId('reader-message').textContent=message;byId('reader-message').hidden=false;
