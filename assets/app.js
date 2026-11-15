@@ -193,37 +193,62 @@
     });emptyNode.hidden=books.length>0;
   }
 
-
-  /* Only records validated for public use in the existing catalogue reach the app home. */
+  /* Mobile dashboard previews are sourced exclusively from approved catalogues. */
   function renderAppHome() {
     const holder=$('app-latest-issue'); if(!holder)return;
     holder.replaceChildren();
     if(!published.length){holder.append(textEl('p','ยังไม่มีจดหมายข่าวที่เผยแพร่','app-loading'));return;}
     const issue=published[0], card=textEl('article','','app-featured-issue');
-    const img=document.createElement('img');img.src=new URL('./'+issue.pages[0].web_image,document.baseURI).href;
+    const img=document.createElement('img');
+    img.src=new URL('./'+issue.pages[0].web_image,document.baseURI).href;
     img.alt=issue.pages[0].alt_th;img.loading='lazy';img.decoding='async';
     img.addEventListener('error',()=>img.replaceWith(textEl('span','ภาพปกไม่พร้อมใช้งาน','app-loading')),{once:true});
     const body=textEl('div','','app-featured-issue-body');
-    body.append(textEl('time',dateThai(issue.date)),textEl('h3',issue.title_th),
-      textEl('p',issue.excerpt_th || 'เปิดอ่านจดหมายข่าวฉบับเต็ม'));
-    const action=textEl('button','เปิดอ่าน','');action.type='button';
-    action.setAttribute('aria-label','เปิดอ่าน '+issue.title_th);
-    action.addEventListener('click',()=>openIssue(issue.id,true));
-    body.append(action);card.append(img,body);holder.append(card);
+    body.append(textEl('time',dateThai(issue.date)),textEl('h3',issue.title_th),textEl('p',issue.excerpt_th||'เปิดอ่านจดหมายข่าวฉบับเต็ม'));
+    const open=textEl('button','เปิดอ่าน','');open.type='button';
+    open.setAttribute('aria-label','เปิดอ่าน '+issue.title_th);
+    open.addEventListener('click',()=>openIssue(issue.id,true));
+    body.append(open);card.append(img,body);holder.append(card);
   }
-  async function renderAppGalleries() {
+  async function renderAppGalleries(){
     const holder=$('app-latest-galleries');if(!holder)return;
     try{
       const response=await fetch('./data/galleries.json',{cache:'no-store'});
-      if(!response.ok)throw new Error('gallery unavailable');
+      if(!response.ok)throw new Error('Gallery unavailable');
       const data=await response.json();
-      if(data.schema_version!==1||!Array.isArray(data.galleries))throw new Error('gallery schema');
+      if(data.schema_version!==1||!Array.isArray(data.galleries))throw new Error('Invalid Gallery catalogue');
       const albums=data.galleries.filter(g=>{
-        if(!g||g.status!=='published'||!g.visibility_approved_at||!g.published_at||
-          !g.approved_version||!/^WDGAL-\d{4}-\d{4}$/.test(g.gallery_id||'')||
-          !/^\d{4}-\d{2}-\d{2}$/.test(g.date||'')||
-          typeof g.title_th!=='string'||!g.title_th.trim()||!Array.isArray(g.photos))return false;
-        const allowed=new RegExp('^assets/galleries/'+g.gallery_id+'/[A-Za-z0-9._-]+\\.(?:webp|png|jpe?g)
+        if(!g||g.status!=='published'||!g.visibility_approved_at||!g.published_at||!g.approved_version||
+          typeof g.title_th!=='string'||!g.title_th.trim()||typeof g.gallery_id!=='string'||
+          !g.gallery_id.startsWith('WDGAL-')||!Array.isArray(g.photos)||!g.photos.length||
+          typeof g.date!=='string'||g.date.length!==10||typeof g.cover_image!=='string')return false;
+        const prefix='assets/galleries/'+g.gallery_id+'/';
+        const filename=g.cover_image.slice(prefix.length);
+        return g.cover_image.startsWith(prefix)&&!filename.includes('/')&&!filename.includes('..')&&
+          ['.webp','.png','.jpg','.jpeg'].some(ext=>filename.toLowerCase().endsWith(ext))&&
+          g.photos.some(p=>p&&p.thumb_image===g.cover_image);
+      }).sort((a,b)=>b.date.localeCompare(a.date)||a.gallery_id.localeCompare(b.gallery_id)).slice(0,2);
+      holder.replaceChildren();
+      if(!albums.length){holder.append(textEl('p','ยังไม่มีอัลบั้มที่เผยแพร่','app-loading'));return;}
+      albums.forEach(g=>{
+        const link=textEl('a','','app-album-card');
+        link.href='./gallery.html#album='+encodeURIComponent(g.gallery_id);
+        link.setAttribute('aria-label','เปิดอัลบั้ม '+g.title_th);
+        const img=document.createElement('img');
+        img.src=new URL('./'+g.cover_image,document.baseURI).href;
+        img.alt=(g.photos.find(p=>p.thumb_image===g.cover_image)||{}).alt_th||'ภาพปกกิจกรรม';
+        img.loading='lazy';img.decoding='async';
+        img.addEventListener('error',()=>img.replaceWith(textEl('span','ภาพไม่พร้อมใช้งาน','app-loading')),{once:true});
+        link.append(img,textEl('strong',g.title_th),textEl('time',dateThai(g.date)));
+        holder.append(link);
+      });
+    }catch(e){
+      console.warn('App Gallery preview unavailable',e);
+      holder.replaceChildren(textEl('p','ไม่สามารถโหลดอัลบั้มล่าสุดได้','app-dashboard-error'));
+    }
+  }
+  async function init() {
+    setupEvents();
     try {
       const response = await fetch('./data/catalog.json', { cache: 'no-store' });
       if (!response.ok) throw new Error('Failed to load catalog: ' + response.status);
@@ -242,49 +267,6 @@
       count.textContent = 'โหลดข้อมูลไม่สำเร็จ';
       const home=$('app-latest-issue');if(home)home.replaceChildren(textEl('p','ไม่สามารถโหลดจดหมายข่าวล่าสุดได้','app-dashboard-error'));
       void renderAppGalleries();
-    }
-  }
-  init();
-}());,'i');
-        return allowed.test(g.cover_image||'')&&g.photos.some(p=>p&&p.thumb_image===g.cover_image);
-      }).sort((a,b)=>b.date.localeCompare(a.date)||a.gallery_id.localeCompare(b.gallery_id)).slice(0,2);
-      holder.replaceChildren();
-      if(!albums.length){holder.append(textEl('p','ยังไม่มีอัลบั้มที่เผยแพร่','app-loading'));return;}
-      albums.forEach(g=>{
-        const link=textEl('a','','app-album-card');
-        link.href='./gallery.html#album='+encodeURIComponent(g.gallery_id);
-        link.setAttribute('aria-label','เปิดอัลบั้ม '+g.title_th);
-        const img=document.createElement('img');img.src=new URL('./'+g.cover_image,document.baseURI).href;
-        img.alt=(g.photos.find(p=>p.thumb_image===g.cover_image)||{}).alt_th||'ภาพปกกิจกรรม';
-        img.loading='lazy';img.decoding='async';
-        img.addEventListener('error',()=>img.replaceWith(textEl('span','ภาพไม่พร้อมใช้งาน','app-loading')),{once:true});
-        link.append(img,textEl('strong',g.title_th),textEl('time',dateThai(g.date)));
-        holder.append(link);
-      });
-    }catch(e){
-      console.warn('App Gallery preview unavailable',e);
-      holder.replaceChildren(textEl('p','ไม่สามารถโหลดอัลบั้มล่าสุดได้','app-dashboard-error'));
-    }
-  }
-
-  async function init() {
-    setupEvents();
-    try {
-      const response = await fetch('./data/catalog.json', { cache: 'no-store' });
-      if (!response.ok) throw new Error('Failed to load catalog: ' + response.status);
-      const catalogue = await response.json();
-      if (catalogue.schema_version !== 1 || !Array.isArray(catalogue.issues)) throw new Error('Invalid catalog');
-      const ids = new Set();
-      published = catalogue.issues.filter(issue => {
-        if (!validIssue(issue) || ids.has(issue.id)) return false;
-        ids.add(issue.id); return true;
-      }).sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
-      buildFilters(); render(); routeHash();
-      try {const bres=await fetch('./data/books.json',{cache:'no-store'});if(!bres.ok)throw new Error('Book manifest unavailable');const bdata=await bres.json();renderBooks(bdata);} catch(e) { console.warn('BWD bookshelf loading error',e); }
-    } catch (e) {
-      console.error('BWD Newsroom catalog error', e);
-      loadFailed = true; grid.setAttribute('aria-busy', 'false'); error.hidden = false;
-      count.textContent = 'โหลดข้อมูลไม่สำเร็จ';
     }
   }
   init();
