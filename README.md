@@ -93,3 +93,9 @@ Phone launch uses native iPhone portrait startup PNGs for supported screen sizes
 ## App Experience v1.3 — Launch & Header Refinement (15 November 2026)
 
 Fix the repeating in-page splash on installed iPhones (retain native OS startup), keep skeletons, position the gold logo dot inside the WD mark, add a subtle navy/gold phone header flourish and remove the blank area between Gallery Footer and fixed app navigation. Source tests and release checkpoint: [App Experience v1.3](docs/APP_EXPERIENCE_V13_20261115.md). Physical iOS device QA remains distinct from CI.
+
+## N04-P teacher photo upload — accepted direction (15 Nov 2026)
+
+The school-approved direction recorded in [the N04-P architecture decision](docs/GALLERY_CHAT_UI_PWA_PLAN.md#10-n04-p-architecture-decision-record--github-pages-single-surface-teacher-upload-15-nov-2026) is **GitHub Pages as the teacher-facing upload surface**, with an independently secured server-side intake writing originals to school-controlled Drive. Both managed school Google and personal Gmail accounts may authenticate via a verified Google identity provider, but authorization always requires a private school-managed allowlist, individual role and per-event permission checks. No public anonymous upload, owner-privileged open Apps Script endpoint, embedded private Drive API keys, or new publishing dashboard. Backend choice is **P0 feasibility-gated**, not decided by this plan; Apps Script cross-origin credentialed intake must be proven under the actual school account and browser policy, otherwise compare a vetted authenticated API. No P0 live endpoint or deployment is confirmed here.
+
+Plan-only acceptance is separate from actual uploader implementation and proof of security. Do not merge the old divergent history or overwrite newer Mobile UX releases when continuing N04-P.
