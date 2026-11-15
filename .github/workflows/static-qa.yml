@@ -16,6 +16,8 @@ jobs:
           node-version: '22'
       - name: Check JavaScript syntax
         run: |
+          node --check assets/share.js
+          node --check scripts/generate-share-pages.mjs
           node --check assets/app-shell.js
           node --check sw.js
           node --check assets/app.js
@@ -31,6 +33,7 @@ jobs:
           node scripts/validate-catalog.mjs
           node scripts/validate-books.mjs
           node scripts/validate-galleries.mjs
+          node scripts/generate-share-pages.mjs --check
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -46,5 +49,6 @@ jobs:
           node tests/mobile-ui-polish.test.mjs
           node tests/app-experience.test.mjs
           node tests/app-ux-v11.test.mjs
+          node tests/line-sharing.test.mjs
           node tests/n02.test.mjs
           node tests/n02-mobile.test.mjs

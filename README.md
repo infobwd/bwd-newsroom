@@ -81,3 +81,7 @@ Verify N02 demo reader and GitHub Pages deployment. Publish real news only after
 ## App Experience v1.1 — 15 November 2026
 
 Follow-up to merged PR #20: mobile-safe bottom navigation, compact no-crop Gallery cards, native Bottom Sheet filters for news and Gallery, and a reversible reader Focus Mode with page-geometry refresh. The public content manifests/Canva/Drive original assets are unchanged. See [v1.1 QA checkpoint](docs/APP_EXPERIENCE_V11_20261115.md) for tested and untested gates. Device Safari and actual PWA-install acceptance remain independent of source-only CI.
+
+## LINE sharing (proposal branch, 15 November 2026)
+
+New native image + text sharing, official LINE text handoff and per-issue link previews are scoped in [Sharing v1 checkpoint](docs/LINE_SHARING_V1_20261115.md). Image/text bundling is dependent on the target app. LIFF is **not enabled** without a school-owned LINE Login channel and verified JPEG/PNG share URLs. No publication or rights status is changed.
