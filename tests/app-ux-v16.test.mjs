@@ -6,7 +6,7 @@ const css=read('assets/app-shell.css');
 const home=read('index.html'), gallery=read('gallery.html');
 const sw=read('sw.js'), workflow=read('.github/workflows/static-qa.yml');
 const start=shell.indexOf("search?.addEventListener('click'");
-const end=shell.indexOf("  const banner=",start);
+const end=shell.indexOf("  const filterForm=",start);
 assert(start>=0&&end>start,'app quick search handler must exist');
 const handler=shell.slice(start,end);
 assert.match(handler,/event\.preventDefault\(\)/,'avoid native hash jump while focusing');
