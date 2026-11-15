@@ -101,3 +101,44 @@ Verified from GitHub connected reads on 13 Nov 2026: PR #3 N02-MOBILE has merged
 - `docs/N02_MOBILE_CHECKPOINT.md` and existing reader code
 - MDN installability: https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable
 - MDN caching: https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Caching
+
+## 10. N04-P architecture decision record — GitHub Pages single-surface teacher upload (15 Nov 2026)
+
+**Decision status: PROPOSED / SCHOOL DIRECTION ACCEPTED / TECHNICAL GATES PENDING.** The school wants teachers to stay on \`https://infobwd.github.io/bwd-newsroom/\` for login, event selection and photo upload. Do not redirect teachers to a Google Apps Script Web App UI. This is a UX requirement, **not** proof that the upload API, authentication, or Drive write integration already exists.
+
+### User journey and ownership
+1. Teacher opens a dedicated \`/bwd-newsroom/teacher-upload.html\` route (proposed, not yet created). It is linked from the public site's “สำหรับครู” entry point, but all private data is fetched only after authentication. No private event data in static HTML, JavaScript bundles, service-worker cache or public JSON.
+2. Sign in using a school-approved identity provider; server verifies identity, teacher allowlist/role and event permissions **on every request**, not merely by hiding controls. Support explicit sign-out, session expiry, revocation and access-denied states.
+3. Select an authorized existing \`EVT-...\` or request creation of a new event. The server allocates a unique ID and creates the event folder beneath \`ปีการศึกษา 2569/01_ภาพกิจกรรม/<BE-year-month>/<event-id>_<short-title>\` **before** storing originals. Never let a client choose arbitrary Drive folder IDs or paths.
+4. Select multiple PNG/JPEG/WebP files on mobile, review previews and consent reminders, then upload with per-file progress, size/count limits, retry, idempotency keys, hash-based duplicate checks and an explicit receipt. Handle HEIC as unsupported or via an approved conversion step; do not silently accept it as JPEG.
+5. Private server-side intake checks actual MIME magic bytes, allowed extensions, size, image decoding/dimensions, malicious payload risks, ownership and file metadata; store originals in restricted school Shared Drive, write private registry/audit (uploader, event, checksum, upload status, permission-review state). Never send service credentials, Drive refresh tokens or signed long-lived write access to Pages.
+6. Submission ends in **RECEIVED / PRIVATE**. ChatGPT-assisted curation uses authorized actual image bytes only after a privacy/AI-processing gate. Human approvals for Gallery and WD'NEWS are separate. Approved WebP derivatives are staged for review in a PR; only an independently authorized release may publish them.
+
+### Backend feasibility — do not assume Apps Script is a cross-origin API
+- **Option A: Apps Script** behind the GitHub Pages form is conditional on a successful proof-of-concept for CORS preflight, redirects, credentialed requests, CSRF/session security, request-size/timeout constraints, school-account identity visibility and Shared Drive write operations (possibly Advanced Drive service). \`no-cors\`, public \`execute as me\` write endpoints, JSONP and exposing tokens in client code are **not acceptable workarounds**. An iframe of the Apps Script UI does not meet the desired native Pages experience.
+- **Option B: authenticated API backend** (e.g. Supabase Auth + Edge Functions plus a secure Drive-capable worker, or another vetted service) if Option A fails. Browser uses short-lived authenticated requests; backend enforces RBAC, CORS allowlist restricted to the exact Pages origin, upload quotas/rate limits, CSRF or token protections, replay/idempotency checks, audit and bounded uploads. A server-to-server Google integration must use appropriately scoped, school-authorized credentials with Shared Drive membership/permissions verified. Supabase Edge Functions alone do not magically provide Google Drive access or unlimited binary upload capacity; evaluate staging storage and worker costs/limits.
+- **Preferred selection rule:** run a minimal, non-public end-to-end spike using a non-sensitive test image and a test event in a restricted school-approved area. Compare reliability/security/maintenance and actual identity semantics; choose a backend only after gates pass. No provider is selected by this document.
+
+### Implementation slices and acceptance
+| Slice | Scope | Acceptance / evidence |
+|---|---|---|
+| P0 — feasibility | Identity policy, school Google account vs personal Gmail, authenticated CORS upload, Drive write to restricted test event, quotas, audit and threat model | Real cross-origin mobile-browser upload; denied unauthorized user; no public file exposure; no secrets in repo |
+| P1 — Pages UI | Responsive teacher route, login, event selector/create, multi-file preview, progress/retry/receipt, accessible errors | iPhone Safari + Android Chrome + desktop QA, network interruption and duplicate tests; no navigation away from Pages |
+| P2 — secure intake | MIME-bytes validation, limits, hash/idempotency, private event registry, Shared Drive folder creation and originals | Actual authorized file readback, event mapping, least-privilege permissions, 403/429/timeouts, audit and rollback |
+| P3 — AI editorial review | Authorized image-byte access, privacy screen, candidate ranking, duplicate detection, explicit human Gallery/issue approvals | AI cannot publish, identify children or bypass permission gate; selections versioned and auditable |
+| P4 — release staging | EXIF/GPS stripping, approved optimized WebP/JPEG, local Pages asset paths, schema/CI and draft PR | School-reviewed image-level release evidence, browser/mobile live QA and explicit separate merge/deploy approval |
+
+### Security and QA stop gates
+- **Never** make the original-photo, pending-WebP, PDF or draft folders public; never auto-mark \`approved\`/\`published\`; never publish on upload. Preserve the 17 existing PDFs and do not duplicate original photos into \`03_Source_Photos\` (shortcut/index only).
+- Teacher UI and authentication must not be cached by public PWA; avoid localStorage for tokens or sensitive metadata. Restrict origins; use server-side checks and log only necessary identifiers. No secrets or private Drive IDs in public repository.
+- Verify data retention, consent for student images and any external AI processing with school policy before production. Confirm school account eligibility, Shared Drive access, quota and uploader roles; do not infer rights from folder names.
+- **Rollback:** disable server-side intake independently of public Newsroom, revoke backend credentials/sessions, retain audit and private originals, and keep the public Gallery untouched.
+- **Current evidence:** architecture analysis/documentation only. No N04-P endpoint, login, Pages upload form, browser CORS test, real-device QA or upload-to-Drive end-to-end test has been implemented or passed under this decision.
+- **Next action:** decide allowed teacher identities (managed school Google accounts or personal Gmail), then perform P0 feasibility spike on a private test event; only then implement the Pages UI in a reviewed development PR. Existing N01-G and Drive-first PRs stay draft; no merge or deployment authorized by this plan.
+
+
+### P0 identity decision — 15 Nov 2026 (school direction)
+**Both Google Workspace/school Google accounts and personal Gmail accounts are eligible to sign in.** Authentication alone never grants upload permission: after Google OIDC sign-in, the backend validates the issuer, audience, expiry, email verification and stable Google \`sub\`, then checks a school-maintained **private approved-uploader allowlist** and role (teacher, reviewer, administrator). Do not rely on email domain alone; personal Gmail is not automatically trusted. Enrollment/revocation must be controlled by the school, with no public self-registration granting upload rights. Prefer account \`sub\` as durable identity key, retain email only for authorized audit/display, and require re-approval if the linked identity changes. Admin/reviewer roles require explicit assignment and cannot be self-selected.
+
+P0 acceptance must test **both account types** (authorized school account, authorized personal Gmail) plus denied unknown Gmail, revoked user, expired token, forged identity, and insufficient role. No Drive permission is granted directly to teacher Gmail accounts: the restricted server-side school integration writes on their behalf and records the authenticated uploader. Check Google OAuth consent-screen eligibility/test-user limits, login UX, token/session security, and actual CORS + Shared Drive upload before selecting backend. This decision does not authorize public deployment or student-photo processing.
+
