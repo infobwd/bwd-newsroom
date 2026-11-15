@@ -6,10 +6,11 @@ const app=read('assets/app.js'),g=read('assets/gallery.js'),r=read('assets/reade
 const loader=read('assets/loading.js'),css=read('assets/loading.css'),styles=read('assets/styles.css');
 const sw=read('sw.js');
 for(const doc of [home,gallery]){
- assert.match(doc,/id="app-launch"/);
+ assert.doesNotMatch(doc,/id="app-launch"/);
+ assert.doesNotMatch(doc,/classList\.add\('app-launching'\)/);
  assert.match(doc,/assets\/loading\.css/);
  assert.match(doc,/assets\/loading\.js/);
- assert.match(doc,/display-mode: standalone/);
+ assert.match(doc,/apple-mobile-web-app-capable/);
  assert.match(doc,/rel="apple-touch-startup-image"/);
  assert.match(doc,/startup-1290x2796\.png/);
  assert.match(doc,/startup-1179x2556\.png/);
@@ -28,10 +29,12 @@ assert.match(app,/figure\.classList\.add\('bwd-page-pending'\)/);
 assert.match(g,/bwd-image-pending/);
 assert.match(r,/first\.onload=\(\)=>\{pending\.hidden=true;\}/);
 assert.match(r,/function fail\(message\)\{\s+byId\('reader-loading'\)\.hidden=true/);
-assert.match(loader,/window\.setTimeout\(finishLaunch,10000\)/);
+assert.doesNotMatch(loader,/setTimeout\(finishLaunch/);
+assert.match(loader,/window\.BWDLoading=Object\.freeze\(\{finishLaunch\}\)/);
+assert.doesNotMatch(css,/html\.app-launching \.app-launch/);
 assert.match(css,/prefers-reduced-motion:reduce/);
 assert.match(css,/@keyframes bwd-skeleton-shimmer/);
-assert.match(sw,/bwd-public-shell-2569-11-15-v11-share-v12/);
+assert.match(sw,/bwd-public-shell-2569-11-15-v11-share-v13/);
 assert(sw.includes("'./assets/loading.css'")&&sw.includes("'./assets/loading.js'"));
 const shell=sw.slice(sw.indexOf('const SHELL='),sw.indexOf('const PATHS='));
 assert(!shell.includes('assets/issues/'), 'No published page images in precache');

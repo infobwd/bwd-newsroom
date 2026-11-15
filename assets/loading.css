@@ -26,13 +26,7 @@
 .reader-loading-sheet i{display:block;background:#dbe4ed;height:13px;border-radius:7px;width:78%}
 .reader-loading-sheet i:nth-child(2){width:94%}.reader-loading-sheet i:nth-child(3){width:62%}
 .reader-loading-caption{font:500 13px Kanit,sans-serif;color:#264461}
-.app-launch{display:none}
-html.app-launching .app-launch{display:flex;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;flex-direction:column;background:#112b4e;color:#fff;gap:9px;text-align:center;padding:env(safe-area-inset-top) 20px env(safe-area-inset-bottom)}
-.app-launch-mark{width:92px;height:92px;border-radius:20px;background:#f9fbfe;color:#112b4e;display:flex;align-items:center;justify-content:center;font:700 42px Kanit,sans-serif;margin-bottom:16px}
-.app-launch-mark span{color:#d9b15b}
-.app-launch strong{font:700 23px Kanit,sans-serif;letter-spacing:1.5px}
-.app-launch p{font:500 15px Kanit,sans-serif;color:#f4dcaa;margin:0}
-.app-launch small{font:400 12px Kanit,sans-serif;color:#d9e3ed}
+/* The iOS startup image is the sole splash. Skeletons replace in-page overlays. */
 @media(max-width:630px){
  .news-grid>.bwd-skeleton{min-height:152px}
  .gallery-grid>.bwd-skeleton{min-height:145px}

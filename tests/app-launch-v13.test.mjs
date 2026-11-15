@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const home=read('index.html');
+const gallery=read('gallery.html');
+const css=read('assets/app-shell.css');
+const styles=read('assets/styles.css');
+const loader=read('assets/loading.js');
+const loaderCSS=read('assets/loading.css');
+const shell=read('assets/app-shell.js');
+const worker=read('sw.js');
+for(const html of [home,gallery]){
+  assert.doesNotMatch(html,/id="app-launch"/,'no repeated in-app splash element');
+  assert.doesNotMatch(html,/classList\.add\('app-launching'\)/,'do not re-enable splash on navigation');
+  assert.match(html,/rel="apple-touch-startup-image"/,'retain OS-managed cold launch');
+  assert.match(html,/assets\/loading\.js/);
+  assert.match(html,/assets\/loading\.css/);
+  assert.match(html,/class="brand-dot"/,'keep gold brand dot inside mark');
+  assert.match(html,/class="app-bottom-nav"/);
+  assert.match(html,/class="site-footer"/);
+}
+assert.match(css,/\.site-header \.brand-mark\{[\s\S]*?position:relative;display:flex;align-items:center;justify-content:center/);
+assert.match(css,/\.site-header \.brand-dot\{[\s\S]*?position:absolute;right:5px;bottom:5px/);
+assert.match(css,/\.site-header::after\{[\s\S]*?pointer-events:none/);
+assert.match(css,/background:[\s\S]*?radial-gradient\(circle at 87% -18%/);
+assert.match(css,/body\.newsroom-page,body\.gallery-page\{padding-bottom:0\}/);
+assert.match(css,/\.site-footer\{padding-bottom:calc\(69px \+ env\(safe-area-inset-bottom\)\)\}/);
+assert.match(css,/\.gallery-page \.gallery-content\{padding-bottom:36px\}/);
+assert.match(css,/\.app-bottom-nav\{background:#fff/);
+assert.match(styles,/\.site-footer\{background:#0e2746/);
+assert.match(shell,/serviceWorker\.register/,'preserve PWA shell behavior');
+assert.match(loader,/window\.BWDLoading=Object\.freeze\(\{finishLaunch\}\)/);
+assert.doesNotMatch(loader,/setTimeout\(/,'no artificial HTML splash lifetime');
+assert.doesNotMatch(loaderCSS,/html\.app-launching \.app-launch/,'remove overlay styles');
+assert.match(worker,/v11-share-v13/,'PWA update key changed');
+assert.doesNotMatch(worker.slice(worker.indexOf('const SHELL='),worker.indexOf('const PATHS=')),/assets\/issues\/|assets\/galleries\/|data\//);
+console.log('PASS v1.3 launch, header, Gallery footer and offline shell source contracts; physical iPhone QA not run');

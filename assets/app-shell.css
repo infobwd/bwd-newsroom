@@ -162,3 +162,33 @@
   .gallery-page .gallery-card{grid-template-columns:minmax(100px,35%) minmax(0,1fr)}
   .gallery-page .gallery-card p{display:none}
 }
+
+/* App Experience v1.3: fix floating gold dot, subtle phone masthead & bottom safe zone. */
+.site-header .brand-mark{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  isolation:isolate;overflow:hidden;line-height:1;white-space:nowrap;
+}
+.site-header .brand-dot{
+  position:absolute;right:5px;bottom:5px;font-size:12px;
+  letter-spacing:0;line-height:1;color:var(--gold);
+}
+@media(max-width:630px){
+  /* Decorative graphics stay strictly behind the logo and search target. */
+  .site-header{
+    background:
+      radial-gradient(circle at 87% -18%,rgba(217,177,91,.14) 0,rgba(217,177,91,0) 36%),
+      linear-gradient(125deg,#fff 72%,#f6f9fd 100%);
+    border-bottom:0;
+  }
+  .site-header::after{
+    content:"";position:absolute;pointer-events:none;left:0;right:0;bottom:0;
+    height:2px;background:linear-gradient(90deg,var(--gold),#d9b15b66 22%,#e9eef4 60%,transparent);
+  }
+  .site-header .topbar{position:relative;z-index:1}
+  /* Previous mobile rules added bottom padding AFTER the footer, producing a blank strip.
+     Reserve the navigation room INSIDE the footer instead, without covering content. */
+  body.newsroom-page,body.gallery-page{padding-bottom:0}
+  .site-footer{padding-bottom:calc(69px + env(safe-area-inset-bottom))}
+  .gallery-page .gallery-content{padding-bottom:36px}
+  .gallery-page #gallery-main{min-height:0}
+}

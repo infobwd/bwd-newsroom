@@ -89,3 +89,7 @@ New native image + text sharing, official LINE text handoff and per-issue link p
 ## App Experience v1.2 — Loading & Launch UX
 
 Phone launch uses native iPhone portrait startup PNGs for supported screen sizes plus a standalone-only, no-delay branded HTML loading overlay. News, Gallery, reader, modal images and bookshelf now have reduced-motion-aware skeleton/error states; optional share actions are collapsed without changing LINE message content. See [v1.2 QA checkpoint](docs/APP_EXPERIENCE_V12_20261115.md). Real-device validation remains outstanding after source CI.
+
+## App Experience v1.3 — Launch & Header Refinement (15 November 2026)
+
+Fix the repeating in-page splash on installed iPhones (retain native OS startup), keep skeletons, position the gold logo dot inside the WD mark, add a subtle navy/gold phone header flourish and remove the blank area between Gallery Footer and fixed app navigation. Source tests and release checkpoint: [App Experience v1.3](docs/APP_EXPERIENCE_V13_20261115.md). Physical iOS device QA remains distinct from CI.
