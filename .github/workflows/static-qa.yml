@@ -58,5 +58,6 @@ jobs:
           node tests/app-ux-v15.test.mjs
           node tests/app-ux-v16.test.mjs
           node tests/app-ux-v17.test.mjs
+          node tests/issue-image-first.test.mjs
           node tests/n02.test.mjs
           node tests/n02-mobile.test.mjs
