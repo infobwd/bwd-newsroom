@@ -76,4 +76,8 @@
   .bwd-notify-toasts,.bwd-notify-banners{width:calc(100vw - 24px)}
   .bwd-notify-toast,.bwd-notify-banner{padding:11px 12px}
 }
+@media(orientation:landscape) and (max-height:550px){
+  .reader-body>.bwd-notify-toasts{bottom:calc(85px + env(safe-area-inset-bottom,0px))}
+  .reader-body>.bwd-notify-banners{bottom:calc(85px + env(safe-area-inset-bottom,0px))}
+}
 @media(prefers-reduced-motion:reduce){.bwd-notify-toast{animation:none!important}}
