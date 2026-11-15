@@ -6,7 +6,8 @@ const SHELL=[
   './assets/styles.css','./assets/gallery.css','./assets/reader.css',
   './assets/app-shell.css','./assets/app-shell.js','./assets/loading.css','./assets/loading.js','./assets/share.js','./assets/app.js',
   './assets/gallery.js','./assets/ui-motion.js','./favicon.svg',
-  './manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'
+  './manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png',
+  './icons/startup-1290x2796.png','./icons/startup-1179x2556.png','./icons/startup-1170x2532.png'
 ];
 const PATHS=new Set(SHELL.map(p=>new URL(p,ROOT).pathname));
 self.addEventListener('install',event=>{

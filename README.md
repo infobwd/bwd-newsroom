@@ -85,3 +85,7 @@ Follow-up to merged PR #20: mobile-safe bottom navigation, compact no-crop Galle
 ## LINE sharing (proposal branch, 15 November 2026)
 
 New native image + text sharing, official LINE text handoff and per-issue link previews are scoped in [Sharing v1 checkpoint](docs/LINE_SHARING_V1_20261115.md). Image/text bundling is dependent on the target app. LIFF is **not enabled** without a school-owned LINE Login channel and verified JPEG/PNG share URLs. No publication or rights status is changed.
+
+## App Experience v1.2 — Loading & Launch UX
+
+Phone launch uses native iPhone portrait startup PNGs for supported screen sizes plus a standalone-only, no-delay branded HTML loading overlay. News, Gallery, reader, modal images and bookshelf now have reduced-motion-aware skeleton/error states; optional share actions are collapsed without changing LINE message content. See [v1.2 QA checkpoint](docs/APP_EXPERIENCE_V12_20261115.md). Real-device validation remains outstanding after source CI.
