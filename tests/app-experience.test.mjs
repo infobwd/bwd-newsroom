@@ -16,7 +16,11 @@ for(const icon of manifest.icons){
 }
 const worker=read('sw.js'), shell=read('assets/app-shell.js');
 assert.match(worker,/registration\.scope/);
-assert.match(worker,/\/data\\\/\|\/assets\\\/\(\\?:issues\|galleries\|books\)/);
+const shellEntries=worker.slice(worker.indexOf('const SHELL='),worker.indexOf('const PATHS='));
+assert(!shellEntries.includes('data/'), 'no published catalogues in precache');
+assert(!shellEntries.includes('assets/issues/'), 'no issue media in precache');
+assert(!shellEntries.includes('assets/galleries/'), 'no photo media in precache');
+assert(worker.includes('data') && worker.includes('issues|galleries|books') && worker.includes('pdf'), 'worker excludes public media and PDFs');
 assert.match(worker,/cache\.addAll\(SHELL\)/);
 assert.doesNotMatch(worker,/https:\/\/drive\.google\.com|private_source|client_secret|auth_token/i);
 assert.match(shell,/serviceWorker\.register\('\.\/sw\.js',\{scope:'\.\/'\}\)/);
