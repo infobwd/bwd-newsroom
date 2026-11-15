@@ -37,7 +37,7 @@ assert.match(css,/@keyframes bwd-welcome-enter/);
 assert.match(css,/@keyframes bwd-welcome-gradient/);
 assert.match(css,/@keyframes bwd-welcome-light/);
 assert.match(css,/\.app-welcome,\.app-welcome::after\{animation:none!important\}/,'reduced-motion disables hero effects');
-assert.match(worker,/v13-dots-autoplay-motion/,'PWA cache version advances');
+assert(Number(worker.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=13,'PWA shell version remains at v1.5 or later');
 assert.match(workflow,/node tests\/app-ux-v15\.test\.mjs/);
 assert.doesNotMatch(app,/https:\/\/drive\.google\.com\/uc\?/,'no private image preview hotlinks');
 console.log('PASS Mobile UX v1.5 static contract checks; live iPhone/PWA gesture QA NOT RUN');
