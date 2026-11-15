@@ -102,6 +102,7 @@
         </div>
         <form class="filters" id="filters" role="search" autocomplete="off">
           <label class="search-field"><span class="search-icon" aria-hidden="true">⌕</span><span class="visually-hidden">ค้นหาข่าว</span><input id="search" type="search" placeholder="ค้นหาชื่อข่าว กิจกรรม หรือคำสำคัญ…" aria-label="ค้นหาข่าว"></label>
+          <button type="button" class="app-filter-trigger" aria-haspopup="dialog" aria-controls="app-filter-sheet"><svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M7 12h10M10 17h4"/><circle cx="8" cy="7" r="2" fill="#fff"/><circle cx="15" cy="12" r="2" fill="#fff"/></svg><span>ตัวกรอง</span><output class="app-filter-count" hidden></output></button>
           <label><span class="visually-hidden">เลือกปี</span><select id="year" aria-label="เลือกปี"><option value="">ทุกปี</option></select></label>
           <label><span class="visually-hidden">เลือกหมวดข่าว</span><select id="category" aria-label="เลือกหมวดข่าว"><option value="">ทุกหมวด</option></select></label>
           <label><span class="visually-hidden">เลือกรูปแบบจดหมายข่าว</span><select id="template" aria-label="เลือกรูปแบบ"><option value="">ทุกรูปแบบ</option></select></label>
@@ -149,6 +150,14 @@
   <a data-app-tab="books" href="#books"><svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-2.5-2.5-5.6-2.9-9-2v14c3.4-.9 6.5-.5 9 2 2.5-2.5 5.6-2.9 9-2V5c-3.4-.9-6.5-.5-9 2ZM12 7v14"/></svg><span>หนังสือ</span></a>
 </nav>
   <footer class="site-footer"><div class="wrap footer-inner"><span>© 2569 โรงเรียนบ้านวังด้ง</span><span>ข่าวสาร · ความทรงจำ · การเติบโต</span></div></footer>
+  <dialog id="app-filter-sheet" class="app-filter-sheet" aria-labelledby="app-filter-title">
+    <div class="app-filter-sheet-head"><h2 id="app-filter-title">กรองจดหมายข่าว</h2><button type="button" id="app-filter-close" aria-label="ปิดตัวกรอง">×</button></div>
+    <div id="app-filter-fields" class="app-filter-fields"></div>
+    <div class="app-filter-sheet-actions">
+      <button type="button" id="app-filter-reset">ล้างตัวกรอง</button>
+      <button type="button" id="app-filter-apply">แสดงผล</button>
+    </div>
+  </dialog>
   <dialog id="issue-dialog" aria-labelledby="dialog-title">
     <div class="dialog-frame"><div class="dialog-top"><div><span class="section-label">WD’NEWS / ISSUE</span><h2 id="dialog-title"></h2><p id="dialog-meta"></p></div><button id="dialog-close" type="button" class="dialog-close" aria-label="ปิดรายละเอียด">×</button></div><div id="dialog-content" class="dialog-content"></div><div id="dialog-actions" class="dialog-actions"></div></div>
   </dialog>

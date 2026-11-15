@@ -77,3 +77,7 @@ Verify N02 demo reader and GitHub Pages deployment. Publish real news only after
 - Validation: `node scripts/validate-galleries.mjs` and `node tests/n01-gallery.test.mjs`. These checks also run in GitHub Actions.
 - This is **N01-G only**; authenticated teacher upload, AI image curation through ChatGPT and installation/offline PWA remain N04-P/N04-W.
 - Checkpoint: [N01-G](docs/N01_G_CHECKPOINT.md). Publication and real-device/browser QA are independent gates; feature branch/PR is not automatically live.
+
+## App Experience v1.1 — 15 November 2026
+
+Follow-up to merged PR #20: mobile-safe bottom navigation, compact no-crop Gallery cards, native Bottom Sheet filters for news and Gallery, and a reversible reader Focus Mode with page-geometry refresh. The public content manifests/Canva/Drive original assets are unchanged. See [v1.1 QA checkpoint](docs/APP_EXPERIENCE_V11_20261115.md) for tested and untested gates. Device Safari and actual PWA-install acceptance remain independent of source-only CI.

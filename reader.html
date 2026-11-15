@@ -33,11 +33,13 @@
           <button id="reader-zoom-out" class="reader-tool-button" type="button" title="ย่อหน้า" aria-label="ย่อหน้า">−</button>
           <output id="reader-zoom-value" class="reader-zoom-value" aria-live="polite">100%</output>
           <button id="reader-zoom-in" class="reader-tool-button" type="button" title="ขยายหน้า" aria-label="ขยายหน้า">＋</button>
+          <button id="reader-focus-toggle" class="reader-tool-button reader-focus-toggle" type="button" aria-pressed="false" aria-label="เปิดโหมดอ่านเต็มพื้นที่" title="โหมดอ่าน">▣</button>
           <button id="reader-fullscreen" class="reader-tool-button" type="button" title="เต็มจอ" aria-label="เปิดเต็มจอ">⛶</button>
         </div>
       </div>
       <div id="reader-message" class="reader-message" role="status" hidden></div>
       <div class="reader-canvas">
+        <button id="reader-focus-restore" class="reader-focus-restore" type="button" aria-label="แสดงเครื่องมืออ่านอีกครั้ง" hidden>แสดงเครื่องมือ</button>
         <div id="flip-stage" class="paper-stage" tabindex="0" aria-label="พื้นที่พลิกหน้าหนังสือ ลากมุมกระดาษหรือใช้ปุ่มก่อนหน้าและถัดไป">
           <div id="flip-engine" class="flip-engine"></div>
         </div>

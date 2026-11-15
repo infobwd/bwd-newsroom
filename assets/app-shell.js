@@ -38,6 +38,64 @@
   window.addEventListener('offline',setOnline);
   setOnline();
 
+  // Original select controls remain the single source of filter state and desktop UI.
+  // The mobile dialog mirrors their options only while open; it never maintains a second catalogue.
+  const filterForm=document.getElementById(isGallery?'gallery-filters':'filters');
+  const filterTrigger=filterForm?.querySelector('.app-filter-trigger');
+  const filterDialog=document.getElementById('app-filter-sheet');
+  const filterIds=isGallery?['gallery-year','gallery-category']:['year','category','template'];
+  const updateFilterCount=()=>{
+    if(!filterTrigger)return;
+    const count=filterIds.filter(id=>Boolean(document.getElementById(id)?.value)).length;
+    const output=filterTrigger.querySelector('.app-filter-count');
+    if(output){output.hidden=count===0;output.textContent=String(count);}
+    filterTrigger.setAttribute('aria-label','ตัวกรอง'+(count?' ใช้อยู่ '+count+' รายการ':''));
+  };
+  filterTrigger?.addEventListener('click',()=>{
+    if(!filterDialog||filterDialog.open||typeof filterDialog.showModal!=='function')return;
+    const fields=document.getElementById('app-filter-fields');
+    fields.replaceChildren();
+    for(const id of filterIds){
+      const original=document.getElementById(id);if(!original)continue;
+      const label=document.createElement('label');
+      label.textContent=original.getAttribute('aria-label')||'เลือกตัวกรอง';
+      const select=document.createElement('select');
+      select.setAttribute('aria-label',label.textContent);
+      for(const option of original.options){
+        const item=document.createElement('option');
+        item.value=option.value;item.textContent=option.textContent;
+        select.append(item);
+      }
+      select.value=original.value;
+      select.addEventListener('change',()=>{
+        original.value=select.value;
+        original.dispatchEvent(new Event('change',{bubbles:true}));
+        updateFilterCount();
+      });
+      label.append(select);fields.append(label);
+    }
+    filterDialog.showModal();
+    fields.querySelector('select')?.focus();
+  });
+  document.getElementById('app-filter-close')?.addEventListener('click',()=>filterDialog?.close());
+  document.getElementById('app-filter-apply')?.addEventListener('click',()=>filterDialog?.close());
+  document.getElementById('app-filter-reset')?.addEventListener('click',()=>{
+    filterForm?.reset();
+    for(const originalId of filterIds){
+      const original=document.getElementById(originalId);
+      const i=filterIds.indexOf(originalId),copy=document.getElementById('app-filter-fields')?.querySelectorAll('select')[i];
+      if(original&&copy)copy.value=original.value;
+    }
+    setTimeout(updateFilterCount,0);
+  });
+  filterDialog?.addEventListener('click',event=>{
+    if(event.target===filterDialog)filterDialog.close();
+  });
+  filterForm?.addEventListener('change',updateFilterCount);
+  filterForm?.addEventListener('reset',()=>setTimeout(updateFilterCount,0));
+  updateFilterCount();
+
+
   const installButton=document.getElementById('app-install-button');
   const installGuide=document.getElementById('app-install-guide');
   const standalone=matchMedia('(display-mode: standalone)').matches || navigator.standalone===true;

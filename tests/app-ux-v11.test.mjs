@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const news=read('index.html'),gallery=read('gallery.html');
+const app=read('assets/app-shell.js'),appCSS=read('assets/app-shell.css');
+const reader=read('reader.html'),readerJS=read('assets/reader.js'),readerCSS=read('assets/reader.css');
+const sw=read('sw.js');
+for(const html of [news,gallery]){
+  assert.match(html,/class="app-filter-trigger"/);
+  assert.match(html,/id="app-filter-sheet"/);
+  assert.match(html,/id="app-filter-fields"/);
+  assert.match(html,/id="app-filter-reset"/);
+  assert.match(html,/id="app-filter-apply"/);
+  assert.match(html,/class="app-bottom-nav"/);
+  assert.equal((html.match(/id="app-filter-sheet"/g)||[]).length,1);
+}
+assert.match(app,/filterDialog\.showModal\(\)/);
+assert.match(app,/original\.dispatchEvent\(new Event\('change'/);
+assert.match(app,/filterForm\?\.reset\(\)/);
+assert.match(app,/setTimeout\(updateFilterCount,0\)/);
+assert.match(appCSS,/\.gallery-page \.gallery-cover img\{object-fit:contain\}/);
+assert.match(appCSS,/\.app-album-card img\{height:auto;aspect-ratio:4\/3;object-fit:contain/);
+assert.match(appCSS,/scroll-padding-bottom:calc\(112px \+ env\(safe-area-inset-bottom\)\)/);
+assert.match(appCSS,/\.app-filter-sheet\[open\]/);
+assert.match(appCSS,/\.app-bottom-nav\{background:#fff/);
+assert.match(reader,/id="reader-focus-toggle"/);
+assert.match(reader,/id="reader-focus-restore"/);
+assert.match(readerJS,/function setFocusMode\(enabled\)/);
+assert.match(readerJS,/if\(state\.mode==='flip'\)activate\('flip'\)/);
+assert.match(readerJS,/reader-focus-restore'\)\.addEventListener/);
+assert.match(readerCSS,/\.reader-body\.is-focus-mode \.reader-toolbar\{display:none\}/);
+assert.match(readerCSS,/\.reader-body\.is-focus-mode \.reader-mode-row\{display:none\}/);
+assert.match(readerCSS,/\.reader-body\.is-focus-mode \.reader-focus-restore:not\(\[hidden\]\)/);
+assert.doesNotMatch(reader,/app-bottom-nav|app-shell\.js/, 'immersive reader keeps independent navigation');
+assert.match(sw,/bwd-public-shell-2569-11-15-v11/, 'PWA cache bump ensures safe client update');
+assert.doesNotMatch(sw,/assets\/galleries\/WDGAL|assets\/issues\/WDNEWS/, 'SW precache contains no private/media content');
+console.log('App Experience v1.1 source contract checks PASS (not iPhone QA)');
