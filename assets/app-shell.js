@@ -18,14 +18,24 @@
     if(news && news.getBoundingClientRect().top<=threshold){mark('news');return;}
     if(root){mark('home');}
   }
+  // An app-like compact header reuses the existing navbar; it never replaces
+  // native navigation or shifts search focus into a separate overlay.
+  const appHeader=document.querySelector('.site-header');
+  const mobileHeaderQuery=window.matchMedia('(max-width:630px)');
+  function updateCompactHeader(){
+    appHeader?.classList.toggle('is-app-compact',mobileHeaderQuery.matches&&window.scrollY>112);
+  }
   let scrollFrame=0;
   window.addEventListener('scroll',()=>{
     if(scrollFrame)return;
-    scrollFrame=requestAnimationFrame(()=>{scrollFrame=0;updateActive();});
+    scrollFrame=requestAnimationFrame(()=>{
+      scrollFrame=0;updateActive();updateCompactHeader();
+    });
   },{passive:true});
   window.addEventListener('hashchange',()=>requestAnimationFrame(updateActive));
-  window.addEventListener('pageshow',updateActive);
-  updateActive();
+  window.addEventListener('pageshow',()=>{updateActive();updateCompactHeader();});
+  window.addEventListener('resize',()=>requestAnimationFrame(updateCompactHeader),{passive:true});
+  updateActive();updateCompactHeader();
 
   const search=document.querySelector('.app-quick-search');
   search?.addEventListener('click',event=>{
