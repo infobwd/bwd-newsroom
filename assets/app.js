@@ -443,8 +443,8 @@
     galleries.forEach(g=>{
       if(!g||g.status!=='published'||!g.visibility_approved_at||
          !g.approved_version||!g.published_at||!Array.isArray(g.photos))return;
+      if(!Object.hasOwn(HERO_PHOTO_ALLOWLIST,g.gallery_id))return;
       const allowed=HERO_PHOTO_ALLOWLIST[g.gallery_id];
-      if(!allowed)return;
       g.photos.forEach(photo=>{
         if(!photo||!allowed.includes(photo.photo_id)||typeof photo.alt_th!=='string'||!photo.alt_th.trim())return;
         const path=photo.thumb_image;
