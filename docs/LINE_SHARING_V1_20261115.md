@@ -3,7 +3,8 @@
 **Work ID:** BN-SHARE-2569-01  
 **Base main:** `4be003da2d3d68ad3c5fb7cac3ad8b2fef1fe69b`  
 **Branch:** `feat/line-share-newsroom-20261115`  
-**Status:** Implementation and PR QA; **not approved for merge/public release by this request**.  
+**PR:** [#22 — LINE Sharing v1](https://github.com/infobwd/bwd-newsroom/pull/22)
+**Status:** Feature implemented with passing source-only CI; **not approved for merge/public release by this request**.  
 **Assets:** Only existing approved `data/catalog.json` issue records, page WebP and PDF. Source images, QR, Canva/Drive, IDs and approvals remain untouched.
 
 ## Working share flows
@@ -22,7 +23,8 @@ Documentation: https://developers.line.biz/en/docs/liff/developing-liff-apps/ an
 
 ## QA / release gates
 
-- GitHub Actions static QA, approved catalogue, HTML sync and JS syntax: PENDING final PR checks.
+- GitHub Actions source tests: **PASS** on [run 43678444755](https://github.com/infobwd/bwd-newsroom/actions/runs/43678444755) for head `839cca7da37190d549452aa237e52fdc1733f3e0` (JS syntax, approved catalogue, static share page sync, regression and share contracts). A subsequent documentation-only head still requires the final check.
+- Existing live Pages baseline smoke **PASS** on [run 43678444683](https://github.com/infobwd/bwd-newsroom/actions/runs/43678444683). It does NOT verify unpublished share UI/OG previews.
 - Real iPhone Safari, LINE app native file share, LINE text share, LINE spider OG images, LINE installed/PWA mode and Android: **NOT RUN** until release/device QA.
 - Confirm photo appears as a real LINE chat attachment and verify accompanying text separately; never infer from browser share promise or link preview alone.
 - Merge/deploy: **NOT AUTHORIZED in this turn**; prior explicit merge requests applied to older PRs only.
