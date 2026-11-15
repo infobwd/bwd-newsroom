@@ -25,3 +25,12 @@ School owner identified the **เรื่องราวของวังด�
 - **Not run by source tests:** Physical iPhone Safari & installed PWA; image composition/readability at 360/390/430px, actual close/reopen behavior, offscreen image request, search with keyboard under sticky header, scroll position persistence, reduced-motion/VoiceOver.
 - **Publishing:** No new image approval or news publication is implied, only an expressly authorized website layout reusing previously public Gallery derivative assets. School can withdraw photos in public manifest, after which a new session will not select withdrawn images. No changes to image sources, consent records, master templates or QR.
 - **Rollback:** Revert the scoped PR; existing approved material remains unmodified.
+
+## QA evidence before merge
+
+- **PR:** https://github.com/infobwd/bwd-newsroom/pull/28
+- **Static QA:** PASS, https://github.com/infobwd/bwd-newsroom/actions/runs/43690199373 (PR source head `6fd0f5c4fae8aff8e3cbb9178ba58afd2939c0ed`).
+- **Live Pages smoke:** PASS for the previously deployed public baseline only, https://github.com/infobwd/bwd-newsroom/actions/runs/43690199366. It is not a screenshot or guarantee of the new PR experience.
+- **New regression tests:** simulated approved-only photo selection, stable session, nonrepeat on next session, withdrawal fallback, plus static header/keyboard-safe margin and reduced-motion checks.
+- **Device acceptance:** NOT RUN; still requires actual iPhone Safari/PWA and visual assessment.
+- This docs-only evidence update requires **another Static QA PASS at the final PR head** before merging.
