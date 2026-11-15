@@ -140,16 +140,62 @@
       if (localPdf) a.download = issue.id + '-' + issue.approved_version + '.pdf';
       actions.append(a);
     }
-    const copy = textEl('button', 'คัดลอกลิงก์ข่าว'); copy.type = 'button';
-    copy.addEventListener('click', async () => {
-      const link = new URL(location.href); link.hash = 'issue=' + encodeURIComponent(issue.id);
-      try { await navigator.clipboard.writeText(link.href); copy.textContent = 'คัดลอกแล้ว'; }
-      catch (_) { copy.textContent = 'ไม่สามารถคัดลอกอัตโนมัติได้'; }
+    const shareKit=window.BWDShare;
+    const status=textEl('p','','dialog-share-status');status.hidden=true;
+    const report=(message)=>{status.textContent=message;status.hidden=!message;};
+    let files=null;
+    const photoShare=textEl('button','กำลังเตรียมภาพข่าว…','dialog-share-primary');
+    photoShare.type='button';photoShare.disabled=true;
+    photoShare.addEventListener('click',()=>{
+      if(!files||!shareKit?.canShareFiles(files))return;
+      try{
+        const request=shareKit.shareFiles(issue,files);
+        Promise.resolve(request).then(()=>report('เปิดการแชร์แล้ว โปรดตรวจข้อความและผู้รับใน LINE ก่อนส่ง'))
+          .catch(err=>{if(err?.name!=='AbortError')report('แชร์ไฟล์ไม่สำเร็จ ลองใช้ปุ่มส่งข้อความเข้า LINE หรือดาวน์โหลดภาพ');});
+      }catch(_){report('อุปกรณ์นี้ไม่รองรับการแชร์ไฟล์ กรุณาดาวน์โหลดภาพแทน');}
+    });
+    actions.append(photoShare);
+    const line=textEl('button','คัดลอกข้อความ + เปิด LINE','dialog-line-action');
+    line.type='button';
+    line.addEventListener('click',()=>{
+      if(!shareKit)return;
+      // The LINE URL pre-fills the message even when clipboard permission is denied.
+      const url=shareKit.lineTextUrl(issue);
+      const navigate=()=>{window.location.assign(url);};
+      shareKit.copyText(shareKit.message(issue)).then(navigate).catch(navigate);
+    });
+    actions.append(line);
+    const downloadImage=textEl('button','ดาวน์โหลดภาพข่าว','dialog-image-download');
+    downloadImage.type='button';downloadImage.disabled=true;
+    downloadImage.addEventListener('click',()=>{if(files?.length)shareKit.downloadFile(files[0]);});
+    actions.append(downloadImage);
+    const copy=textEl('button','คัดลอกข้อความ','dialog-copy-action');
+    copy.type='button';
+    copy.addEventListener('click',async()=>{
+      if(!shareKit)return;
+      try{await shareKit.copyText(shareKit.message(issue));report('คัดลอกข้อความข่าวแล้ว สามารถวางลงใน LINE ได้');}
+      catch(_){report('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาใช้ปุ่มเปิด LINE');}
     });
     actions.append(copy);
     const read = textEl('a', 'อ่านแบบพลิกหน้า ↗', 'dialog-read');
     read.href = './reader.html?issue=' + encodeURIComponent(issue.id);
     actions.prepend(read);
+    actions.append(status);
+    if(shareKit){
+      shareKit.prepareFiles(issue).then(result=>{
+        files=result;
+        downloadImage.disabled=!files.length;
+        if(shareKit.canShareFiles(files)){
+          photoShare.disabled=false;
+          photoShare.textContent='แชร์ภาพข่าวพร้อมข้อความ';
+          report('เมื่อเมนูแชร์ปรากฏ ให้เลือก LINE; บางรุ่นอาจไม่แนบข้อความไปพร้อมภาพ');
+        }else{
+          photoShare.textContent='อุปกรณ์ไม่รองรับแชร์ภาพโดยตรง';
+          report('ยังดาวน์โหลดภาพและส่งข้อความเข้า LINE ได้');
+        }
+      }).catch(()=>{photoShare.textContent='เตรียมไฟล์ภาพไม่สำเร็จ';
+        report('โหลดไฟล์ภาพไม่สำเร็จ กรุณาลองเมื่อออนไลน์หรือเปิด PDF');});
+    }
     content.scrollTop = 0;
     if (!dialog.open) dialog.showModal();
     if (updateHash) history.pushState(null, '', '#issue=' + encodeURIComponent(issue.id));
