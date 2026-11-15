@@ -85,7 +85,7 @@ const FILE_RULES=Object.freeze({
  * size/account quotas, retries, hashes and persistence belong to the backend.
  */
 export function inspectP0Image({filename,mimeType,bytes,sizeBytes}={}){
-  if(typeof filename!=='string'||filename.length>180||!/^[-\p{L}\p{N}_. ()]+$/u.test(filename)||
+  if(typeof filename!=='string'||filename.length>180||!/^[-\p{L}\p{M}\p{N}_. ()]+$/u.test(filename)||
      filename==='.'||filename==='..'||filename.startsWith('.'))return reject('FILE_NAME_INVALID');
   const rule=Object.hasOwn(FILE_RULES,mimeType)?FILE_RULES[mimeType]:null;
   if(!rule)return reject('TYPE_DENIED');
