@@ -164,7 +164,25 @@
     if(best!==state.current)setCurrent(best);
   }
   function openSheet(id){const dialog=byId(id);if(!dialog.open)dialog.showModal();}
+
+  // Focus hides chrome but keeps page controls and a visible restore button.
+  // A deliberate geometry refresh preserves the current page when switching toolbar height.
+  function setFocusMode(enabled){
+    const active=Boolean(enabled);
+    document.body.classList.toggle('is-focus-mode',active);
+    const toggle=byId('reader-focus-toggle');
+    toggle.setAttribute('aria-pressed',String(active));
+    toggle.setAttribute('aria-label',active?'ออกจากโหมดอ่านเต็มพื้นที่':'เปิดโหมดอ่านเต็มพื้นที่');
+    byId('reader-focus-restore').hidden=!active;
+    if(!state.pages.length)return;
+    requestAnimationFrame(()=>{
+      if(state.mode==='flip')activate('flip');
+      else scrollToCurrent(false);
+    });
+  }
   function setup(){
+    byId('reader-focus-toggle').addEventListener('click',()=>setFocusMode(!document.body.classList.contains('is-focus-mode')));
+    byId('reader-focus-restore').addEventListener('click',()=>setFocusMode(false));
     byId('reader-prev').addEventListener('click',()=>jump(state.current-1));
     byId('reader-next').addEventListener('click',()=>jump(state.current+1));
     byId('reader-toc').addEventListener('change',e=>{byId('reader-toc-dialog').close();jump(Number(e.target.value));});
@@ -192,6 +210,7 @@
     document.addEventListener('keydown',e=>{
       if(e.altKey||e.ctrlKey||e.metaKey||byId('reader-toc-dialog').open||byId('reader-info-dialog').open||
         ['INPUT','SELECT','TEXTAREA','BUTTON'].includes(document.activeElement?.tagName))return;
+      if(e.key==='Escape'&&document.body.classList.contains('is-focus-mode')){e.preventDefault();setFocusMode(false);return;}
       if(e.key==='ArrowRight'){e.preventDefault();jump(state.current+1);}
       if(e.key==='ArrowLeft'){e.preventDefault();jump(state.current-1);}
     });
