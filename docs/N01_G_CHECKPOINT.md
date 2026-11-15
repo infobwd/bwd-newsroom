@@ -211,3 +211,16 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 
 ### L4–L5 — gate
 **READY_FOR_SCHOOL_REVIEW.** The direct Drive listing corroborates PR #15's *file count/MIME* for the first-event WebP derivatives, but does **not** clear public access or consent gates. Keep PR #6 and #15 draft; no new N01-G PR, merge, deploy, source-photo move, permission change or Gallery manifest edit. Next action: obtain anonymous per-file delivery evidence and school image-rights approval; independently run live browser/mobile QA. The existing published catalogue should be treated as already public-facing, not as an empty demo.
+
+
+## 2026-11-15 — live access and Drive-connection gate recheck
+
+**One selected task:** N01-G public Gallery and school Drive access verification, without changing media, publication state, or deployment.
+
+- **L0 PASS (readback):** Fetched main README.md, AGENTS.md, docs/MASTER_PLAN.md, docs/DATA_AND_STORAGE.md, docs/PUBLISHING_AND_QA.md, docs/AI_DEVELOPMENT_LOOP.md, docs/GALLERY_CHAT_UI_PWA_PLAN.md, docs/N01_G_CHECKPOINT.md and this existing PR #6 checkpoint. GitHub open PR search returned #6 and #15; no duplicate N01-G PR created. This pass did not independently resolve main HEAD SHA or run CI; those are NOT VERIFIED/NOT RUN.
+- **L1:** Retain N01-G access/privacy QA as highest priority before N04-P teacher uploads.
+- **L2/L3 BLOCKED (Drive):** Attempted authenticated folder listings for school-selected academic-year Shared Drive and BWD Newsroom root. Both calls failed with `link_id must identify an eligible linked account`. No current file-level permissions, image bytes, MIME, or consent evidence can be inferred from this attempt. Prior inventory evidence remains historical, not reconfirmed today.
+- **L3 NOT VERIFIED (live Pages):** Attempted external GET/read of `/bwd-newsroom/gallery.html` and `/bwd-newsroom/data/galleries.json`; the web inspection tool returned inaccessible/internal error for both. This is an inspection limitation, not proof of site outage, HTTP 404, or broken images.
+- **L3 NOT RUN:** Real Safari iPhone/iPad, rendered lightbox/swipe/performance, EXIF/GPS and actual image consent, anonymous per-file WebP delivery, PDF approval, Canva persisted saved pages, local JS/schema validators and new CI execution.
+- **L4:** Checkpoint-only documentation update in existing draft PR #6; no app/public manifest/assets, Drive permissions, PDF or originals changed; no merge/deploy.
+- **L5 READY_FOR_SCHOOL_REVIEW:** Restore eligible school Drive connection for authenticated metadata and per-file release audit; obtain independent anonymous image delivery and real-device QA. School approval of photo/PDF release remains a separate gate. Do not proceed to automated N04-P publication.
