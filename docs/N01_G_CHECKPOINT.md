@@ -224,3 +224,17 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 - **L3 NOT RUN:** Real Safari iPhone/iPad, rendered lightbox/swipe/performance, EXIF/GPS and actual image consent, anonymous per-file WebP delivery, PDF approval, Canva persisted saved pages, local JS/schema validators and new CI execution.
 - **L4:** Checkpoint-only documentation update in existing draft PR #6; no app/public manifest/assets, Drive permissions, PDF or originals changed; no merge/deploy.
 - **L5 READY_FOR_SCHOOL_REVIEW:** Restore eligible school Drive connection for authenticated metadata and per-file release audit; obtain independent anonymous image delivery and real-device QA. School approval of photo/PDF release remains a separate gate. Do not proceed to automated N04-P publication.
+
+
+## 2026-11-15 10:01 Asia/Bangkok — school Drive folder reconciliation and public QA boundary
+
+**Selected work:** N01-G source/derivative location and access-gate audit. No public content or permissions changed.
+
+- **L0 PASS:** Read main README, AGENTS, MASTER_PLAN, DATA_AND_STORAGE, PUBLISHING_AND_QA, AI_DEVELOPMENT_LOOP, GALLERY_CHAT_UI_PWA_PLAN, N01_G_CHECKPOINT and data/galleries.json. GitHub open PR search returned existing #6 and #15. Main README and checkpoint are historically stale; public manifest contains two published Gallery records. Main HEAD SHA was not independently resolved this run.
+- **L1/L2 PASS (authenticated folder listing):** School Google Drive connection `info@bwd.ac.th` worked. Academic-year Shared Drive root has four folders: `01_ภาพกิจกรรม`, `02_จดหมายข่าวย้อนหลัง_PDF`, `03_ภาพเว็บ_รอตรวจ`, `04_ภาพเว็บ_เผยแพร่`. Newsroom root has six expected editorial folders. Approved-web-derivative folder contains three event/issue subfolders (WDGAL-2569-0001, WDGAL-2569-0002, WDNEWS-2569-0002). Activity-photo root contains month `2569-11_พฤศจิกายน`.
+- **L3 PASS (PDF inventory):** Direct listing of `02_จดหมายข่าวย้อนหลัง_PDF` shows historical `1.pdf` through `17.pdf` all present, plus five other files: WDNEWS-2569-0002 issue-v01 PDF, two draft PDFs, two draft PNGs. Historical 17 PDFs were not moved or modified. File names and MIME are metadata evidence, not approval or contents QA.
+- **L3 NOT VERIFIED (permissions):** Google returned `access_not_verified` for the relevant folders/files; this does not imply blocked access or permission to publish. No anonymous per-file read test or independent release authorization was completed.
+- **L3 NOT VERIFIED (public site):** HTTPS attempts for live Gallery HTML, JSON, and a WebP image failed at DNS resolution in the execution environment. No HTTP status, browser rendering or outage conclusion can be inferred.
+- **L3 NOT RUN:** Real-device iPhone/iPad Safari, photo EXIF and consent, PDF page/content verification, Canva saved pages, local validator/CI, and web image performance.
+- **L4:** Checkpoint-only commit in existing draft PR #6; no new PR, public assets/manifest edit, merge, deploy or Drive share change.
+- **L5 READY_FOR_SCHOOL_REVIEW:** Verify individual photo/PDF publication rights and anonymous public delivery; perform real-device Gallery QA before N04-P release. Keep all original and draft folders restricted.
