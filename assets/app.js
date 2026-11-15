@@ -18,6 +18,7 @@
   let published = [];
   let loadFailed = false;
   let issueScrollY = null;
+  let lastIssueInputWasPointer = false;
 
   // iOS standalone Safari can rubber-band the page behind a native dialog.
   // Freeze it at its current scroll offset; restore that offset on every close path.
@@ -244,12 +245,21 @@
     } else if (dialog.open) dialog.close();
   }
   function setupEvents() {
+    // Preserve keyboard focus while clearing touch-only Safari outlines on modal close.
+    document.addEventListener('pointerdown',()=>{lastIssueInputWasPointer=true;},{passive:true});
+    document.addEventListener('keydown',()=>{lastIssueInputWasPointer=false;});
     [search, year, category, template].forEach(el => el.addEventListener(el === search ? 'input' : 'change', render));
     $('filters').addEventListener('reset', () => setTimeout(render, 0));
     $('dialog-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
     dialog.addEventListener('close', () => {
       unlockIssueBackground();
+      if (lastIssueInputWasPointer) {
+        requestAnimationFrame(()=>{
+          const active=document.activeElement;
+          if (active?.closest?.('.app-latest-track')) active.blur();
+        });
+      }
       if (location.hash.startsWith('#issue=')) history.replaceState(null, '', location.pathname + location.search + '#news');
     });
     window.addEventListener('hashchange', routeHash);
@@ -308,13 +318,23 @@
     holder.append(track);
     if(cards.length===1)return;
     const controls=textEl('div','','app-carousel-controls');
-    const previous=textEl('button','‹','app-carousel-arrow');
-    const next=textEl('button','›','app-carousel-arrow');
-    const position=textEl('output','1 / '+cards.length,'app-carousel-position');
-    previous.type=next.type='button';
-    previous.setAttribute('aria-label','จดหมายข่าวก่อนหน้า');
-    next.setAttribute('aria-label','จดหมายข่าวถัดไป');
-    position.setAttribute('aria-live','polite');
+    controls.setAttribute('role','group');
+    controls.setAttribute('aria-label','เลือกจดหมายข่าวล่าสุด');
+    const dots=latest.map((issue,index)=>{
+      const dot=textEl('button','','app-carousel-dot');
+      dot.type='button';
+      dot.setAttribute('aria-label','ไปยังจดหมายข่าวที่ '+(index+1)+' '+issue.title_th);
+      dot.addEventListener('click',()=>{pauseForInteraction();go(index);});
+      controls.append(dot);
+      return dot;
+    });
+    const position=textEl('span','1 / '+cards.length,'app-carousel-position visually-hidden');
+    position.setAttribute('aria-live','off');
+    const play=textEl('button','Ⅱ','app-carousel-play-toggle');
+    play.type='button';
+    play.setAttribute('aria-label','หยุดเลื่อนข่าวอัตโนมัติ');
+    play.setAttribute('aria-pressed','false');
+    controls.append(play,position);
     const currentIndex=()=>{
       let closest=0,distance=Infinity;
       cards.forEach((card,index)=>{
@@ -323,33 +343,92 @@
       });
       return closest;
     };
+    const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const AUTO_DELAY=5500, INTERACTION_PAUSE=9000;
+    let autoTimer=0,resumeTimer=0,autoDirection=1;
+    let inViewport=typeof IntersectionObserver==='undefined';
+    let pausedByUser=false,manualDelay=false,hovered=false,keyboardFocus=false,pointerInput=false;
+    const stopAuto=()=>{window.clearTimeout(autoTimer);autoTimer=0;};
+    const allowedToAuto=()=>inViewport&&!document.hidden&&!dialog?.open&&!reducedMotion?.matches&&
+      !pausedByUser&&!manualDelay&&!hovered&&!keyboardFocus;
     const updatePosition=()=>{
       const current=currentIndex();
       position.textContent=(current+1)+' / '+cards.length;
-      previous.disabled=current===0;
-      next.disabled=current===cards.length-1;
+      dots.forEach((dot,index)=>{
+        if(index===current)dot.setAttribute('aria-current','true');
+        else dot.removeAttribute('aria-current');
+      });
     };
-    const go=(delta)=>{
-      const target=cards[Math.max(0,Math.min(cards.length-1,currentIndex()+delta))];
-      const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-      track.scrollTo({left:target.offsetLeft-cards[0].offsetLeft,behavior:reduced?'auto':'smooth'});
+    const go=(index)=>{
+      const target=cards[Math.max(0,Math.min(cards.length-1,index))];
+      track.scrollTo({
+        left:target.offsetLeft-cards[0].offsetLeft,
+        behavior:reducedMotion?.matches?'auto':'smooth'
+      });
     };
-    previous.addEventListener('click',()=>go(-1));
-    next.addEventListener('click',()=>go(1));
+    const scheduleAuto=()=>{
+      stopAuto();
+      if(!allowedToAuto())return;
+      autoTimer=window.setTimeout(()=>{
+        if(!allowedToAuto())return;
+        let next=currentIndex()+autoDirection;
+        if(next<0||next>=cards.length){autoDirection*=-1;next=currentIndex()+autoDirection;}
+        go(next);scheduleAuto();
+      },AUTO_DELAY);
+    };
+    const pauseForInteraction=()=>{
+      manualDelay=true;stopAuto();
+      window.clearTimeout(resumeTimer);
+      resumeTimer=window.setTimeout(()=>{manualDelay=false;scheduleAuto();},INTERACTION_PAUSE);
+    };
+    play.addEventListener('click',()=>{
+      pausedByUser=!pausedByUser;
+      play.textContent=pausedByUser?'▶':'Ⅱ';
+      play.setAttribute('aria-pressed',String(pausedByUser));
+      play.setAttribute('aria-label',pausedByUser?'เริ่มเลื่อนข่าวอัตโนมัติ':'หยุดเลื่อนข่าวอัตโนมัติ');
+      if(pausedByUser)stopAuto();
+      else {manualDelay=false;window.clearTimeout(resumeTimer);scheduleAuto();}
+    });
+    // Manual swipes, dots and keyboard navigation defer autoplay.
+    holder.addEventListener('pointerdown',()=>{pointerInput=true;pauseForInteraction();},{passive:true});
+    holder.addEventListener('keydown',()=>{pointerInput=false;pauseForInteraction();});
     track.addEventListener('keydown',event=>{
       if(event.key==='ArrowRight'||event.key==='ArrowLeft'){
-        event.preventDefault();go(event.key==='ArrowRight'?1:-1);
+        event.preventDefault();go(currentIndex()+(event.key==='ArrowRight'?1:-1));
       }
     });
+    holder.addEventListener('focusin',()=>{
+      if(!pointerInput){keyboardFocus=true;stopAuto();}
+    });
+    holder.addEventListener('focusout',()=>{
+      window.setTimeout(()=>{
+        if(!holder.contains(document.activeElement)){keyboardFocus=false;scheduleAuto();}
+      },0);
+    });
+    holder.addEventListener('mouseenter',()=>{if(window.matchMedia?.('(hover: hover)').matches){hovered=true;stopAuto();}});
+    holder.addEventListener('mouseleave',()=>{hovered=false;scheduleAuto();});
     let scheduled=false;
     track.addEventListener('scroll',()=>{
       if(scheduled)return;
       scheduled=true;
       requestAnimationFrame(()=>{scheduled=false;updatePosition();});
     },{passive:true});
-    controls.append(previous,position,next);
+    if(typeof IntersectionObserver!=='undefined'){
+      const observer=new IntersectionObserver(entries=>{
+        inViewport=entries[0]?.intersectionRatio>=0.45;
+        if(inViewport)scheduleAuto();else stopAuto();
+      },{threshold:[0,0.45,0.75]});
+      observer.observe(track);
+    }
+    document.addEventListener('visibilitychange',scheduleAuto);
+    dialog?.addEventListener('close',scheduleAuto);
+    window.addEventListener('pagehide',stopAuto);
+    window.addEventListener('pageshow',scheduleAuto);
+    const syncMotion=()=>{play.hidden=Boolean(reducedMotion?.matches);scheduleAuto();};
+    reducedMotion?.addEventListener?.('change',syncMotion);
     holder.append(controls);
     updatePosition();
+    syncMotion();
   }
   async function renderAppGalleries(){
     const holder=$('app-latest-galleries');if(!holder)return;
