@@ -60,6 +60,7 @@
     }
     function start(ms){
       if(!ms)return;
+      host.clearTimeout(timer);
       until=Date.now()+ms;
       timer=host.setTimeout(dismiss,ms);
     }
