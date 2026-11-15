@@ -15,7 +15,12 @@ assert(start>0 && end>start,'approved-only Gallery resolver should exist');
 const resolver=vm.runInNewContext(app.slice(start,end)+'\napprovedIssueGalleryLinks;');
 const issues=catalogue.issues,galleries=galleryCatalogue.galleries;
 const links=resolver(galleries,issues);
-assert.equal(links.size,2,'both existing approved news issues should link to existing Gallery');
+const publicIssueIds=new Set(issues.filter(i => i.status === 'published' && i.visibility_approved_at && i.published_at).map(i => i.id));
+const linkedPublicIssueIds=new Set(galleries.filter(g => g.status === 'published' && g.visibility_approved_at && g.published_at)
+  .flatMap(g => (g.linked_issue_ids || []).filter(id => publicIssueIds.has(id))));
+assert.equal(links.size, linkedPublicIssueIds.size, 'each approved related news issue should link to Gallery');
+assert.equal(links.get('WDNEWS-2569-0003')?.[0]?.id,'WDGAL-2569-0003');
+assert.equal(links.get('WDNEWS-2569-0003')?.[0]?.count,6);
 assert.equal(links.get('WDNEWS-2569-0002')?.[0]?.id,'WDGAL-2569-0002');
 assert.equal(links.get('WDNEWS-2569-0002')?.[0]?.count,11);
 assert.equal(links.get('WDNEWS-2569-0001')?.[0]?.id,'WDGAL-2569-0001');

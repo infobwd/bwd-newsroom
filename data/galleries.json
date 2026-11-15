@@ -1,7 +1,93 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-14",
+  "generated_at": "2026-11-15",
   "galleries": [
+    {
+      "gallery_id": "WDGAL-2569-0003",
+      "event_id": "EVT-2569-0003",
+      "title_th": "ไทยฟู้ดส์ ใส่ใจสังคม มอบสิ่งของแก่โรงเรียนบ้านวังด้ง",
+      "date": "2026-11-11",
+      "description_th": "ภาพกิจกรรมเพื่อสังคมและสิ่งแวดล้อม (CSR) ไทยฟู้ดส์มอบสิ่งของและสนับสนุนการศึกษาจำนวน 10,000 บาท ณ โรงเรียนบ้านวังด้ง วันที่ 11 พฤศจิกายน 2569",
+      "category": "community",
+      "tags": [
+        "ไทยฟู้ดส์",
+        "CSR",
+        "มอบสิ่งของ",
+        "สนับสนุนการศึกษา",
+        "กิจกรรมเพื่อสังคม",
+        "โรงเรียนบ้านวังด้ง"
+      ],
+      "status": "published",
+      "approved_version": "v01",
+      "visibility_approved_at": "2026-11-15T23:33:04.512+07:00",
+      "published_at": "2026-11-15T23:33:04.512+07:00",
+      "cover_image": "assets/galleries/WDGAL-2569-0003/photo01-thumb-v01.webp",
+      "photos": [
+        {
+          "photo_id": "P01",
+          "thumb_image": "assets/galleries/WDGAL-2569-0003/photo01-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0003/photo01-web-v01.webp",
+          "alt_th": "ภาพพิธีรับมอบสิ่งของจากผู้แทนไทยฟู้ดส์ ณ โรงเรียนบ้านวังด้ง",
+          "caption_th": "พิธีรับมอบสิ่งของแก่โรงเรียน",
+          "width": 1599,
+          "height": 1200,
+          "sha256": "7308f14ab8a083bdd18e9095b7d4389eded73500ae404c5acb5d23307fd9a3d7"
+        },
+        {
+          "photo_id": "P02",
+          "thumb_image": "assets/galleries/WDGAL-2569-0003/photo02-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0003/photo02-web-v01.webp",
+          "alt_th": "คณะครู ผู้แทนไทยฟู้ดส์ และนักเรียนถ่ายภาพหมู่ร่วมกัน",
+          "caption_th": "ภาพหมู่ผู้ร่วมกิจกรรม",
+          "width": 1599,
+          "height": 1200,
+          "sha256": "89be1773c1461a543a867dc709331478e7fe13e4861fbb2a4f2f434f0c1452ca"
+        },
+        {
+          "photo_id": "P03",
+          "thumb_image": "assets/galleries/WDGAL-2569-0003/photo03-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0003/photo03-web-v01.webp",
+          "alt_th": "ผู้แทนไทยฟู้ดส์มอบสิ่งของต่อหน้าคณะครูและนักเรียนที่นั่งร่วมกิจกรรม",
+          "caption_th": "บรรยากาศพิธีมอบสิ่งของ",
+          "width": 1599,
+          "height": 1200,
+          "sha256": "2b9493c026b3274bf97f178d25614e70714263ec63e9583eda4625c9596f2a15"
+        },
+        {
+          "photo_id": "P04",
+          "thumb_image": "assets/galleries/WDGAL-2569-0003/photo04-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0003/photo04-web-v01.webp",
+          "alt_th": "ผู้แทนและบุคลากรมอบสิ่งของให้นักเรียนบริเวณลานกิจกรรม",
+          "caption_th": "มอบสิ่งของให้แก่นักเรียน",
+          "width": 1599,
+          "height": 1200,
+          "sha256": "9e0d0dc14966858005d9c2e8167b3789f9a87c25a162eed586b8564b2fd55292"
+        },
+        {
+          "photo_id": "P05",
+          "thumb_image": "assets/galleries/WDGAL-2569-0003/photo05-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0003/photo05-web-v01.webp",
+          "alt_th": "ผู้แทนและบุคลากรส่งมอบสิ่งของให้นักเรียนในกิจกรรมเพื่อสังคม",
+          "caption_th": "นักเรียนร่วมรับมอบสิ่งของ",
+          "width": 1599,
+          "height": 1200,
+          "sha256": "a15c0c3170edb8686e82f2aef034aa912a96a1a4ff28da388c30a8ddf5eb459a"
+        },
+        {
+          "photo_id": "P06",
+          "thumb_image": "assets/galleries/WDGAL-2569-0003/photo06-thumb-v01.webp",
+          "web_image": "assets/galleries/WDGAL-2569-0003/photo06-web-v01.webp",
+          "alt_th": "ภาพมุมกว้างนักเรียนร่วมกิจกรรมรับมอบสิ่งของบริเวณลานโรงเรียน",
+          "caption_th": "บรรยากาศกิจกรรมในโรงเรียน",
+          "width": 1599,
+          "height": 1200,
+          "sha256": "3a5f86546cce9b0e5e13532f636d840226f6b03fca230c41ed879c6758b7b636"
+        }
+      ],
+      "linked_issue_ids": [
+        "WDNEWS-2569-0003"
+      ]
+    },
     {
       "gallery_id": "WDGAL-2569-0002",
       "event_id": "EVT-2569-0002",

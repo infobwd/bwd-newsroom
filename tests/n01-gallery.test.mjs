@@ -95,4 +95,11 @@ assert.ok(!css.includes('2000px') && !css.includes('repeat(4,minmax(0,1fr))'));
 assert.ok(css.includes('@media(max-width:900px)') && css.includes('@media(max-width:630px)'));
 
 assert.ok(!html.includes('drive.google.com')&&!js.includes('drive.google.com'),'no public Drive hotlink');
+// WD'NEWS-2569-0003 gallery regression: approved album and reverse link.
+const thaiFoods = data.galleries.find(g => g.gallery_id === 'WDGAL-2569-0003');
+assert.ok(thaiFoods, 'Thai Foods Gallery must be in public catalogue');
+assert.equal(thaiFoods.event_id, 'EVT-2569-0003');
+assert.equal(thaiFoods.photos.length, 6);
+assert.deepEqual(thaiFoods.linked_issue_ids, ['WDNEWS-2569-0003']);
+assert.ok(thaiFoods.photos.every(p => p.web_image.endsWith('-v01.webp') && p.thumb_image.endsWith('-v01.webp')));
 console.log('PASS N01-G: approved-only schema, source parity, security fixtures, UI routes and responsive styles');
