@@ -148,11 +148,11 @@
     if (!Array.isArray(galleries) || !Array.isArray(issues)) return links;
     const publicIds = new Set(issues.filter(i =>
       i && i.status === 'published' && i.visibility_approved_at && i.published_at &&
-      i.approved_version && /^WDNEWS-\\d{4}-\\d{4}$/.test(i.id || '')
+      i.approved_version && /^WDNEWS-\d{4}-\d{4}$/.test(i.id || '')
     ).map(i => i.id));
     galleries.forEach(g => {
       if (!g || g.status !== 'published' || !g.visibility_approved_at || !g.published_at ||
-          !g.approved_version || !/^WDGAL-\\d{4}-\\d{4}$/.test(g.gallery_id || '') ||
+          !g.approved_version || !/^WDGAL-\d{4}-\d{4}$/.test(g.gallery_id || '') ||
           typeof g.title_th !== 'string' || !g.title_th.trim() ||
           !Array.isArray(g.photos) || !g.photos.length ||
           !Array.isArray(g.linked_issue_ids)) return;
