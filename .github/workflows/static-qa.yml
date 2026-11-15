@@ -54,5 +54,6 @@ jobs:
           node tests/line-sharing.test.mjs
           node tests/loading-v12.test.mjs
           node tests/app-launch-v13.test.mjs
+          node tests/app-ux-v14.test.mjs
           node tests/n02.test.mjs
           node tests/n02-mobile.test.mjs

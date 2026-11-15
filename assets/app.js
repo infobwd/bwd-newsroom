@@ -17,6 +17,29 @@
   const count = $('result-count'), dialog = $('issue-dialog');
   let published = [];
   let loadFailed = false;
+  let issueScrollY = null;
+
+  // iOS standalone Safari can rubber-band the page behind a native dialog.
+  // Freeze it at its current scroll offset; restore that offset on every close path.
+  function lockIssueBackground() {
+    if (issueScrollY !== null) return;
+    issueScrollY = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
+    document.body.style.setProperty('--issue-locked-top', '-' + issueScrollY + 'px');
+    document.documentElement.classList.add('issue-overlay-open');
+    document.body.classList.add('issue-background-locked');
+  }
+  function unlockIssueBackground() {
+    if (issueScrollY === null) return;
+    const savedY = issueScrollY;
+    issueScrollY = null;
+    document.body.classList.remove('issue-background-locked');
+    document.body.style.removeProperty('--issue-locked-top');
+    document.documentElement.classList.remove('issue-overlay-open');
+    const previousBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, savedY);
+    document.documentElement.style.scrollBehavior = previousBehavior;
+  }
 
   function validAsset(path) {
     return typeof path === 'string' && /^assets\/issues\/[A-Za-z0-9_-]+\/[A-Za-z0-9._-]+\.(?:png|jpe?g|webp)$/i.test(path) && !path.includes('..');
@@ -205,7 +228,12 @@
         report('โหลดไฟล์ภาพไม่สำเร็จ กรุณาลองเมื่อออนไลน์หรือเปิด PDF');});
     }
     content.scrollTop = 0;
-    if (!dialog.open) dialog.showModal();
+    actions.scrollTop = 0;
+    if (!dialog.open) {
+      lockIssueBackground();
+      try { dialog.showModal(); }
+      catch (e) { unlockIssueBackground(); throw e; }
+    }
     if (updateHash) history.pushState(null, '', '#issue=' + encodeURIComponent(issue.id));
   }
   function routeHash() {
@@ -221,6 +249,7 @@
     $('dialog-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
     dialog.addEventListener('close', () => {
+      unlockIssueBackground();
       if (location.hash.startsWith('#issue=')) history.replaceState(null, '', location.pathname + location.search + '#news');
     });
     window.addEventListener('hashchange', routeHash);
@@ -254,17 +283,73 @@
     const holder=$('app-latest-issue'); if(!holder)return;
     holder.replaceChildren();
     if(!published.length){holder.append(textEl('p','ยังไม่มีจดหมายข่าวที่เผยแพร่','app-loading'));return;}
-    const issue=published[0], card=textEl('article','','app-featured-issue');
-    const img=document.createElement('img');
-    img.src=new URL('./'+issue.pages[0].web_image,document.baseURI).href;
-    img.alt=issue.pages[0].alt_th;img.loading='lazy';img.decoding='async';
-    img.addEventListener('error',()=>img.replaceWith(textEl('span','ภาพปกไม่พร้อมใช้งาน','app-loading')),{once:true});
-    const body=textEl('div','','app-featured-issue-body');
-    body.append(textEl('time',dateThai(issue.date)),textEl('h3',issue.title_th),textEl('p',issue.excerpt_th||'เปิดอ่านจดหมายข่าวฉบับเต็ม'));
-    const open=textEl('button','เปิดอ่าน','');open.type='button';
-    open.setAttribute('aria-label','เปิดอ่าน '+issue.title_th);
-    open.addEventListener('click',()=>openIssue(issue.id,true));
-    body.append(open);card.append(img,body);holder.append(card);
+    // "published" is approved-only and sorted newest first by init().
+    const latest=published.slice(0,5);
+    const track=textEl('div','','app-latest-track');
+    track.tabIndex=0;
+    track.setAttribute('role','region');
+    track.setAttribute('aria-roledescription','carousel');
+    track.setAttribute('aria-label','จดหมายข่าวล่าสุด ปัดซ้ายหรือขวาเพื่อดูฉบับถัดไป');
+    const cards=[];
+    latest.forEach((issue,index)=>{
+      const card=textEl('a','','app-featured-issue');
+      card.href='#issue='+encodeURIComponent(issue.id);
+      card.setAttribute('aria-label','อ่านจดหมายข่าว '+(index+1)+' จาก '+latest.length+' '+issue.title_th);
+      card.addEventListener('click',e=>{e.preventDefault();openIssue(issue.id,true);});
+      const img=document.createElement('img');
+      img.src=new URL('./'+issue.pages[0].web_image,document.baseURI).href;
+      img.alt=issue.pages[0].alt_th;img.loading=index===0?'eager':'lazy';img.decoding='async';
+      img.addEventListener('error',()=>img.replaceWith(textEl('span','ภาพปกไม่พร้อมใช้งาน','app-loading')),{once:true});
+      const body=textEl('div','','app-featured-issue-body');
+      body.append(textEl('time',dateThai(issue.date)),textEl('h3',issue.title_th),textEl('p',issue.excerpt_th||'เปิดอ่านจดหมายข่าวฉบับเต็ม'));
+      body.append(textEl('span','เปิดอ่าน','app-card-open'));
+      card.append(img,body);track.append(card);cards.push(card);
+    });
+    holder.append(track);
+    if(cards.length===1)return;
+    const controls=textEl('div','','app-carousel-controls');
+    const previous=textEl('button','‹','app-carousel-arrow');
+    const next=textEl('button','›','app-carousel-arrow');
+    const position=textEl('output','1 / '+cards.length,'app-carousel-position');
+    previous.type=next.type='button';
+    previous.setAttribute('aria-label','จดหมายข่าวก่อนหน้า');
+    next.setAttribute('aria-label','จดหมายข่าวถัดไป');
+    position.setAttribute('aria-live','polite');
+    const currentIndex=()=>{
+      let closest=0,distance=Infinity;
+      cards.forEach((card,index)=>{
+        const delta=Math.abs((card.offsetLeft-cards[0].offsetLeft)-track.scrollLeft);
+        if(delta<distance){closest=index;distance=delta;}
+      });
+      return closest;
+    };
+    const updatePosition=()=>{
+      const current=currentIndex();
+      position.textContent=(current+1)+' / '+cards.length;
+      previous.disabled=current===0;
+      next.disabled=current===cards.length-1;
+    };
+    const go=(delta)=>{
+      const target=cards[Math.max(0,Math.min(cards.length-1,currentIndex()+delta))];
+      const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      track.scrollTo({left:target.offsetLeft-cards[0].offsetLeft,behavior:reduced?'auto':'smooth'});
+    };
+    previous.addEventListener('click',()=>go(-1));
+    next.addEventListener('click',()=>go(1));
+    track.addEventListener('keydown',event=>{
+      if(event.key==='ArrowRight'||event.key==='ArrowLeft'){
+        event.preventDefault();go(event.key==='ArrowRight'?1:-1);
+      }
+    });
+    let scheduled=false;
+    track.addEventListener('scroll',()=>{
+      if(scheduled)return;
+      scheduled=true;
+      requestAnimationFrame(()=>{scheduled=false;updatePosition();});
+    },{passive:true});
+    controls.append(previous,position,next);
+    holder.append(controls);
+    updatePosition();
   }
   async function renderAppGalleries(){
     const holder=$('app-latest-galleries');if(!holder)return;

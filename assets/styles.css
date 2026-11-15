@@ -266,3 +266,15 @@
  }
  #issue-dialog .dialog-actions .dialog-share-status:not([hidden]){order:3}
 }
+
+/* Mobile UX v1.4 — only the issue dialog's content and actions may scroll. */
+html.issue-overlay-open{overflow:hidden;overscroll-behavior:none}
+body.newsroom-page.issue-background-locked{
+  position:fixed;top:var(--issue-locked-top,0px);left:0;right:0;
+  width:100%;overflow:hidden;overscroll-behavior:none;
+}
+@media(max-width:630px){
+  #issue-dialog{overflow:hidden;overscroll-behavior:none}
+  #issue-dialog .dialog-content{overscroll-behavior-y:contain}
+  #issue-dialog .dialog-actions{max-height:min(46dvh,300px);gap:6px}
+}

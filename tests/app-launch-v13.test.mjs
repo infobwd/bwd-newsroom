@@ -32,6 +32,6 @@ assert.match(shell,/serviceWorker\.register/,'preserve PWA shell behavior');
 assert.match(loader,/window\.BWDLoading=Object\.freeze\(\{finishLaunch\}\)/);
 assert.doesNotMatch(loader,/setTimeout\(/,'no artificial HTML splash lifetime');
 assert.doesNotMatch(loaderCSS,/html\.app-launching \.app-launch/,'remove overlay styles');
-assert.match(worker,/v11-share-v13/,'PWA update key changed');
+assert(Number(worker.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=11,'PWA update key retains v1.3+ release progression');
 assert.doesNotMatch(worker.slice(worker.indexOf('const SHELL='),worker.indexOf('const PATHS=')),/assets\/issues\/|assets\/galleries\/|data\//);
 console.log('PASS v1.3 launch, header, Gallery footer and offline shell source contracts; physical iPhone QA not run');

@@ -32,6 +32,6 @@ assert.match(readerCSS,/\.reader-body\.is-focus-mode \.reader-toolbar\{display:n
 assert.match(readerCSS,/\.reader-body\.is-focus-mode \.reader-mode-row\{display:none\}/);
 assert.match(readerCSS,/\.reader-body\.is-focus-mode \.reader-focus-restore:not\(\[hidden\]\)/);
 assert.doesNotMatch(reader,/app-bottom-nav|app-shell\.js/, 'immersive reader keeps independent navigation');
-assert.match(sw,/bwd-public-shell-2569-11-15-v11/, 'PWA cache bump ensures safe client update');
+assert(Number(sw.match(/const VERSION='bwd-public-shell-2569-11-15-v(\d+)/)?.[1])>=11, 'PWA cache version retains v1.1+ update guarantee');
 assert.doesNotMatch(sw,/assets\/galleries\/WDGAL|assets\/issues\/WDNEWS/, 'SW precache contains no private/media content');
 console.log('App Experience v1.1 source contract checks PASS (not iPhone QA)');
