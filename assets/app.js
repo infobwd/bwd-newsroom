@@ -405,7 +405,7 @@
         if(!holder.contains(document.activeElement)){keyboardFocus=false;scheduleAuto();}
       },0);
     });
-    holder.addEventListener('mouseenter',()=>{hovered=true;stopAuto();});
+    holder.addEventListener('mouseenter',()=>{if(window.matchMedia?.('(hover: hover)').matches){hovered=true;stopAuto();}});
     holder.addEventListener('mouseleave',()=>{hovered=false;scheduleAuto();});
     let scheduled=false;
     track.addEventListener('scroll',()=>{
@@ -424,10 +424,11 @@
     dialog?.addEventListener('close',scheduleAuto);
     window.addEventListener('pagehide',stopAuto);
     window.addEventListener('pageshow',scheduleAuto);
-    reducedMotion?.addEventListener?.('change',scheduleAuto);
+    const syncMotion=()=>{play.hidden=Boolean(reducedMotion?.matches);scheduleAuto();};
+    reducedMotion?.addEventListener?.('change',syncMotion);
     holder.append(controls);
     updatePosition();
-    scheduleAuto();
+    syncMotion();
   }
   async function renderAppGalleries(){
     const holder=$('app-latest-galleries');if(!holder)return;
