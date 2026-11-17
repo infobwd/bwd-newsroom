@@ -1,7 +1,111 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-15",
+  "generated_at": "2026-11-17",
   "galleries": [
+    {
+      "gallery_id": "WDGAL-2569-0004",
+      "event_id": "EVT-2569-0004",
+      "title_th": "กีฬานักเรียนระดับกลุ่ม มิตรภาพเกมส์ 2569 — โรงเรียนบ้านวังด้ง",
+      "date": "2026-11-16",
+      "description_th": "ภาพบรรยากาศโรงเรียนบ้านวังด้งร่วมกิจกรรมกีฬานักเรียนระดับกลุ่ม “มิตรภาพเกมส์ 2569” วันที่ 16 พฤศจิกายน 2569 ทั้งขบวนพาเหรด การแสดง การร่วมพิธีเปิด และการจัดเตรียมอาหารสำหรับนักกีฬา",
+      "category": "sports",
+      "tags": [
+        "มิตรภาพเกมส์ 2569",
+        "กีฬานักเรียนระดับกลุ่ม",
+        "โรงเรียนบ้านวังด้ง",
+        "ขบวนพาเหรด",
+        "กิจกรรมกีฬา",
+        "นักกีฬา"
+      ],
+      "status": "published",
+      "approved_version": "v01",
+      "visibility_approved_at": "2026-11-17T07:14:28+07:00",
+      "published_at": "2026-11-17T07:14:28+07:00",
+      "cover_image": "assets/galleries/WDGAL-2569-0004/photo01-thumb-v01.webp",
+      "photos": [
+        {
+          "photo_id": "P01",
+          "caption_th": "ผู้บริหารและแขกผู้มีเกียรติ",
+          "alt_th": "ภาพกิจกรรมมิตรภาพเกมส์ 2569: ผู้บริหารและแขกผู้มีเกียรติ",
+          "web_image": "assets/galleries/WDGAL-2569-0004/photo01-web-v01.webp",
+          "thumb_image": "assets/galleries/WDGAL-2569-0004/photo01-thumb-v01.webp",
+          "width": 1536,
+          "height": 1153,
+          "sha256": "f270128731f07f9dbdd5b324ee5d43ebfac8a4379f2c00defb1e980b79b304f9"
+        },
+        {
+          "photo_id": "P02",
+          "caption_th": "พิธีเปิดและขบวนพาเหรด",
+          "alt_th": "ภาพกิจกรรมมิตรภาพเกมส์ 2569: พิธีเปิดและขบวนพาเหรด",
+          "web_image": "assets/galleries/WDGAL-2569-0004/photo02-web-v01.webp",
+          "thumb_image": "assets/galleries/WDGAL-2569-0004/photo02-thumb-v01.webp",
+          "width": 1536,
+          "height": 1153,
+          "sha256": "9c570d12f41e3c2adff2a6291ca35882e345e3a0cbd760928fe4ef63e8121ae8"
+        },
+        {
+          "photo_id": "P03",
+          "caption_th": "ขบวนธงและนักเรียน",
+          "alt_th": "ภาพกิจกรรมมิตรภาพเกมส์ 2569: ขบวนธงและนักเรียน",
+          "web_image": "assets/galleries/WDGAL-2569-0004/photo03-web-v01.webp",
+          "thumb_image": "assets/galleries/WDGAL-2569-0004/photo03-thumb-v01.webp",
+          "width": 1536,
+          "height": 1153,
+          "sha256": "183fd0df120f1574c4978c608dbbc3eb080cbd4219c5ae039348133c17b6b2d1"
+        },
+        {
+          "photo_id": "P04",
+          "caption_th": "สีสันการแสดง",
+          "alt_th": "ภาพกิจกรรมมิตรภาพเกมส์ 2569: สีสันการแสดง",
+          "web_image": "assets/galleries/WDGAL-2569-0004/photo04-web-v01.webp",
+          "thumb_image": "assets/galleries/WDGAL-2569-0004/photo04-thumb-v01.webp",
+          "width": 1351,
+          "height": 1800,
+          "sha256": "c2835d2d8f754b77957e65fd30d157538d94f5b496c811ed9eef07e2832d3bfa"
+        },
+        {
+          "photo_id": "P05",
+          "caption_th": "การแสดงชุดสีกรมท่า–ทอง",
+          "alt_th": "ภาพกิจกรรมมิตรภาพเกมส์ 2569: การแสดงชุดสีกรมท่า–ทอง",
+          "web_image": "assets/galleries/WDGAL-2569-0004/photo05-web-v01.webp",
+          "thumb_image": "assets/galleries/WDGAL-2569-0004/photo05-thumb-v01.webp",
+          "width": 1153,
+          "height": 1536,
+          "sha256": "0c1048722ec778390bd6a579fa419f71ffe959fd3ddb47945d4021758e53e3a4"
+        },
+        {
+          "photo_id": "P06",
+          "caption_th": "นักเรียนร่วมขบวนพาเหรด",
+          "alt_th": "ภาพกิจกรรมมิตรภาพเกมส์ 2569: นักเรียนร่วมขบวนพาเหรด",
+          "web_image": "assets/galleries/WDGAL-2569-0004/photo06-web-v01.webp",
+          "thumb_image": "assets/galleries/WDGAL-2569-0004/photo06-thumb-v01.webp",
+          "width": 1800,
+          "height": 1351,
+          "sha256": "d7388af11e93fa96550ae0a30859e84e44737942fb78f7bc333bf4dbc1c86ab5"
+        },
+        {
+          "photo_id": "P07",
+          "caption_th": "ป้ายขบวนโรงเรียนบ้านวังด้ง",
+          "alt_th": "ภาพกิจกรรมมิตรภาพเกมส์ 2569: ป้ายขบวนโรงเรียนบ้านวังด้ง",
+          "web_image": "assets/galleries/WDGAL-2569-0004/photo07-web-v01.webp",
+          "thumb_image": "assets/galleries/WDGAL-2569-0004/photo07-thumb-v01.webp",
+          "width": 1351,
+          "height": 1800,
+          "sha256": "23b266e96246aa6c39a3cbfaa36d5145b2a4ee93be6a8d1091d8670df2ab820e"
+        },
+        {
+          "photo_id": "P08",
+          "caption_th": "ร่วมจัดอาหารสำหรับนักกีฬา",
+          "alt_th": "ภาพกิจกรรมมิตรภาพเกมส์ 2569: ร่วมจัดอาหารสำหรับนักกีฬา",
+          "web_image": "assets/galleries/WDGAL-2569-0004/photo08-web-v01.webp",
+          "thumb_image": "assets/galleries/WDGAL-2569-0004/photo08-thumb-v01.webp",
+          "width": 1536,
+          "height": 1153,
+          "sha256": "506f4d091262a8bc14e1479fa9c4696cfe4b92aa3bed58447882045f606c50ec"
+        }
+      ],
+      "linked_issue_ids": []
+    },
     {
       "gallery_id": "WDGAL-2569-0003",
       "event_id": "EVT-2569-0003",
