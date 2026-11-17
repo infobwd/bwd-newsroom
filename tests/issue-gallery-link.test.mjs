@@ -27,7 +27,10 @@ assert.equal(links.get('WDNEWS-2569-0001')?.[0]?.id,'WDGAL-2569-0001');
 assert.equal(links.get('WDNEWS-2569-0001')?.[0]?.count,5);
 
 // Fail closed when either side is draft, unpublished, unapproved or unlinked.
-const g=galleries[0], issue=issues.find(item=>g.linked_issue_ids?.includes(item.id));
+const g=galleries.find(item=>item.linked_issue_ids?.some(id=>publicIssueIds.has(id)));
+const issue=issues.find(item=>g?.linked_issue_ids?.includes(item.id));
+assert.equal(resolver(galleries.filter(item=>(item.linked_issue_ids||[]).length===0),issues).size,0,
+  'published Gallery-only albums must not fabricate an issue link');
 assert.ok(issue,'fixture must choose an existing news issue linked by the approved gallery');
 for(const patch of [
   {status:'draft'}, {visibility_approved_at:''}, {approved_version:''},
