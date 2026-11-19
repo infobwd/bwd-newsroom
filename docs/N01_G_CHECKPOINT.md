@@ -314,3 +314,18 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 - **L5 READY_FOR_SCHOOL_REVIEW / LIVE QA BLOCKED BY BROWSER ACCESS:** Next obtain a browser session with the connected extension or a school-provided real-device QA capture, run the validator in a checkout/CI, and inspect all asset responses plus explicit per-photo rights. Do not automatically publish or change Drive access. The separately confirmed legacy root `anyone=writer` risk remains open.
 
 **Rollback:** revert this checkpoint-only edit; no production behavior changes.
+
+
+## 2026-11-19 12:00 Asia/Bangkok — L0–L5 manifest consistency audit (no release)
+
+**L0:** Re-read current main HEAD `01270ad5f39e97b5eda50212cdb3d5bcfd319a93`, open PR #6/#15, README, AGENTS, MASTER_PLAN, DATA_AND_STORAGE, PUBLISHING_AND_QA, AI_DEVELOPMENT_LOOP, GALLERY_CHAT_UI_PWA_PLAN, main N01_G_CHECKPOINT, PR #6 checkpoint, `data/galleries.json`, `data/catalog.json`, Gallery validator source and static QA workflow. School-account Drive read again confirmed the legacy root six folders and its `anyone=writer` ACL, plus the academic-year Shared Drive's four category folders. The latter returned `permissions=null` and `access_not_verified`; do not interpret that as publication authorization. No original photos or 17 historical PDFs touched.
+
+**L1 single task:** N01-G public-manifest consistency QA, an independently executable safe check while live-browser access is unavailable.
+
+**L2/L3 new PASS (in-memory source-data audit):** Parsed current public Gallery JSON and news catalogue. All **4 published-marked albums / 30 photo records / 60 unique WebP paths** pass the checked consistency assertions: Gallery/Event ID format, approval/published fields present, cover matches an album thumbnail, image paths constrained to their own Gallery directory with approved version suffix, SHA-256 field format, nonempty alt text, positive image dimensions, and linked news issue IDs existing in the current catalogue. **0 errors found.** This is a lightweight independent source-data audit; it does **not** execute `node scripts/validate-galleries.mjs`, inspect actual WebP bytes, validate SHA-256 against bytes, verify school consent or certify the published approval fields.
+
+**L3 NOT VERIFIED:** Actual anonymous HTTP response for Gallery and 60 assets. External web reader could not access Gallery/JSON; do not infer site outage. **NOT RUN:** Safari/iPhone/iPad/Android interactive QA, local Node validator, accessibility/performance, Canva persisted-page visual/QR QA and PDF byte-level audit.
+
+**L4:** Append only this evidence to existing draft PR #6. No new PR, no public asset/manifest change, no merge, no deployment, no permission adjustment.
+
+**L5 READY_FOR_SCHOOL_REVIEW:** Obtain independent browser/CI artifact delivery evidence and actual mobile-device QA, then confirm image-level release rights. The school's acknowledgement of the `anyone=writer` risk permits development to continue, but the risk stays OPEN and does not grant image/PDF publication approval.
