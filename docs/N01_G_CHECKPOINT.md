@@ -301,3 +301,16 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 - **L5: READY_FOR_SCHOOL_REVIEW / QA PENDING.** Next task: collect independent anonymous Gallery and image-asset HTTP/browser evidence, then physical iOS/mobile interaction and per-image consent review. Keep Drive risk explicitly open and recommend narrowing `anyone=writer` separately with explicit school authorization. Retain 17 legacy PDFs and private originals untouched.
 
 **Rollback:** revert this checkpoint-only commit in PR #6; no production files or permissions are affected.
+
+
+## 2026-11-19 10:10 Asia/Bangkok — independent Live Gallery attempt and catalogue inventory
+
+**L1 single task:** N01-G live/public Gallery QA, continuing existing draft PR #6; no feature or publication change.
+
+- **L0 PASS:** Fresh GitHub main HEAD `01270ad5f39e97b5eda50212cdb3d5bcfd319a93`; open PRs #6 and #15. The current main `data/galleries.json` contains **four** published-marked album records: `WDGAL-2569-0001` (5 photos), `0002` (11), `0003` (6), `0004` (8): **30 photo records / 60 referenced web+thumbnail asset paths**. These are manifest entries, not live URL or consent proof.
+- **L2/L3 live probe attempted:** Public `gallery.html` and `data/galleries.json` via external web reader both returned tool-level **not accessible**, without a reliable HTTP status; a separate HTTPS request from the execution container failed DNS resolution. Browser connector refused access because no originating browser/extension context was present. **Result: NOT VERIFIED**, not FAIL and not evidence of a website outage.
+- **L3 PASS (source inspection):** Current Gallery validator `scripts/validate-galleries.mjs` includes published-only fields, versioned local image-path constraints, file existence checks and source/index parity. **NOT RUN:** executing Node validator, verifying all 60 referenced asset bytes/HTTP statuses, public/incognito rendering, Safari/iPhone/iPad, performance and accessibility. The static schema readback is not execution.
+- **L4:** Documentation-only evidence appended to existing PR #6. No new PR, ACL adjustment, media, merge or deployment.
+- **L5 READY_FOR_SCHOOL_REVIEW / LIVE QA BLOCKED BY BROWSER ACCESS:** Next obtain a browser session with the connected extension or a school-provided real-device QA capture, run the validator in a checkout/CI, and inspect all asset responses plus explicit per-photo rights. Do not automatically publish or change Drive access. The separately confirmed legacy root `anyone=writer` risk remains open.
+
+**Rollback:** revert this checkpoint-only edit; no production behavior changes.
