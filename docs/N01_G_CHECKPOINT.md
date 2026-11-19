@@ -344,3 +344,18 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 - **L5 READY_FOR_SCHOOL_REVIEW:** Prioritize live anonymous Gallery/asset tests when a browser context is available, run Node validator on checkout/CI, review image-level consent, and separately remediate legacy `anyone=writer` with explicit permission-change authorization. The 17 historical PDFs remain untouched.
 
 **Rollback:** revert this documentation-only checkpoint commit; no production behavior changed.
+
+
+## 2026-11-19 15:56 Asia/Bangkok — branch divergence and QA tooling boundary
+
+**L0 PASS:** Re-read current main SHA `01270ad5f39e97b5eda50212cdb3d5bcfd319a93`, open PR #6/#15, all eight governance/readme files and existing branch checkpoint. GitHub compare `main...chore/n01-g-qa-readback-20261113` reports **diverged, 21 commits ahead and 195 behind**; merge base `2ef99e9a2a7cc6a3c2f810720f8163daf4fbd20f`. Diff lists only `docs/GALLERY_CHAT_UI_PWA_PLAN.md` and `docs/N01_G_CHECKPOINT.md`. Do not merge stale PR #6 blindly.
+
+**L1 selected task:** N01-G independent live-delivery/QA feasibility check, no N04-P deployment.
+
+**L2/L3 evidence:** Reattempted public `gallery.html` and `data/galleries.json` with an independent web reader; both returned tool-level inaccessible, without trustworthy HTTP status (**NOT VERIFIED**, not outage proof). Direct container `git ls-remote` failed DNS resolution for github.com; this environment cannot run checkout-based Node validator. GitHub `fetch_file` on a WebP failed with UTF-8 decode error, so binary asset bytes/HTTP content type and SHA-256 **NOT VERIFIED** by that connector. GitHub combined status and commit workflow-runs queries for current main returned empty arrays; this is **NOT VERIFIED** CI, not CI failure. GitHub comparison and metadata checks **PASS**. School-account Drive metadata read again: legacy Newsroom root still `anyone=writer` (risk accepted for continued work, not remediation), academic-year Shared Drive permissions `null` / `access_not_verified`, four expected top-level folders present. No file-level approval inferred.
+
+**L4:** Checkpoint-only edit to existing PR #6; no duplicate PR, production asset, ACL, deployment, or main change.
+
+**L5 READY_FOR_SCHOOL_REVIEW / QA PENDING:** Obtain independent real browser/CI runner and physical iOS/Android evidence; verify asset HTTP 200, content type, image dimensions, cache, privacy and per-image school approval. Rebase/reconcile review branch against main only with conflict-aware review. Keep 17 original PDFs and private originals untouched.
+
+**Rollback:** revert checkpoint commit only.
