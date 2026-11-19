@@ -329,3 +329,18 @@ No duplicate PR #5 and no Gallery feature rewrite. This branch updates only the 
 **L4:** Append only this evidence to existing draft PR #6. No new PR, no public asset/manifest change, no merge, no deployment, no permission adjustment.
 
 **L5 READY_FOR_SCHOOL_REVIEW:** Obtain independent browser/CI artifact delivery evidence and actual mobile-device QA, then confirm image-level release rights. The school's acknowledgement of the `anyone=writer` risk permits development to continue, but the risk stays OPEN and does not grant image/PDF publication approval.
+
+
+## 2026-11-19 14:03 Asia/Bangkok — Gallery static QA and PDF inventory delta
+
+**Single task:** N01-G acceptance source-data and safety QA in existing draft PR #6; no new feature PR or publication.
+
+- **L0 PASS:** Current main commit `01270ad5f39e97b5eda50212cdb3d5bcfd319a93`, open PRs #6 and #15; read current main README, AGENTS, MASTER_PLAN, DATA_AND_STORAGE, PUBLISHING_AND_QA, AI_DEVELOPMENT_LOOP, GALLERY_CHAT_UI_PWA_PLAN, N01_G_CHECKPOINT, public Gallery manifest and this branch checkpoint. Main documentation still has historical draft/no-album claims; manifest is authoritative for the current catalogue.
+- **L1–L3 PASS (static manifest check, not Node execution):** 4 published-marked Gallery records, 30 photo entries and 60 WebP asset-path references. Independently checked album/event ID formats, required publication timestamp presence, each image path's local gallery prefix and WebP extension, and SHA-256 field format: **zero detected errors** in these specific checks. **NOT RUN:** repository Node validator, actual file hashes, 60 image HTTP/MIME/byte responses, browser/mobile rendering.
+- **L2–L3 PASS (authenticated school Drive metadata):** Legacy Newsroom root has six expected folders and retains confirmed `anyone=writer` permission (OPEN SECURITY RISK). Shared Drive academic-year root has four category folders with `access_not_verified` visibility metadata. The **PDF archive folder currently contains 22 files: original `1.pdf`–`17.pdf` all still present, three additional named PDF exports, and two PNG draft exports**. Thus the prior shorthand “17 PDFs total” is outdated: there are **20 PDFs**, of which **17 are the protected historical set**. Newer exports' DRAFT names are not approval or publication evidence. No file was moved, modified or exposed.
+- **L3 PASS (Canva saved data read):** Design `DAHbHxLxopo` is titled `WDNEWS-2569-0004` and marked DRAFT, one saved 794×1123 page, with Mittraphap Games 2569 text. **NOT RUN:** saved-page visual inspection, PNG export parity, QR check, rights review. No temporary thumbnail URL was reused.
+- **L3 NOT VERIFIED:** Live public Gallery reader was inaccessible via web reader; container DNS resolution failed; connected browser requires an originating browser context. These are tool-environment limitations, **not proof of site failure**. Per-photo rights, consent and per-file public ACL remain unverified. Real Safari/Android QA NOT RUN.
+- **L4:** Append factual checkpoint only to existing PR #6; no main merge, Pages deploy, ACL change, PDF/asset upload, public manifest edit or automatic approval.
+- **L5 READY_FOR_SCHOOL_REVIEW:** Prioritize live anonymous Gallery/asset tests when a browser context is available, run Node validator on checkout/CI, review image-level consent, and separately remediate legacy `anyone=writer` with explicit permission-change authorization. The 17 historical PDFs remain untouched.
+
+**Rollback:** revert this documentation-only checkpoint commit; no production behavior changed.
